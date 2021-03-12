@@ -39,6 +39,14 @@ Looking through jokes for a fun time
 ###### Goal
 Finding specific joke
 ###### The system
+1. In the search bar search for tag or name of joke
+2. get results based on search criteria in the view.
+
+###### Goal
+View Joke category
+###### The system
+1. Press on the category button to choose a Joke category
+2. You will then see all jokes of the category in the view.
 
 ###### Goal
 Become a Registered user
