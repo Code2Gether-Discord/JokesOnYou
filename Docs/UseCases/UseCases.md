@@ -140,8 +140,59 @@ Add or +1 Tags on other people's jokes
 # Admin
 - Manage Jokes
 - Manage Users
+- Review Joke Flags
+- Review tag flags
 
 ###### Goal
-TODO
+Manage Jokes
 ###### The system
-1. TODO
+1. Login to your account.
+2. press on the account settings button
+3. press on manage jokes
+4. from here you will see a list of all jokes
+5. You can press on only view new jokes to only review new jokes.
+6. press on a joke to Delete it.
+7. Pick a reason why the joke was removed.
+8. you can add your personal message.
+9. the owner of the joke will get notified about the removal of the joke.
+10. the joke will be sent together with the removal notification.
+11. the user should get reprocussion, a strike and with 3 strikes banned from the website.
+
+###### Goal
+Manage Users
+###### The system
+1. Login to your account.
+2. press on the account settings button
+3. Press on Manage Users
+4. see a list of all users
+5. there will be buttons next to the user for removal or banning.
+
+###### Goal
+Review Joke Flags
+###### The system
+1. Login to your account.
+2. press on the account settings button
+3. Press review joke flags
+4. here you will see a list of all flagged jokes.
+5. you can manage the joke with deletion or dismiss the flag.
+6. Deletion:
+    - the owner of the joke will get notified about the removal of the joke.
+    - the joke will be sent together with the removal notification.
+    - the user should get reprocussion, a strike and with 3 strikes banned from the website.
+7. if you dismiss the flag you will have to write a message why its not being removed.
+8. the owner of the flag will get notified with the dismissal.
+
+###### Goal
+Review Tag Flags
+###### The system
+1. Login to your account.
+2. press on the account settings button
+3. Press review joke flags
+4. here you will see a list of all flagged Tags.
+5. you can manage the Tag with deletion or dismiss the flag.
+6. Deletion:
+    - the owner of the Tag will get notified about the removal of the Tag.
+    - the Tag will be sent together with the removal notification.
+    - the user should get reprocussion, a strike and with 3 strikes banned from the website.
+7. if you dismiss the flag you will have to write a message why its not being removed.
+8. the owner of the flag will get notified with the dismissal.
