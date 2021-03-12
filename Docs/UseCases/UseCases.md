@@ -121,7 +121,7 @@ Edit jokes
 4. Delete will also be found on this page.
 
 ###### Goal
-Edit jokes
+Delete jokes
 ###### The system
 1. Next to an **existing** joke you will be able to **delete** it or edit it.
 2. press **Delete** and it will **Prompt** you if you would like to Delete the joke, This can not be undone.
