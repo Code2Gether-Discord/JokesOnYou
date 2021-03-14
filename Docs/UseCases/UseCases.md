@@ -8,12 +8,12 @@
 - Like Joke
 - Report Joke
 - CRUD jokes
-- Add or +1 Tags on other people's jokes
+- Add or +1 Category (tags) on other people's jokes
 ### Guest
 - Register
 - View Jokes
 - Sort jokes
-  - By type
+  - By Category (tags)
   - By upload date
   - By Likes
 
@@ -26,6 +26,13 @@
 **The system** The process and steps taken to reach the end goal, including the necessary functional requirements and their anticipated behaviors.
 
 # Guests
+- Looking through jokes for a fun time
+- Finding specific joke
+- View Joke category
+- Sort jokes
+- Become a Registered user
+- Find out how the website was made and by who
+
 ###### Goal
 Looking through jokes for a fun time
 ###### The system
@@ -52,7 +59,7 @@ View Joke category
 Sort jokes
 ###### The system
 1. when viewing jokes you will be able to sort them by different attributes:
-  - By type
+  - By Category (Tags)
   - By upload date
   - By Likes
 
@@ -81,10 +88,14 @@ Find out how the website was made and by who
 
 # Registered user.
 - Favorite Jokes
-- Like Joke
+- Like/Dislike Joke
 - Report Joke
 - CRUD jokes
+    - Create jokes
+    - Edit jokes
+    - Delete jokes
 - Add or +1 Tags on other people's jokes
+- Report a Tag for voilating rules
 
 ###### Goal
 Favorite Jokes
@@ -124,9 +135,8 @@ Create jokes
 ###### The system
 1. On the **Manage** jokes page you will find a button to **Create** a new Joke
 2. When pressed it will redirect you to the Joke **Creation page**
-3. Here you will give the joke a Category, Name, the joke Premise and punchline.
-4. add some Tags to your joke. 
-5. Press **create** to publish the joke.
+3. Here you will give the joke a Category (tags), Name, the joke Premise and punchline.
+4. Press **create** to publish the joke.
 
 ###### Goal
 Edit jokes
