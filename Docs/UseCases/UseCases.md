@@ -94,6 +94,8 @@ Share joke
  - Through a direct link
  - Facebook
  - Twitter
+ - Reddit
+ - Email
 
 # Registered user.
 - Favorite Jokes
