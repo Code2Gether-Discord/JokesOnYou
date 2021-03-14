@@ -32,6 +32,7 @@
 - Sort jokes
 - Become a Registered user
 - Find out how the website was made and by who
+- Share Joke
 
 ###### Goal
 Looking through jokes for a fun time
@@ -85,6 +86,14 @@ Find out how the website was made and by who
 3. what **tools** were used
 4. **how** to help
 5. Donate?
+
+###### Goal
+Share joke
+###### The system
+1. when viewing jokes There will be a button to share the joke
+ - Through a direct link
+ - Facebook
+ - Twitter
 
 # Registered user.
 - Favorite Jokes
