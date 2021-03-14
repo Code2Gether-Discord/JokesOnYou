@@ -49,6 +49,14 @@ View Joke category
 2. You will then see all jokes of the category in the view.
 
 ###### Goal
+Sort jokes
+###### The system
+1. when viewing jokes you will be able to sort them by different attributes:
+  - By type
+  - By upload date
+  - By Likes
+
+###### Goal
 Become a Registered user
 ###### The system
 1. Go to the **Login Page**
@@ -142,7 +150,14 @@ Add or +1 Tags on other people's jokes
 1. When **viewing** a joke you can find a list of all the **tags** ?beneath? the joke
 2. Press on a **existing** tag to +1 it and make it **move** to the front of the tags
 3. if you want to **add** a tag press on the **+ button** next to the tags and fill in a name and press enter
-4. there is also a **flag button** in the tag if that's pressed you can report a **tag** for being offensive. 
+
+###### Goal
+Report a Tag for voilating rules
+###### The system
+1. When **viewing** a joke you can find a list of all the **tags** ?beneath? the joke
+2. there is a **flag button** in the tag if that's pressed you can report a **tag** for being offensive.
+3. you will have to **select** which guideline is being violated
+4. the Tag will then be **flagged** for review by one of the **admins** of the site.
 
 
 # Admin
