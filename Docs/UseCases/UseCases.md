@@ -8,12 +8,12 @@
 - Like Joke
 - Report Joke
 - CRUD jokes
-- Add or +1 Tags on other people's jokes
+- Add or +1 tags on other people's jokes
 ### Guest
 - Register
 - View Jokes
 - Sort jokes
-  - By type
+  - By tags
   - By upload date
   - By Likes
 
@@ -26,6 +26,14 @@
 **The system** The process and steps taken to reach the end goal, including the necessary functional requirements and their anticipated behaviors.
 
 # Guests
+- Looking through jokes for a fun time
+- Finding specific joke
+- View Jokes based on tags
+- Sort jokes
+- Become a Registered user
+- Find out how the website was made and by who
+- Share Joke
+
 ###### Goal
 Looking through jokes for a fun time
 ###### The system
@@ -39,6 +47,22 @@ Looking through jokes for a fun time
 ###### Goal
 Finding specific joke
 ###### The system
+1. In the search bar search for tag or name of joke
+2. get results based on search criteria in the view.
+
+###### Goal
+View Jokes based on tags
+###### The system
+1. Press on the category button to choose a Joke category
+2. You will then see all jokes of the category in the view.
+
+###### Goal
+Sort jokes
+###### The system
+1. when viewing jokes you will be able to sort them by different attributes:
+  - By Tags
+  - By upload date
+  - By Likes
 
 ###### Goal
 Become a Registered user
@@ -63,12 +87,26 @@ Find out how the website was made and by who
 4. **how** to help
 5. Donate?
 
+###### Goal
+Share joke
+###### The system
+1. when viewing jokes There will be a button to share the joke
+ - Through a direct link
+ - Facebook
+ - Twitter
+ - Reddit
+ - Email
+
 # Registered user.
 - Favorite Jokes
-- Like Joke
+- Like/Dislike Joke
 - Report Joke
 - CRUD jokes
+    - Create jokes
+    - Edit jokes
+    - Delete jokes
 - Add or +1 Tags on other people's jokes
+- Report a Tag for voilating rules
 
 ###### Goal
 Favorite Jokes
@@ -80,8 +118,8 @@ Favorite Jokes
 Like/Dislike Joke
 ###### The system
 1. When **viewing** a joke you can **+1 or -1** a joke
-2. Press on **?arrow?** up next to the joke to **+1** it
-3. press on **?arrow?** down next to the joke to **-1** it
+2. Press on **arrow** up next to the joke to **+1** it
+3. press on **arrow** down next to the joke to **-1** it
 4. In your profile, you will find a list of all your **Liked/Disliked** jokes
 
 ###### Goal
@@ -108,9 +146,8 @@ Create jokes
 ###### The system
 1. On the **Manage** jokes page you will find a button to **Create** a new Joke
 2. When pressed it will redirect you to the Joke **Creation page**
-3. Here you will give the joke a Category, Name, the joke Premise and punchline.
-4. add some Tags to your joke. 
-5. Press **create** to publish the joke.
+3. Here you will give the joke a tags, Name, the joke Premise and punchline.
+4. Press **create** to publish the joke.
 
 ###### Goal
 Edit jokes
@@ -121,7 +158,7 @@ Edit jokes
 4. Delete will also be found on this page.
 
 ###### Goal
-Edit jokes
+Delete jokes
 ###### The system
 1. Next to an **existing** joke you will be able to **delete** it or edit it.
 2. press **Delete** and it will **Prompt** you if you would like to Delete the joke, This can not be undone.
@@ -134,7 +171,14 @@ Add or +1 Tags on other people's jokes
 1. When **viewing** a joke you can find a list of all the **tags** ?beneath? the joke
 2. Press on a **existing** tag to +1 it and make it **move** to the front of the tags
 3. if you want to **add** a tag press on the **+ button** next to the tags and fill in a name and press enter
-4. there is also a **flag button** in the tag if that's pressed you can report a **tag** for being offensive. 
+
+###### Goal
+Report a Tag for voilating rules
+###### The system
+1. When **viewing** a joke you can find a list of all the **tags** ?beneath? the joke
+2. there is a **flag button** in the tag if that's pressed you can report a **tag** for being offensive.
+3. you will have to **select** which guideline is being violated
+4. the Tag will then be **flagged** for review by one of the **admins** of the site.
 
 
 # Admin
