@@ -3,36 +3,40 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "JokesOnYou", ".", "{E89B7455-F3CD-490C-8A5E-7B797ECFFC80}"
-	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		Debug.AspNetCompiler.VirtualPath = "/localhost_51705"
-		Debug.AspNetCompiler.PhysicalPath = "..\JokesOnYou\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_51705\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/localhost_51705"
-		Release.AspNetCompiler.PhysicalPath = "..\JokesOnYou\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_51705\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "51705"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{C308B76F-F38B-4076-BBA7-C70599433A9B}"
+	ProjectSection(SolutionItems) = preProject
+		Docs\DocumentationForm.md = Docs\DocumentationForm.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{1A2E150B-D6D9-4AA5-92FD-806A4448CABF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{5A3E478B-3F00-4343-A897-5C1DDC449F91}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JokesOnYou.Web.Api", "Server\JokesOnYou.Web.Api\JokesOnYou.Web.Api.csproj", "{1F005C86-5DE0-4480-BB20-9326F2C11F23}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UseCases", "UseCases", "{A7A355E6-6931-4D8C-8F3A-14A5FC2E0DE3}"
+	ProjectSection(SolutionItems) = preProject
+		Docs\UseCases\JokesOnYouUseCaseDiagram.png = Docs\UseCases\JokesOnYouUseCaseDiagram.png
+		Docs\UseCases\UseCases.md = Docs\UseCases\UseCases.md
 	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E89B7455-F3CD-490C-8A5E-7B797ECFFC80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E89B7455-F3CD-490C-8A5E-7B797ECFFC80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F005C86-5DE0-4480-BB20-9326F2C11F23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F005C86-5DE0-4480-BB20-9326F2C11F23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F005C86-5DE0-4480-BB20-9326F2C11F23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F005C86-5DE0-4480-BB20-9326F2C11F23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1F005C86-5DE0-4480-BB20-9326F2C11F23} = {1A2E150B-D6D9-4AA5-92FD-806A4448CABF}
+		{A7A355E6-6931-4D8C-8F3A-14A5FC2E0DE3} = {C308B76F-F38B-4076-BBA7-C70599433A9B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {85171580-4B88-493F-8F02-C9F4DE94B958}

@@ -2,7 +2,7 @@ using System;
 
 namespace JokesOnYou.Web.Api
 {
-    public class WeatherForecast
+    public class Foo
     {
         public DateTime Date { get; set; }
 
