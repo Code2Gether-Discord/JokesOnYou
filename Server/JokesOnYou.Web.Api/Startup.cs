@@ -35,7 +35,7 @@ namespace JokesOnYou.Web.Api
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "JokesOYou API");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "JokesOnYou API v1");
             });
 
             if (env.IsDevelopment())
