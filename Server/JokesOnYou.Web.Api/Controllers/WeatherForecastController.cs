@@ -23,6 +23,10 @@ namespace JokesOnYou.Web.Api.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Hello from Get method inside Weather Controller
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IEnumerable<Foo> Get()
         {
