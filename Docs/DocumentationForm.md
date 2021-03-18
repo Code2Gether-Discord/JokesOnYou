@@ -3,15 +3,15 @@
 ##### Issue Number and name: #12314 Documentation
 Expected Time:{} Actual Time{}
 ##### List of Things i need to learn:
-[] item 1
-[] item 2
-[] item 3
-[] item 4
+- [ ] item 1
+- [ ] item 2
+- [ ] item 3
+- [ ] item 4
 ##### What parts do you know:
-[] item 1
-[] item 2
-[] item 3
-[] item 4
+- [ ] item 1
+- [ ] item 2
+- [ ] item 3
+- [ ] item 4
 # List of Steps:
 1. start with this.
 2. then do this.
