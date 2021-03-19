@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Users\chrisk\source\repos\JokesOnYou\Server\JokesOnYou.Web.Api\JokesOnYou.Web.Api.xml</DocumentationFile>
+    <DocumentationFile>JokesOnYou.Web.Api.xml</DocumentationFile>
     <NoWarn>1701;1702;1591;</NoWarn>
   </PropertyGroup>
 
