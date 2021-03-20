@@ -9,6 +9,12 @@ Check out the [WIKI](https://github.com/Code2Gether-Discord/JokesOnYou/wiki)!!!!
 The Building, Coding, Documenting and Teaching.
 
 *About project*
+- Jokes on you is a text based reddit like jokes website (No Memes YET!).
+- Users can add their own Jokes.
+- Users can then Vote the joke up and down.
+- Users can `sort` jokes and will get to see different jokes every time they visit.
+- Users can vote on and create `Tags` for jokes by which the jokes can be sorted.
+- Users can be `Flagged` because they violated a rule, by posting "bad" Joke or "bad" Tag.
 
 ## Summary
 
@@ -33,7 +39,6 @@ The Building, Coding, Documenting and Teaching.
 2. Join the Code Together Discord Group : [Join Here](https://discord.gg/fkksvX7YPR)
 
 ### Follow this:
-
 
 1. **Clone** the project from this page to your pc.
 2. Use the IDE you prefer Visual studio 2019 or Visual studio code should work best.
