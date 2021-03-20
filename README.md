@@ -9,6 +9,7 @@ The Building, Coding, Documenting and Teaching.
 ## Summary
 
   - [Getting Started](#getting-started)
+  - [How to Discord](#How-to-Discord)
   - [Running the tests](#running-the-tests)
   - [Deployment](#deployment)
   - [Built With](#built-with)
@@ -47,6 +48,33 @@ Check out the [WIKI](https://github.com/Code2Gether-Discord/JokesOnYou/wiki)!!!!
 ### Installing
 
 *Step-by-step instructions on how to get dev environment running*
+
+## How to Discord
+
+1. Join the Discord [Server](https://discord.gg/fkksvX7YPR)
+2. There ask to join the group building the Jokes On You Website
+3. You will be invited and see the following channels:
+ ![](Docs/Images/DiscordChannels.png)
+ - `Announcements` Here these rules will be posted and you will find information.
+ - `Funchat` is for your everything conversation. small questions, discussions, ask for help here.
+ - `projectfun` is where important information goes. please don't talk here or discuss here we try to keep it clean.
+ - `fungithub` Github posts everything changed to github in this channel, Good Bot!
+ - `standup`    
+    - Want to work on something? 
+    - need help with something? 
+    - want to work together on something?
+    - Made something?
+    - Need a PR review?
+    
+   Please Post here!
+  - `Hello` Say Hello here please add 
+    - from which timezone you are so we can add it to the list and you can Pair-code with people from your timezone.
+    - What you hope to learn from this project.
+    - what you would like to learn.
+    - what you already know.
+    
+    **PLEASE KEEP CHATS IN THE CORRECT CHANNELS!**
+
 
 ## Running the tests
 *Explain how to run the automated tests for this system*
