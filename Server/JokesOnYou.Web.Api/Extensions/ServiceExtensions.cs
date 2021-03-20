@@ -14,10 +14,12 @@ namespace JokesOnYou.Web.Api.Extensions
         public static IServiceCollection ConfigureAppServices(this IServiceCollection services, IConfiguration config)
         {
             services.AddDbContext<DataContext>(options =>
-            options.UseSqlite(config.GetConnectionString("Default")));
+                options.UseSqlite(config.GetConnectionString("DefaultConnection")));
 
+            
             return services;
         }
+        
 
     }
 }
