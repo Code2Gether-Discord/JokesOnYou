@@ -1,10 +1,14 @@
 # JokesOnYou
 
-*description of project*
+Check out the [WIKI](https://github.com/Code2Gether-Discord/JokesOnYou/wiki)!!!!!
+
+*About Learning*
 - We formed this project to learn about web development using C# as main Language.
 - We will create a website where people can view and rate jokes.
 - This should be a learning project for all aspects.
 The Building, Coding, Documenting and Teaching.
+
+*About project*
 
 ## Summary
 
@@ -20,7 +24,16 @@ The Building, Coding, Documenting and Teaching.
 
 ## Getting Started
 
-Check out the [WIKI](https://github.com/Code2Gether-Discord/JokesOnYou/wiki)!!!!!
+### Prerequisites
+
+1. Any type of IDE:
+ - [Visual Studio 2019](https://visualstudio.microsoft.com/downloads/)
+ - [Visual Studio Code](https://code.visualstudio.com/download)
+ - [Discord](https://discord.com/download)
+2. Join the Code Together Discord Group : [Join Here](https://discord.gg/fkksvX7YPR)
+
+### Follow this:
+
 
 1. **Clone** the project from this page to your pc.
 2. Use the IDE you prefer Visual studio 2019 or Visual studio code should work best.
@@ -31,19 +44,13 @@ Check out the [WIKI](https://github.com/Code2Gether-Discord/JokesOnYou/wiki)!!!!
  - Backlog is where all new issues (if assigned to the project will start in)
 4. Assign yourself as **Assignee**.
 5. Move the card into **In Progress**
-6. In your IDE or Git manager create a new branch based of **dev**
+6. In your IDE or Git manager create a new branch based of `dev`
 7. Name it as discussed in the wiki page [How To BackLog](https://github.com/Code2Gether-Discord/JokesOnYou/wiki/How-To-Backlog)
 8. **Start** working on it!
 9. When done with working for the day **push** your branch to the github. (so other people might continue where you left off)
-10. When fully done with the issue Make a **Pull-Request** (PR) and make sure you target dev branch.
+10. When done with the branch Merge `dev` into `your branch` so you have the most updated version of `dev`.
+12. Then make a **Pull-Request** (PR) and make sure you target `dev` branch.
 
-### Prerequisites
-
-1. Any type of IDE:
- - [Visual Studio 2019](https://visualstudio.microsoft.com/downloads/)
- - [Visual Studio Code](https://code.visualstudio.com/download)
- - [Discord](https://discord.com/download)
-2. Join the Code Together Discord Group : [Join Here](https://discord.gg/fkksvX7YPR)
 
 ### Installing
 
