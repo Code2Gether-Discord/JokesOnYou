@@ -15,5 +15,6 @@ namespace JokesOnYou.Web.Api.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Joke> Jokes { get; set; }
         //For each class in models folder, add it here, only if its also in db
+        // This is what was written in the wiki by ChrisK
     }
 }

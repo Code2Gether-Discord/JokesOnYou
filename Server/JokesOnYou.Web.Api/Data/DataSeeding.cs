@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using JokesOnYou.Web.Api.Migrations;
 using JokesOnYou.Web.Api.Models;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace JokesOnYou.Web.Api.Data
 {
@@ -15,18 +15,20 @@ namespace JokesOnYou.Web.Api.Data
         {
             context.Database.EnsureCreated(); //Make sure db actually exists
 
-            // Look for any students.
+            // Look for any users in db
             if (context.Users.Any())
             {
+                //If there are students then leave method
                 return;
             }
 
-            var jsonThingy = JsonConvert.DeserializeObject<List<User>>(File.ReadAllText(AppContext.BaseDirectory + "SeedingDB.json"));
+            //If you go here than it means that the db is empty
+            var TemporaryUsers = JsonSerializer.Deserialize<List<User>>(File.ReadAllText(@"Data\UserSeedData.json"));
+            
+            //adds users to db
+            context.Users.AddRange(TemporaryUsers);
 
-            foreach (var item in jsonThingy)
-            {
-                context.Users.Add(item);
-            }
+            //always remember to save
             context.SaveChanges();
 
         }

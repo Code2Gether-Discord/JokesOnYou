@@ -1,0 +1,132 @@
+[
+  {
+    "name": "Estes Perez",
+    "passwordhash": [
+      102,
+      15,
+      63,
+      221,
+      37,
+      93,
+      220
+    ],
+    "Passwordsalt": [
+      23,
+      17,
+      34,
+      248,
+      4,
+      124,
+      171
+    ],
+    "email": "estesperez@geekwagon.com",
+    "signupdate": "2014-06-14T01:13:06 -02:00",
+    "role": "aliquip",
+    "strikes": 0,
+    "nsfw": false
+  },
+  {
+    "name": "Marina Ingram",
+    "passwordhash": [
+      11,
+      136,
+      59,
+      79,
+      14,
+      211,
+      137
+    ],
+    "Passwordsalt": [
+      152,
+      29,
+      8,
+      214,
+      2,
+      154,
+      247
+    ],
+    "email": "marinaingram@geekwagon.com",
+    "signupdate": "2017-09-30T05:33:44 -02:00",
+    "role": "duis",
+    "strikes": 0,
+    "nsfw": false
+  },
+  {
+    "name": "Marcella Martinez",
+    "passwordhash": [
+      255,
+      166,
+      203,
+      60,
+      90,
+      147,
+      80
+    ],
+    "Passwordsalt": [
+      12,
+      110,
+      129,
+      41,
+      202,
+      90,
+      135
+    ],
+    "email": "marcellamartinez@geekwagon.com",
+    "signupdate": "2018-09-05T03:08:55 -02:00",
+    "role": "commodo",
+    "strikes": 0,
+    "nsfw": false
+  },
+  {
+    "name": "Sonia Ross",
+    "passwordhash": [
+      220,
+      82,
+      208,
+      187,
+      63,
+      79,
+      57
+    ],
+    "Passwordsalt": [
+      79,
+      16,
+      53,
+      83,
+      23,
+      179,
+      76
+    ],
+    "email": "soniaross@geekwagon.com",
+    "signupdate": "2019-01-04T12:54:38 -01:00",
+    "role": "Lorem",
+    "strikes": 0,
+    "nsfw": false
+  },
+  {
+    "name": "Bette Greer",
+    "passwordhash": [
+      146,
+      63,
+      178,
+      108,
+      57,
+      149,
+      38
+    ],
+    "Passwordsalt": [
+      85,
+      216,
+      252,
+      90,
+      170,
+      205,
+      211
+    ],
+    "email": "bettegreer@geekwagon.com",
+    "signupdate": "2015-05-14T04:34:15 -02:00",
+    "role": "qui",
+    "strikes": 0,
+    "nsfw": false
+  }
+]
