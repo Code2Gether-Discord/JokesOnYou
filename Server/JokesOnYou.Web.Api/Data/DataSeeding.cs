@@ -18,15 +18,15 @@ namespace JokesOnYou.Web.Api.Data
             // Look for any users in db
             if (context.Users.Any())
             {
-                //If there are students then leave method
+                //If there are users then leave method
                 return;
             }
 
             //If you go here than it means that the db is empty
-            var TemporaryUsers = JsonSerializer.Deserialize<List<User>>(File.ReadAllText(@"Data\UserSeedData.json"));
+            var temporaryUsers = JsonSerializer.Deserialize<List<User>>(File.ReadAllText(@"Data\UserSeedData.json"));
             
             //adds users to db
-            context.Users.AddRange(TemporaryUsers);
+            context.Users.AddRange(temporaryUsers);
 
             //always remember to save
             context.SaveChanges();
