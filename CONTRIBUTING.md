@@ -39,14 +39,8 @@ Pull requests are the best way to propose changes to the codebase (we use [Githu
 
  + We work hard to makes sure issues are handled in a timely manner but, depending on the impact, it could take a while to investigate the root cause. A friendly ping in the comment thread to the submitter or a contributor can help draw attention if your issue is blocking.
 
-<!-- ## Any contributions you make will be under the MIT Software License
-In short, when you submit code changes, your submissions are understood to be under the same [MIT License](http://choosealicense.com/licenses/mit/) that covers the project. Feel free to contact the maintainers if that's a concern. -->
-
 ## Issues
 We use GitHub issues to track bugs. Report a bug by opening a new issue; it's that easy!
-
-<!-- ## Write bug reports with detail, background, and sample code
-[This is an example](http://stackoverflow.com/q/12488905/180626) of a bug report I wrote, and I think it's not a bad model. Here's [another example from Craig Hockenberry](http://www.openradar.me/11905408), an app developer whom I greatly respect. -->
 
 **Please check that your Bug Reports** tend to have:
 
@@ -60,8 +54,6 @@ We use GitHub issues to track bugs. Report a bug by opening a new issue; it's th
 
 The more specific and thorough your Bug Report , it is more likely to get solved.
 
-
-
 ## Are you a complete beginner ?
 
 Check out the below links to learn and equip yourselves with the things needed for contributing.
@@ -71,6 +63,3 @@ Check out the below links to learn and equip yourselves with the things needed f
 + [Creating a PR](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request)
 
 + [Creating a PR from a Fork](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork)
-
-<!-- ## License
-By contributing, you agree that your contributions will be licensed under its MIT License. -->
