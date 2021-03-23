@@ -2,57 +2,62 @@
   {
     "name": "Janice Tyler",
     "email": "janicetyler@isonus.com",
-    "signupdate": "2014-08-21T04:52:16 -02:00",
     "role": "hi",
     "strikes": 0,
-    "nsfw": false
+    "nsfw": false,
+    "signupdate": "2021-12-14"
+
   },
   {
     "name": "Trujillo Wilcox",
     "email": "trujillowilcox@isonus.com",
-    "signupdate": "2017-04-14T11:07:39 -02:00",
     "role": "hi",
-    "strikes": 0,
-    "nsfw": false
+    "strikes": 3,
+    "nsfw": true,
+    "signupdate": "2021-12-14"
+
   },
   {
     "name": "Odessa Atkins",
     "email": "odessaatkins@isonus.com",
-    "signupdate": "2020-03-30T04:55:48 -02:00",
     "role": "hi",
     "strikes": 0,
-    "nsfw": false
+    "nsfw": false,
+    "signupdate": "2021-12-14"
+
   },
   {
     "name": "Hale Hahn",
     "email": "halehahn@isonus.com",
-    "signupdate": "2021-03-15T11:52:47 -01:00",
     "role": "hi",
-    "strikes": 0,
-    "nsfw": false
+    "strikes": 1,
+    "nsfw": true,
+    "signupdate": "2021-12-14"
+
   },
   {
     "name": "Stephanie Rosales",
     "email": "stephanierosales@isonus.com",
-    "signupdate": "2019-08-29T04:49:44 -02:00",
     "role": "hi",
-    "strikes": 0,
-    "nsfw": false
+    "strikes": 2,
+    "nsfw": false,
+    "signupdate": "2021-12-14"
+
   },
   {
     "name": "Juarez Booth",
     "email": "juarezbooth@isonus.com",
-    "signupdate": "2015-01-19T02:15:17 -01:00",
     "role": "hi",
     "strikes": 0,
-    "nsfw": false
+    "signupdate": "2021-12-14",
+    "nsfw": true
   },
   {
     "name": "Carla Pruitt",
     "email": "carlapruitt@isonus.com",
-    "signupdate": "2017-12-14T04:24:42 -01:00",
+    "signupdate": "2021-12-14",
     "role": "hi",
-    "strikes": 0,
+    "strikes": 1,
     "nsfw": false
   }
 ]
