@@ -8,9 +8,9 @@ namespace JokesOnYou.Web.Api.Repositories.Interfaces
 {
     public interface IUserRepository
     {
-        Task<User> GetUser(int id);
-        Task<IEnumerable<User>> GetUsers();
-        Task DeleteUser(int id);
-        void UpdateUser();
+        Task<User> GetUserAsync(int id);
+        Task<IEnumerable<User>> GetUsersAsync();
+        Task DeleteUserAsync(int id);
+        void UpdateUser(User user);
     }
 }
