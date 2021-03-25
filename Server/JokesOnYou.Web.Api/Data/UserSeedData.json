@@ -1,0 +1,63 @@
+[
+  {
+    "name": "Janice Tyler",
+    "email": "janicetyler@isonus.com",
+    "role": "hi",
+    "strikes": 0,
+    "nsfw": false,
+    "signupdate": "2021-12-14"
+
+  },
+  {
+    "name": "Trujillo Wilcox",
+    "email": "trujillowilcox@isonus.com",
+    "role": "hi",
+    "strikes": 3,
+    "nsfw": true,
+    "signupdate": "2021-12-14"
+
+  },
+  {
+    "name": "Odessa Atkins",
+    "email": "odessaatkins@isonus.com",
+    "role": "hi",
+    "strikes": 0,
+    "nsfw": false,
+    "signupdate": "2021-12-14"
+
+  },
+  {
+    "name": "Hale Hahn",
+    "email": "halehahn@isonus.com",
+    "role": "hi",
+    "strikes": 1,
+    "nsfw": true,
+    "signupdate": "2021-12-14"
+
+  },
+  {
+    "name": "Stephanie Rosales",
+    "email": "stephanierosales@isonus.com",
+    "role": "hi",
+    "strikes": 2,
+    "nsfw": false,
+    "signupdate": "2021-12-14"
+
+  },
+  {
+    "name": "Juarez Booth",
+    "email": "juarezbooth@isonus.com",
+    "role": "hi",
+    "strikes": 0,
+    "signupdate": "2021-12-14",
+    "nsfw": true
+  },
+  {
+    "name": "Carla Pruitt",
+    "email": "carlapruitt@isonus.com",
+    "signupdate": "2021-12-14",
+    "role": "hi",
+    "strikes": 1,
+    "nsfw": false
+  }
+]
