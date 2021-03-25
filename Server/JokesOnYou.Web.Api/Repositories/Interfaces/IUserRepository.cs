@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using JokesOnYou.Web.Api.Models;
 
@@ -8,9 +6,9 @@ namespace JokesOnYou.Web.Api.Repositories.Interfaces
 {
     public interface IUserRepository
     {
-        Task<User> GetUserAsync(int id);
+        Task DeleteUserAsync(User user);
+        Task<User> GetUserAsync(string id);
         Task<IEnumerable<User>> GetUsersAsync();
-        Task DeleteUserAsync(int id);
-        void UpdateUser(User user);
+        Task UpdateUserAsync(User user);
     }
 }
