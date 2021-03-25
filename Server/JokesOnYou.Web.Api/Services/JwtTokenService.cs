@@ -3,9 +3,6 @@ using JokesOnYou.Web.Api.Services.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 
