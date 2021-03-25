@@ -9,7 +9,7 @@ namespace JokesOnYou.Web.Api.Services
 {
     public class JwtTokenService : ITokenService
     {
-        public string GenerateToken(User user)
+        public string GetToken(User user)
         {
             throw new NotImplementedException();
         }
