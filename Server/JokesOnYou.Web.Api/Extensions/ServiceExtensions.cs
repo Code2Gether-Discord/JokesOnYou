@@ -24,6 +24,7 @@ namespace JokesOnYou.Web.Api.Extensions
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<DataContext>();
 
             var key = Encoding.ASCII.GetBytes("We need to use a Secret Handler here");
+
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
