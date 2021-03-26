@@ -7,6 +7,7 @@ namespace JokesOnYou.Web.Api.Repositories.Interfaces
 {
     public interface IUserRepository
     {
+        Task<User> GetUserByEmail(string email);
         Task<User> CreateUserAsync(UserRegisterDTO userRegisterDTO);
         Task DeleteUserAsync(User user);
         Task<User> GetUserAsync(string id);

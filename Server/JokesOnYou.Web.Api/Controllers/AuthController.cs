@@ -40,9 +40,18 @@ namespace JokesOnYou.Web.Api.Controllers
         [HttpPost("Register")]
         public IActionResult Register(UserRegisterDTO userRegisterDto)
         {
-            var user = _authService.Register(userRegisterDto);
+            try
+            {
+                var user = _authService.Register(userRegisterDto);
+                return Ok(user);
+            }
+            catch
+            {
+                return BadRequest("Something went wrong during Register more info in future");
+            }
+            
 
-            return Ok(user);
+            
         }
     }
 }

@@ -21,9 +21,21 @@ namespace JokesOnYou.Web.Api.Services
             _userRepo = userRepo;
         }
 
-        public User Login(UserLoginDTO userLoginDTO)
+        public async Task<User> Login(UserLoginDTO userLoginDTO)
         {
-            _signInManager.SignInAsync()
+            var user = _userRepo.GetUserByEmail(userLoginDTO.Email);
+
+            var result = await _signInManager.CheckPasswordSignInAsync(user.Result, userLoginDTO.Password, false);
+
+            if (result.Succeeded)
+            {
+                return user.Result;
+            }
+            else
+            {
+                return null;
+            }
+
         }
 
         public User Register(UserRegisterDTO userRegisterDTO)
