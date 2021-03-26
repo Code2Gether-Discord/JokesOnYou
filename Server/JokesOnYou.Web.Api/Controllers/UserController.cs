@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class UserController : ControllerBase
     {
         public ActionResult GetUsers()

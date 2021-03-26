@@ -7,14 +7,16 @@ using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Controllers
 {
-    public class AuthController
+    [Route("api/[controller]")]
+    [ApiController]
+    public class AuthController : ControllerBase
     {
-        public ActionResult Login([FromBody] UserLoginDTO userLoginDto)
+        public ActionResult Login(UserLoginDTO userLoginDto)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ActionResult> Register([FromBody] UserRegisterDTO userRegisterDto)
+        public Task<ActionResult> Register(UserRegisterDTO userRegisterDto)
         {
             throw new NotImplementedException();
         }
