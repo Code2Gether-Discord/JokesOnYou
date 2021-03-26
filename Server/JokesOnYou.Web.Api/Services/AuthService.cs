@@ -1,6 +1,7 @@
 ﻿using JokesOnYou.Web.Api.DTOs;
 using JokesOnYou.Web.Api.Models;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
+using JokesOnYou.Web.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -9,23 +10,26 @@ using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Services
 {
-    public class AuthService
+    public class AuthService : IAuthService
     {
         private readonly SignInManager<User> _signInManager;
+        private readonly IUserRepository _userRepo;
 
-        public AuthService(SignInManager<User> signInManager)
+        public AuthService(SignInManager<User> signInManager, IUserRepository userRepo)
         {
             _signInManager = signInManager;
+            _userRepo = userRepo;
         }
 
-        User Login(UserLoginDTO userLoginDTO)
+        public User Login(UserLoginDTO userLoginDTO)
         {
-            throw new NotImplementedException();
+            _signInManager.SignInAsync()
         }
 
-        User Register(UserRegisterDTO userRegisterDTO)
+        public User Register(UserRegisterDTO userRegisterDTO)
         {
-            _signInManager.
+            var user = _userRepo.CreateUserAsync(userRegisterDTO);
+            return user.Result;
         }
     }
 }

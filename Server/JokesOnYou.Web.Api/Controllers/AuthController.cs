@@ -1,4 +1,5 @@
 ﻿using JokesOnYou.Web.Api.DTOs;
+using JokesOnYou.Web.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,18 +13,36 @@ namespace JokesOnYou.Web.Api.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
+        private readonly IAuthService _authService;
+
+        public AuthController(IAuthService authService)
+        {
+            _authService = authService;
+        }
+
         [AllowAnonymous]
         [HttpPost("login")]
-        public ActionResult Login(UserLoginDTO userLoginDto)
+        public IActionResult Login(UserLoginDTO userLoginDto)
         {
-            throw new NotImplementedException();
+            var user = _authService.Login(userLoginDto);
+
+            if(User == null)
+            {
+                return BadRequest("Username or password is incorrect");
+            }
+            else
+            {
+                return Ok(user);
+            }
         }
 
         [AllowAnonymous]
         [HttpPost("Register")]
-        public Task<ActionResult> Register(UserRegisterDTO userRegisterDto)
+        public IActionResult Register(UserRegisterDTO userRegisterDto)
         {
-            throw new NotImplementedException();
+            var user = _authService.Register(userRegisterDto);
+
+            return Ok(user);
         }
     }
 }

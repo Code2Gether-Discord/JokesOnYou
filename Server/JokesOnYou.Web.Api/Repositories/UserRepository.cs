@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using JokesOnYou.Web.Api.DTOs;
 using JokesOnYou.Web.Api.Models;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -14,6 +15,16 @@ namespace JokesOnYou.Web.Api.Repositories
         public UserRepository(UserManager<User> userManager)
         {
             _userManager = userManager;
+        }
+
+        public async Task<User> CreateUserAsync(UserRegisterDTO userRegisterDTO)
+        {
+            var user = await _userManager.CreateAsync(new User() { Email = userRegisterDTO.Email }, userRegisterDTO.Password);
+
+            if (user.Succeeded)
+            {
+                user.
+            }
         }
 
         public async Task DeleteUserAsync(User user)

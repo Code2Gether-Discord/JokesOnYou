@@ -21,7 +21,9 @@ namespace JokesOnYou.Web.Api.Extensions
             services.AddDbContext<DataContext>(options =>
                 options.UseSqlite(config.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<DataContext>();
+            services.AddIdentity<User, IdentityRole>(
+                options => { options.SignIn.RequireConfirmedAccount = false;} //Made this for adding more options
+                ).AddEntityFrameworkStores<DataContext>();
 
             var key = Encoding.ASCII.GetBytes("We need to use a Secret Handler here");
 
