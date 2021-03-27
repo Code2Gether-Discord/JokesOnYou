@@ -1,38 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using JokesOnYou.Web.Api.Data;
 using JokesOnYou.Web.Api.Models;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace JokesOnYou.Web.Api.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private readonly DataContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public UserRepository(DataContext context)
+        public UserRepository(UserManager<User> userManager)
         {
-            _context = context;
+            _userManager = userManager;
         }
 
-        public async Task DeleteUserAsync(int id)
+        public async Task DeleteUserAsync(User user)
         {
-            var user = await _context.Users.FindAsync(id);
-            _context.Remove(user);
+            await _userManager.DeleteAsync(user);
         }
 
-        public async Task<User> GetUserAsync(int id)
+        public async Task<User> GetUserAsync(string id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == id);
             return user;
         }
 
         public async Task<IEnumerable<User>> GetUsersAsync()
         {
-            var users = await _context.Users.ToListAsync();
+            var users = await _userManager.Users.ToListAsync();
             return users;
         }
     }
