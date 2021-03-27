@@ -11,6 +11,5 @@ namespace JokesOnYou.Web.Api.Repositories.Interfaces
         Task<User> GetUserAsync(int id);
         Task<IEnumerable<User>> GetUsersAsync();
         Task DeleteUserAsync(int id);
-        void UpdateUser(User user);
     }
 }

@@ -35,10 +35,5 @@ namespace JokesOnYou.Web.Api.Repositories
             var users = await _context.Users.ToListAsync();
             return users;
         }
-
-        public void UpdateUser(User user)
-        {
-            _context.Entry(user).State = EntityState.Modified;
-        }
     }
 }
