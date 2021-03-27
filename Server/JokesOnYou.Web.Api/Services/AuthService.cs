@@ -1,4 +1,5 @@
 ﻿using JokesOnYou.Web.Api.DTOs;
+using JokesOnYou.Web.Api.Exceptions;
 using JokesOnYou.Web.Api.Models;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
 using JokesOnYou.Web.Api.Services.Interfaces;
@@ -35,7 +36,7 @@ namespace JokesOnYou.Web.Api.Services
             }
             else
             {
-                return null;
+                throw new UserLoginException("Wrong UserName or Password");
             }
 
         }

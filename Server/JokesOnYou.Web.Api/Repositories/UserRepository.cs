@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using JokesOnYou.Web.Api.DTOs;
+using JokesOnYou.Web.Api.Exceptions;
 using JokesOnYou.Web.Api.Models;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -33,7 +34,7 @@ namespace JokesOnYou.Web.Api.Repositories
                     message += error.Description+ System.Environment.NewLine;
                 }
 
-                throw new System.Exception(message);
+                throw new UserRegisterException(message);
             }
         }
 

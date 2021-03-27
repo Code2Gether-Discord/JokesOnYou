@@ -24,15 +24,14 @@ namespace JokesOnYou.Web.Api.Controllers
         [HttpPost("login")]
         public IActionResult Login(UserLoginDTO userLoginDto)
         {
-            var user = _authService.Login(userLoginDto);
-
-            if(user == null)
+            try
             {
-                return BadRequest("Username or password is incorrect");
-            }
-            else
-            {
+                var user = _authService.Login(userLoginDto);
                 return Ok(user);
+            }
+            catch
+            {
+                return BadRequest();
             }
         }
 
