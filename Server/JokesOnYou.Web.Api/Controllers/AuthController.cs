@@ -26,7 +26,7 @@ namespace JokesOnYou.Web.Api.Controllers
         {
             var user = _authService.Login(userLoginDto);
 
-            if(User == null)
+            if(user == null)
             {
                 return BadRequest("Username or password is incorrect");
             }
