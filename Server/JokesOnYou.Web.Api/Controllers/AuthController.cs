@@ -1,4 +1,5 @@
 ﻿using JokesOnYou.Web.Api.DTOs;
+using JokesOnYou.Web.Api.Exceptions;
 using JokesOnYou.Web.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,16 +23,20 @@ namespace JokesOnYou.Web.Api.Controllers
 
         [AllowAnonymous]
         [HttpPost("login")]
-        public IActionResult Login(UserLoginDTO userLoginDto)
+        public async Task<IActionResult> Login(UserLoginDTO userLoginDto)
         {
             try
             {
-                var user = _authService.Login(userLoginDto);
+                var user = await _authService.LoginAsync(userLoginDto);
                 return Ok(user);
             }
-            catch
+            catch (UserLoginException ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
+            }
+            catch (AggregateException ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
 
@@ -44,7 +49,7 @@ namespace JokesOnYou.Web.Api.Controllers
                 var user = _authService.Register(userRegisterDto);
                 return Ok(user);
             }
-            catch (Exception ex)
+            catch (UserRegisterException ex)
             {
                 return BadRequest(ex.Message);
             }

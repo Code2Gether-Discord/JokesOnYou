@@ -22,21 +22,23 @@ namespace JokesOnYou.Web.Api.Services
             _userRepo = userRepo;
         }
 
-        public async Task<User> Login(UserLoginDTO userLoginDTO)
+        public async Task<User> LoginAsync(UserLoginDTO userLoginDTO)
         {
-            var user = _userRepo.GetUserByEmail(userLoginDTO.Email);
+            var user = await _userRepo.GetUserByEmail(userLoginDTO.Email);
 
-            var result = await _signInManager.CheckPasswordSignInAsync(user.Result, userLoginDTO.Password, false);
+            var result = await _signInManager.CheckPasswordSignInAsync(user, userLoginDTO.Password, false);
 
             //var result = await _signInManager.PasswordSignInAsync(userLoginDTO.Email, userLoginDTO.Password, false, false);
 
             if (result.Succeeded)
             {
-                return user.Result;
+                
+                return user;
             }
             else
             {
-                throw new UserLoginException("Wrong UserName or Password");
+                throw new UserLoginException("Bad UserName or Password!");
+                //return null;
             }
 
         }
