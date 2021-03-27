@@ -45,9 +45,9 @@ namespace JokesOnYou.Web.Api.Controllers
                 var user = _authService.Register(userRegisterDto);
                 return Ok(user);
             }
-            catch
+            catch (Exception ex)
             {
-                return BadRequest("Something went wrong during Register more info in future");
+                return BadRequest(ex.Message);
             }
             
 

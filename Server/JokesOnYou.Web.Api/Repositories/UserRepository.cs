@@ -19,7 +19,7 @@ namespace JokesOnYou.Web.Api.Repositories
 
         public async Task<User> CreateUserAsync(UserRegisterDTO userRegisterDTO)
         {
-            var userCreationResult = await _userManager.CreateAsync(new User() { Email = userRegisterDTO.Email }, userRegisterDTO.Password);
+            var userCreationResult = await _userManager.CreateAsync(new User() { Email = userRegisterDTO.Email, UserName = userRegisterDTO.Email }, userRegisterDTO.Password);
 
             if (userCreationResult.Succeeded)
             {
@@ -27,7 +27,13 @@ namespace JokesOnYou.Web.Api.Repositories
             }
             else
             {
-                throw new System.Exception("Failed to Create User");
+                var message = string.Empty;
+                foreach (var error in userCreationResult.Errors)
+                {
+                    message += error.Description+ System.Environment.NewLine;
+                }
+
+                throw new System.Exception(message);
             }
         }
 
