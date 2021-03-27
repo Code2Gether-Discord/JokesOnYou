@@ -1,6 +1,10 @@
 using System;
 using System.IO;
 using JokesOnYou.Web.Api.Extensions;
+using JokesOnYou.Web.Api.Repositories;
+using JokesOnYou.Web.Api.Repositories.Interfaces;
+using JokesOnYou.Web.Api.Services;
+using JokesOnYou.Web.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -24,6 +28,12 @@ namespace JokesOnYou.Web.Api
             services.ConfigureAppServices(_config);
             
             services.AddControllers();
+
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<ITokenService, JwtTokenService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddSwaggerGen(config =>
             {

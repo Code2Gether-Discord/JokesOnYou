@@ -27,6 +27,8 @@ namespace JokesOnYou.Web.Api.Services
 
             var result = await _signInManager.CheckPasswordSignInAsync(user.Result, userLoginDTO.Password, false);
 
+            //var result = await _signInManager.PasswordSignInAsync(userLoginDTO.Email, userLoginDTO.Password, false, false);
+
             if (result.Succeeded)
             {
                 return user.Result;
