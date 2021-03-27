@@ -32,10 +32,5 @@ namespace JokesOnYou.Web.Api.Repositories
             var users = await _userManager.Users.ToListAsync();
             return users;
         }
-
-        public async Task UpdateUserAsync(User user)
-        {
-            await _userManager.UpdateAsync(user);
-        }
     }
 }
