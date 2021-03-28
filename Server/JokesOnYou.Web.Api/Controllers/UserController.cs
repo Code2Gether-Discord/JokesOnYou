@@ -20,19 +20,21 @@ namespace JokesOnYou.Web.Api.Controllers
             throw new NotImplementedException();
         }
 
-        [HttpGet("{id}", Name = "GetUser")]
+        [HttpGet("{id}")]
         [Authorize(Roles = "NOROLE")]
         public Task<ActionResult> GetUser(string id)
         {
             throw new NotImplementedException();
         }
 
-        public ActionResult UpdateUser([FromBody] UserUpdateDTO userUpdateDTO)
+        [HttpPatch]
+        public ActionResult UpdateUser(UserUpdateDTO userUpdateDTO)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ActionResult> DeleteUser([FromBody] string id)
+        [HttpDelete("{id}")]
+        public Task<ActionResult> DeleteUser(string id)
         {
             throw new NotImplementedException();
         }
