@@ -13,12 +13,16 @@ namespace JokesOnYou.Web.Api.Controllers
     [Authorize]
     public class UserController : ControllerBase
     {
+        [HttpGet]
+        [Authorize(Roles = "Registered")]
         public ActionResult GetUsers()
         {
             throw new NotImplementedException();
         }
 
-        public Task<ActionResult> GetUser([FromBody] string id)
+        [HttpGet("{id}", Name = "GetUser")]
+        [Authorize(Roles = "NOROLE")]
+        public Task<ActionResult> GetUser(string id)
         {
             throw new NotImplementedException();
         }

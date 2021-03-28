@@ -15,14 +15,16 @@ namespace JokesOnYou.Web.Api.Services
     {
         private readonly SignInManager<User> _signInManager;
         private readonly IUserRepository _userRepo;
+        private readonly ITokenService _tokenService;
 
-        public AuthService(SignInManager<User> signInManager, IUserRepository userRepo)
+        public AuthService(SignInManager<User> signInManager, IUserRepository userRepo, ITokenService tokenService)
         {
             _signInManager = signInManager;
             _userRepo = userRepo;
+            _tokenService = tokenService;
         }
 
-        public async Task<User> LoginAsync(UserLoginDTO userLoginDTO)
+        public async Task<UserReplyDTO> LoginAsync(UserLoginDTO userLoginDTO)
         {
             var user = await _userRepo.GetUserByEmail(userLoginDTO.Email);
 
@@ -32,8 +34,13 @@ namespace JokesOnYou.Web.Api.Services
 
             if (result.Succeeded)
             {
-                
-                return user;
+                //TODO need to assign user a role!
+                UserReplyDTO userReplyDTO = new UserReplyDTO() { Email = user.Email, Id = user.Id, UserName = user.UserName, Role = "Registered" };
+
+                string token = _tokenService.GetToken(user);
+                userReplyDTO.Token = token;
+
+                return userReplyDTO;
             }
             else
             {

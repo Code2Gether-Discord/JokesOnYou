@@ -10,8 +10,14 @@ namespace JokesOnYou.Web.Api.Services
 {
     public class JwtTokenService : ITokenService
     {
-        private readonly JwtSecurityTokenHandler _tokenHandler = new JwtSecurityTokenHandler();
-        private readonly byte[] _key = Encoding.ASCII.GetBytes("We need to use a Secret Handler here");
+        private readonly JwtSecurityTokenHandler _tokenHandler;
+        private readonly byte[] _key;
+
+        public JwtTokenService()
+        {
+            _tokenHandler = new JwtSecurityTokenHandler();
+            _key = Encoding.ASCII.GetBytes("We need to use a Secret Handler here");
+        }
 
         public string GetToken(User user)
         {
@@ -43,9 +49,9 @@ namespace JokesOnYou.Web.Api.Services
             // generate token that is valid for 7 days
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, user.Id), new Claim(ClaimTypes.Role, user.Role) }),
+                Subject = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, user.Id), new Claim(ClaimTypes.Role, "Registered") }),
                 Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(_key), SecurityAlgorithms.HmacSha256Signature)
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(_key), SecurityAlgorithms.HmacSha512Signature)
             };
             var token = _tokenHandler.CreateToken(tokenDescriptor);
 
