@@ -34,10 +34,11 @@ namespace JokesOnYou.Web.Api.Controllers
             {
                 return BadRequest(ex.Message);
             }
+            /*
             catch (AggregateException ex)
             {
                 return BadRequest(ex.Message);
-            }
+            }*/
         }
 
         [AllowAnonymous]

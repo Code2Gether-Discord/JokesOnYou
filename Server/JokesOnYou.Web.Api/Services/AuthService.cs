@@ -53,6 +53,7 @@ namespace JokesOnYou.Web.Api.Services
         public User Register(UserRegisterDTO userRegisterDTO)
         {
             var user = _userRepo.CreateUserAsync(userRegisterDTO);
+            //TODO catch Errors for creating user Account.
             return user.Result;
         }
     }
