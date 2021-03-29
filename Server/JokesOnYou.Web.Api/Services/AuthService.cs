@@ -31,8 +31,6 @@ namespace JokesOnYou.Web.Api.Services
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, userLoginDTO.Password, false);
 
-            //var result = await _signInManager.PasswordSignInAsync(userLoginDTO.Email, userLoginDTO.Password, false, false);
-
             if (result.Succeeded)
             {
                 //TODO need to assign user a role!
@@ -46,9 +44,7 @@ namespace JokesOnYou.Web.Api.Services
             else
             {
                 throw new UserLoginException("Bad UserName or Password!");
-                //return null;
             }
-
         }
 
         public async Task<User> RegisterAsync(UserRegisterDTO userRegisterDTO)

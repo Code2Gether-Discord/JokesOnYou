@@ -44,20 +44,21 @@ namespace JokesOnYou.Web.Api.Repositories
             await _userManager.DeleteAsync(user);
         }
 
-        public async Task<User> GetUserAsync(string id)
+        public Task<User> GetUserAsync(string id)
         {
-            var user = await _userManager.FindByIdAsync(id);
+            //var user = await _userManager.FindByIdAsync(id);
             //var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == id);
-            return user;
+            return _userManager.FindByIdAsync(id);
         }
 
-        public async Task<User> GetUserByEmail(string email)
+        public Task<User> GetUserByEmail(string email)
         {
-            return await _userManager.FindByEmailAsync(email);
+            return _userManager.FindByEmailAsync(email);
         }
 
         public async Task<IEnumerable<User>> GetUsersAsync()
         {
+            //Does not need to be awaited here.
             var users = await _userManager.Users.ToListAsync();
             return users;
         }
