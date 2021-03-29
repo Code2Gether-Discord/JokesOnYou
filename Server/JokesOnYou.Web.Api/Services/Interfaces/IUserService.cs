@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Services.Interfaces
 {
-    interface IUserService
+    public interface IUserService
     {
-        IEnumerable<User> GetAll();
-        User GetUserById(string id);
-        void UpdateUser(UserUpdateDTO updateDTO);
-        void DeleteUser(string id);
+        Task<IEnumerable<User>> GetAll();
+        Task<User> GetUserById(string id);
+        Task UpdateUser(UserUpdateDTO updateDTO);
+        Task DeleteUser(string id);
     }
 }
