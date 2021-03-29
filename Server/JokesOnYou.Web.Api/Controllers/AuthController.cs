@@ -26,35 +26,14 @@ namespace JokesOnYou.Web.Api.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserLoginDTO userLoginDto)
         {
-            try
-            {
-                var user = await _authService.LoginAsync(userLoginDto);
-                return Ok(user);
-            }
-            catch (UserLoginException ex)
-            {
-                return Unauthorized(ex.Message);
-            }
-            /*
-            catch (AggregateException ex)
-            {
-                return BadRequest(ex.Message);
-            }*/
+            throw new NotImplementedException();
         }
 
         [AllowAnonymous]
         [HttpPost("Register")]
         public async Task<IActionResult> Register(UserRegisterDTO userRegisterDto)
         {
-            try
-            {
-                var user = await _authService.RegisterAsync(userRegisterDto);
-                return Ok(user);
-            }
-            catch (UserRegisterException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            throw new NotImplementedException();
         }
     }
 }

@@ -46,6 +46,7 @@ namespace JokesOnYou.Web.Api.Repositories
 
         public Task<User> GetUserAsync(string id)
         {
+            //Possibilities 
             //var user = await _userManager.FindByIdAsync(id);
             //var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == id);
             return _userManager.FindByIdAsync(id);

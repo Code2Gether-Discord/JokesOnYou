@@ -20,9 +20,7 @@ namespace JokesOnYou.Web.Api.Services
 
         public async Task DeleteUser(string id)
         {
-            var user = await _userRepository.GetUserAsync(id);
-            //TODO Add error check for user.
-            await _userRepository.DeleteUserAsync(user);
+            throw new NotImplementedException();
         }
 
         public async Task<IEnumerable<User>> GetAll()
