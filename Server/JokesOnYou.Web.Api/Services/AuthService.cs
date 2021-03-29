@@ -27,6 +27,7 @@ namespace JokesOnYou.Web.Api.Services
         public async Task<UserReplyDTO> LoginAsync(UserLoginDTO userLoginDTO)
         {
             var user = await _userRepo.GetUserByEmail(userLoginDTO.Email);
+            //TODO add user validation Not null
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, userLoginDTO.Password, false);
 
