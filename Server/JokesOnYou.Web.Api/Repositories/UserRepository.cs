@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using JokesOnYou.Web.Api.DTOs;
 using JokesOnYou.Web.Api.Exceptions;
@@ -28,13 +29,13 @@ namespace JokesOnYou.Web.Api.Repositories
             }
             else
             {
-                var message = string.Empty;
+                StringBuilder message = new StringBuilder();
                 foreach (var error in userCreationResult.Errors)
                 {
-                    message += error.Description+ System.Environment.NewLine;
+                    message.AppendLine(error.Description);
                 }
 
-                throw new UserRegisterException(message);
+                throw new UserRegisterException(message.ToString());
             }
         }
 
