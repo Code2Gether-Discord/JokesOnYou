@@ -22,7 +22,7 @@ namespace JokesOnYou.Web.Api.Extensions
                 options.UseSqlite(config.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<User, IdentityRole>(
-                options => { options.SignIn.RequireConfirmedAccount = false; options.User.RequireUniqueEmail = true; }
+                options => { options.User.RequireUniqueEmail = true; }
                 ).AddEntityFrameworkStores<DataContext>();
 
             var key = Encoding.ASCII.GetBytes("We need to use a Secret Handler here");
