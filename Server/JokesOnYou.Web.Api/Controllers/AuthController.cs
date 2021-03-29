@@ -33,7 +33,7 @@ namespace JokesOnYou.Web.Api.Controllers
             }
             catch (UserLoginException ex)
             {
-                return BadRequest(ex.Message);
+                return Unauthorized(ex.Message);
             }
             /*
             catch (AggregateException ex)
@@ -55,9 +55,6 @@ namespace JokesOnYou.Web.Api.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            
-
-            
         }
     }
 }
