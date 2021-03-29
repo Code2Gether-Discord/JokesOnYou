@@ -11,7 +11,6 @@ namespace JokesOnYou.Web.Api.Services.Interfaces
     {
         IEnumerable<User> GetAll();
         User GetUserById(string id);
-        void CreateUser(UserRegisterDTO registerDTO);
         void UpdateUser(UserUpdateDTO updateDTO);
         void DeleteUser(string id);
     }

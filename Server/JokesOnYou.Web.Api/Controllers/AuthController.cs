@@ -44,11 +44,11 @@ namespace JokesOnYou.Web.Api.Controllers
 
         [AllowAnonymous]
         [HttpPost("Register")]
-        public IActionResult Register(UserRegisterDTO userRegisterDto)
+        public async Task<IActionResult> Register(UserRegisterDTO userRegisterDto)
         {
             try
             {
-                var user = _authService.Register(userRegisterDto);
+                var user = await _authService.RegisterAsync(userRegisterDto);
                 return Ok(user);
             }
             catch (UserRegisterException ex)

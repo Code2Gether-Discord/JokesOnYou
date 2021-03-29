@@ -51,11 +51,11 @@ namespace JokesOnYou.Web.Api.Services
 
         }
 
-        public User Register(UserRegisterDTO userRegisterDTO)
+        public async Task<User> RegisterAsync(UserRegisterDTO userRegisterDTO)
         {
-            var user = _userRepo.CreateUserAsync(userRegisterDTO);
+            var user = await _userRepo.CreateUserAsync(userRegisterDTO);
             //TODO catch Errors for creating user Account.
-            return user.Result;
+            return user;
         }
     }
 }

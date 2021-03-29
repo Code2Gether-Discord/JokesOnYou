@@ -10,11 +10,6 @@ namespace JokesOnYou.Web.Api.Services
 {
     public class UserService : IUserService
     {
-        public void CreateUser(UserRegisterDTO registerDTO)
-        {
-            throw new NotImplementedException();
-        }
-
         public void DeleteUser(string id)
         {
             throw new NotImplementedException();
