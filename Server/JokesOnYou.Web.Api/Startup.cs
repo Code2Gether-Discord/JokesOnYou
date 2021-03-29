@@ -36,11 +36,14 @@ namespace JokesOnYou.Web.Api
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+            //This part is not needed now because there is no loop, it fixed the loop last time i encouterd it because Identity User has a SignUpDate loop.
+            /*
             services.AddMvc()
             .AddJsonOptions(o => {
                 o.JsonSerializerOptions
                     .ReferenceHandler = ReferenceHandler.Preserve;
             });
+            */
 
             services.AddSwaggerGen(config =>
             {
