@@ -28,22 +28,29 @@ namespace JokesOnYou.Web.Api.Services
 
         public async Task DeleteUser(string id)
         {
-            throw new NotImplementedException();
+            var user = _userRepository.GetUserAsync(id) ?? null;
+
+            if (user == null)
+                throw new Exception();
+
+            var userToDelete = new User { Id = user.Result.Id };
+
+            await _userRepository.DeleteUserAsync(userToDelete);
         }
 
         public async Task<IEnumerable<User>> GetAll()
         {
-            throw new NotImplementedException();
+           return await _userRepository.GetUsersAsync();
         }
-
+       
         public async Task<User> GetUserById(string id)
         {
-            throw new NotImplementedException();
+            return await _userRepository.GetUserAsync(id);
         }
 
         public async Task UpdateUser(UserUpdateDTO updateDTO)
         {
-            throw new NotImplementedException();
+            //
         }
 
         public async Task<UserReplyDTO> LoginUser(UserLoginDTO userLogin)
