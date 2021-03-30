@@ -24,7 +24,7 @@ namespace JokesOnYou.Web.Api.Controllers
 
         [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<IActionResult> Login(UserLoginDTO userLoginDto)
+        public async Task<UserReplyDTO> Login(UserLoginDTO userLoginDto)
         {
             throw new NotImplementedException();
         }
