@@ -7,11 +7,9 @@ using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Services.Interfaces
 {
-    public interface IUserService
+    public interface IAuthService
     {
-        Task<IEnumerable<User>> GetAll();
-        Task<User> GetUserById(string id);
-        Task UpdateUser(UserUpdateDTO updateDTO);
-        Task DeleteUser(string id);
+        public Task<UserReplyDTO> LoginAsync(UserLoginDTO userLoginDTO);
+        public Task<User> RegisterAsync(UserRegisterDTO userRegisterDTO);
     }
 }

@@ -1,4 +1,6 @@
 ﻿using JokesOnYou.Web.Api.DTOs;
+using JokesOnYou.Web.Api.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -7,24 +9,38 @@ using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
-        public ActionResult GetUsers()
+        private readonly IUserService _userService;
+
+        public UserController(IUserService userService)
+        {
+            _userService = userService;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetUsers()
         {
             throw new NotImplementedException();
         }
 
-        public Task<ActionResult> GetUser([FromBody] string id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult> GetUser(string id)
         {
             throw new NotImplementedException();
         }
 
-        public ActionResult UpdateUser([FromBody] UserUpdateDTO userUpdateDTO)
+        [HttpPatch]
+        public async Task<ActionResult> UpdateUser(UserUpdateDTO userUpdateDTO)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ActionResult> DeleteUser([FromBody] string id)
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteUser(string id)
         {
             throw new NotImplementedException();
         }
