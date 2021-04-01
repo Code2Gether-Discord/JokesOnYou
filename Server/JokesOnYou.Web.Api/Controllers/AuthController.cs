@@ -1,4 +1,7 @@
 ﻿using JokesOnYou.Web.Api.DTOs;
+using JokesOnYou.Web.Api.Exceptions;
+using JokesOnYou.Web.Api.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -7,14 +10,28 @@ using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Controllers
 {
-    public class AuthController
+    [Route("api/[controller]")]
+    [ApiController]
+    [Authorize]
+    public class AuthController : ControllerBase
     {
-        public ActionResult Login([FromBody] UserLoginDTO userLoginDto)
+        private readonly IAuthService _authService;
+
+        public AuthController(IAuthService authService)
+        {
+            _authService = authService;
+        }
+
+        [AllowAnonymous]
+        [HttpPost("login")]
+        public async Task<UserReplyDTO> Login(UserLoginDTO userLoginDto)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ActionResult> Register([FromBody] UserRegisterDTO userRegisterDto)
+        [AllowAnonymous]
+        [HttpPost("Register")]
+        public async Task<IActionResult> Register(UserRegisterDTO userRegisterDto)
         {
             throw new NotImplementedException();
         }

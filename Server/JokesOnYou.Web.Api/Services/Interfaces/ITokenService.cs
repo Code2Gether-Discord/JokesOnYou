@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Services.Interfaces
 {
-    interface ITokenService
+    public interface ITokenService
     {
-        string GetToken(User user);
+        public string GetToken(User user);
     }
 }

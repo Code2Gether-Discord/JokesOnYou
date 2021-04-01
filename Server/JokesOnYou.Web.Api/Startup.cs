@@ -1,6 +1,11 @@
 using System;
 using System.IO;
+using System.Text.Json.Serialization;
 using JokesOnYou.Web.Api.Extensions;
+using JokesOnYou.Web.Api.Repositories;
+using JokesOnYou.Web.Api.Repositories.Interfaces;
+using JokesOnYou.Web.Api.Services;
+using JokesOnYou.Web.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -25,6 +30,18 @@ namespace JokesOnYou.Web.Api
             services.ConfigureAppServices(_config);
             
             services.AddControllers();
+
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<ITokenService, JwtTokenService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.AddMvc()
+            .AddJsonOptions(o => {
+                o.JsonSerializerOptions
+                    .ReferenceHandler = ReferenceHandler.Preserve;
+            });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -52,6 +69,8 @@ namespace JokesOnYou.Web.Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

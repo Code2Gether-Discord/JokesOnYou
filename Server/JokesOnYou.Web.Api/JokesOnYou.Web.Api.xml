@@ -4,11 +4,5 @@
         <name>JokesOnYou.Web.Api</name>
     </assembly>
     <members>
-        <member name="M:JokesOnYou.Web.Api.Controllers.WeatherForecastController.Get">
-            <summary>
-            Hello from Get method inside Weather Controller
-            </summary>
-            <returns></returns>
-        </member>
     </members>
 </doc>

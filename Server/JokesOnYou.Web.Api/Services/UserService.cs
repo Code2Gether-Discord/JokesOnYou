@@ -21,20 +21,20 @@ namespace JokesOnYou.Web.Api.Services
         }
         public void CreateUser(UserRegisterDTO registerDTO)
         {
-            throw new NotImplementedException();
+            _userRepository = userRepository;
         }
 
-        public void DeleteUser(string id)
+        public async Task DeleteUser(string id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<User> GetAll()
+        public async Task<IEnumerable<User>> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public User GetUserById(string id)
+        public async Task<User> GetUserById(string id)
         {
             throw new NotImplementedException();
         }
