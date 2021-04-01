@@ -20,7 +20,7 @@ namespace JokesOnYou.Web.Api.Controllers
 
         readonly IUserService _userService;
         readonly ILogger<UserController> _logger;
-        readonly IMapper _mapper;
+        readonly IMapper _mapper;   
         readonly ITokenService _tokenService;
         public UserController(IUserService userService, ILogger<UserController> logger, IMapper mapper, ITokenService tokenService)
         {
@@ -47,7 +47,7 @@ namespace JokesOnYou.Web.Api.Controllers
             {
                 return user;
             }
-            _logger.LogInformation($"customer {id} not found");
+            _logger.LogInformation($"User not found; id: {id}");
             return NotFound();
             
         }
@@ -61,8 +61,8 @@ namespace JokesOnYou.Web.Api.Controllers
             {
                 return Ok();
             }
+            _logger.LogInformation($"Something went wrong with updating user that had id {user.Id}");
 
-            
             return NotFound();
         }
 
@@ -91,7 +91,11 @@ namespace JokesOnYou.Web.Api.Controllers
             }
 
             if (user == null)
+            {
+                _logger.LogInformation($"User / possible attacker inserted wrong password on account id: {user.Id}");
                 return Unauthorized();
+            }
+                
 
             _tokenService.GetToken(user);
             return Ok(new
@@ -109,6 +113,7 @@ namespace JokesOnYou.Web.Api.Controllers
             var user = _userService.GetUserById(id);
             if (user == null)
             {
+                _logger.LogInformation($"Could not delete user id: {user.Id}");
                 return NotFound();
             }
             _userService.DeleteUser(id);
@@ -130,6 +135,7 @@ namespace JokesOnYou.Web.Api.Controllers
             catch (Exception ex)
             {
                 // return error message if there was an exception
+                _logger.LogInformation($"Could not register user; reason: {ex}");
                 return BadRequest(ex.Message);
             }
         }
