@@ -7,6 +7,8 @@ using JokesOnYou.Web.Api.Models;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 
 namespace JokesOnYou.Web.Api.Repositories
 {
@@ -21,8 +23,18 @@ namespace JokesOnYou.Web.Api.Repositories
 
         public async Task<User> CreateUserAsync(UserRegisterDTO userRegisterDTO)
         {
-            var userCreationResult = await _userManager.CreateAsync(new User() { Email = userRegisterDTO.Email, UserName = userRegisterDTO.Email }, userRegisterDTO.Password);
+            // validation thingy
+            if (string.IsNullOrWhiteSpace(userRegisterDTO.Password))
+                throw new Exception("Password is required");
 
+            if (_userManager.Users.Any(x => x.Email == userRegisterDTO.Email))
+                throw new Exception($"Email {userRegisterDTO.Email} is already taken");
+
+            if (_userManager.Users.Any(x => x.UserName == userRegisterDTO.UserName))
+                throw new Exception($"Username: {userRegisterDTO.UserName} is already taken");
+
+            var userCreationResult = await _userManager.CreateAsync(new User() { Email = userRegisterDTO.Email, UserName = userRegisterDTO.UserName }, userRegisterDTO.Password);
+                
             if (userCreationResult.Succeeded)
             {
                 return await _userManager.FindByEmailAsync(userRegisterDTO.Email);
@@ -60,8 +72,7 @@ namespace JokesOnYou.Web.Api.Repositories
         public async Task<IEnumerable<User>> GetUsersAsync()
         {
             //Does not need to be awaited here.
-            var users = await _userManager.Users.ToListAsync();
-            return users;
+            return await _userManager.Users.ToListAsync();
         }
 
         public async Task<bool> UpdateUser(User user)
@@ -73,7 +84,6 @@ namespace JokesOnYou.Web.Api.Repositories
             }
             catch (System.Exception)
             {
-
                 return false;
             }
             // The true and false thing is to just make sure that everything is working 😎
@@ -81,8 +91,19 @@ namespace JokesOnYou.Web.Api.Repositories
 
         public async Task<User> Authenticate(string username, string password)
         {
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password)) //no point in going forward if either of these is empty
+                return null;
+
             var user = await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == username);
-            _userManager.CheckPasswordAsync(user, password);
+
+            if (user == null) //no point going forward if user is empty
+                return null;
+
+            if (!await _userManager.CheckPasswordAsync(user, password)) //if password wrong, return
+                return null;
+
+            // authentication worked
+            return user;
 
         }
 

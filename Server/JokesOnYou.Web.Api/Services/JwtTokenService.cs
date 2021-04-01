@@ -21,10 +21,9 @@ namespace JokesOnYou.Web.Api.Services
         }
 
         public string GetToken(User user)
-        {
+        {   
             return GenerateToken(user);
         }
-
         public bool ValidateToken(string token)
         {
             try

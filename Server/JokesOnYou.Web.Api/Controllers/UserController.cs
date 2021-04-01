@@ -21,11 +21,13 @@ namespace JokesOnYou.Web.Api.Controllers
         readonly IUserService _userService;
         readonly ILogger<UserController> _logger;
         readonly IMapper _mapper;
-        public UserController(IUserService userService, ILogger<UserController> logger, IMapper mapper)
+        readonly ITokenService _tokenService;
+        public UserController(IUserService userService, ILogger<UserController> logger, IMapper mapper, ITokenService tokenService)
         {
             _logger = logger;
             _mapper = mapper;
             _userService = userService;
+            _tokenService = tokenService;
         }
 
         //ok so returning user is dumb, since we return sensitive data, we need better DTO system, Valve plz fix
@@ -50,7 +52,7 @@ namespace JokesOnYou.Web.Api.Controllers
             
         }
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateUser(string id, UserUpdateDTO userUpdateDTO)
+        public async Task<ActionResult> UpdateUser(string id, [FromBody]UserUpdateDTO userUpdateDTO)
         {
             var user = _mapper.Map<User>(userUpdateDTO);
 
@@ -66,62 +68,43 @@ namespace JokesOnYou.Web.Api.Controllers
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody] UserLoginDTO userDto)
+        public async Task<ActionResult> Authenticate([FromBody] UserLoginDTO userDto)
         {
-            var user = _userService.Authenticate(userDto.Username, userDto.Password);
+            User user;
+            if (string.IsNullOrWhiteSpace(userDto.Password))
+            {
+                return Unauthorized(); //or something else, idk
+            }
+
+            //maybe use a switch? should be much different
+            if (!string.IsNullOrWhiteSpace(userDto.Username))
+            {
+                user =await _userService.Authenticate(userDto.Username, userDto.Password);
+            }
+            else if (!string.IsNullOrWhiteSpace(userDto.Email))
+            {
+                user =await _userService.Authenticate(userDto.Email, userDto.Password);
+            }
+            else
+            {
+                return Unauthorized();
+            }
 
             if (user == null)
                 return Unauthorized();
 
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.Name, user.Id.ToString())
-                }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            var tokenString = tokenHandler.WriteToken(token);
-
-            // return basic user info (without password) and token to store client side
+            _tokenService.GetToken(user);
             return Ok(new
             {
                 Id = user.Id,
-                Username = user.Username,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Token = tokenString
-            });
+                Username = user.UserName,
+                Email = user.Email,
+                Token = _tokenService.GetToken(user)
+        });
         }
-
-
-
-        /*
-        [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody]UserDto userDto)
-        {
-            // map dto to entity and set id
-            var user = _mapper.Map<User>(userDto);
-            user.Id = id;
- 
-            try
-            {
-                // save 
-                _userService.Update(user, userDto.Password);
-                return Ok();
-            } 
-            catch(AppException ex)
-            {
-                // return error message if there was an exception
-                return BadRequest(ex.Message);
-            }
-        }*/
-        [HttpDelete]
-        public ActionResult DeleteUser([FromBody] string id)
+        
+        [HttpDelete("{id}")]
+        public ActionResult DeleteUser(string id)
         {
             var user = _userService.GetUserById(id);
             if (user == null)
@@ -131,6 +114,24 @@ namespace JokesOnYou.Web.Api.Controllers
             _userService.DeleteUser(id);
             return Ok();
 
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult Register([FromBody] UserRegisterDTO userDto)
+        {
+
+            try
+            {
+                // save 
+                _userService.CreateUser(userDto);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                // return error message if there was an exception
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
