@@ -32,5 +32,28 @@ namespace JokesOnYou.Web.Api.Repositories
             var users = await _userManager.Users.ToListAsync();
             return users;
         }
+
+        public async Task<bool> UpdateUser(User user)
+        {
+            try
+            {
+                await _userManager.UpdateAsync(user);
+                return true;
+            }
+            catch (System.Exception)
+            {
+
+                return false;
+            }
+            // The true and false thing is to just make sure that everything is working 😎
+        }
+
+        public async Task<User> Authenticate(string username, string password)
+        {
+            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == username);
+            _userManager.CheckPasswordAsync(user, password);
+
+        }
+
     }
 }
