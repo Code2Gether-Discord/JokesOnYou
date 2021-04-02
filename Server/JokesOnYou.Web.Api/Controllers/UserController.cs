@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using JokesOnYou.Web.Api.DTOs;
+using JokesOnYou.Web.Api.Extensions;
 using JokesOnYou.Web.Api.Models;
 using JokesOnYou.Web.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -15,12 +16,13 @@ namespace JokesOnYou.Web.Api.Controllers
 {
     [Authorize]
     [Route("[controller]")]
+    [ApiController]
     public class UserController : ControllerBase
     {
 
         readonly IUserService _userService;
         readonly ILogger<UserController> _logger;
-        readonly IMapper _mapper;   
+        readonly IMapper _mapper;
         readonly ITokenService _tokenService;
         public UserController(IUserService userService, ILogger<UserController> logger, IMapper mapper, ITokenService tokenService)
         {
@@ -32,43 +34,53 @@ namespace JokesOnYou.Web.Api.Controllers
 
         //ok so returning user is dumb, since we return sensitive data, we need better DTO system, Valve plz fix
         [HttpGet]
-        public ActionResult<IEnumerable<User>> GetUsers()
+        public async Task<ActionResult<IEnumerable<User>>> GetUsersAsync()
         {
-            return Ok(_userService.GetAll());
+            return Ok(await _userService.GetAll());
         }
 
         //idk if its from body or Http get thing
         [HttpGet("{id}")]
-        public  ActionResult<User> GetUserById(string id)
+        public async Task<ActionResult<User>> GetUserByIdAsync(string id)
         {
-            var user =  _userService.GetUserById(id);
+            //Haha remove evil brackets
+            if (id != ClaimsPrincipalExtension.GetUserId(User))
+                return Unauthorized();
 
+            var user = await _userService.GetUserById(id);
             if (user != null)
             {
                 return user;
             }
             _logger.LogInformation($"User not found; id: {id}");
             return NotFound();
-            
+
         }
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateUser(string id, [FromBody]UserUpdateDTO userUpdateDTO)
+        public async Task<ActionResult> UpdateUser(string id, UserUpdateDTO userUpdateDTO)
         {
+            //Haha remove evil brackets
+            if (id != ClaimsPrincipalExtension.GetUserId(User))
+                return Unauthorized();
+
             var user = _mapper.Map<User>(userUpdateDTO);
-
-
-            if (await _userService.UpdateUser(user))
+            try
             {
-                return Ok();
+                await _userService.UpdateUser(user);
+                return NoContent();
             }
-            _logger.LogInformation($"Something went wrong with updating user that had id {user.Id}");
+            catch (Exception)
+            {
+                _logger.LogInformation($"Something went wrong with updating user that had id {user.Id}");
+                return NotFound();
+            }
 
-            return NotFound();
         }
-
+        //Commented this just in case someone needs it ;)
+        /*
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public async Task<ActionResult> Authenticate([FromBody] UserLoginDTO userDto)
+        public async Task<ActionResult> Authenticate(UserLoginDTO userDto)
         {
             User user;
             if (string.IsNullOrWhiteSpace(userDto.Password))
@@ -106,29 +118,31 @@ namespace JokesOnYou.Web.Api.Controllers
                 Token = _tokenService.GetToken(user)
         });
         }
-        
+        */
         [HttpDelete("{id}")]
-        public ActionResult DeleteUser(string id)
+        public async Task<ActionResult> DeleteUserAsync(string id)
         {
-            var user = _userService.GetUserById(id);
+            //Haha remove evil brackets
+            if (id != ClaimsPrincipalExtension.GetUserId(User))
+                return Unauthorized();
+
+            var user = await _userService.GetUserById(id);
             if (user == null)
             {
                 _logger.LogInformation($"Could not delete user id: {user.Id}");
                 return NotFound();
             }
-            _userService.DeleteUser(id);
-            return Ok();
+            await _userService.DeleteUser(user);
+            return NoContent();
 
         }
 
         [AllowAnonymous]
         [HttpPost]
-        public ActionResult Register([FromBody] UserRegisterDTO userDto)
+        public ActionResult Register(UserRegisterDTO userDto)
         {
-
             try
             {
-                // save 
                 _userService.CreateUser(userDto);
                 return Ok();
             }

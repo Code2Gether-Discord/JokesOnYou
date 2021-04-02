@@ -75,18 +75,9 @@ namespace JokesOnYou.Web.Api.Repositories
             return await _userManager.Users.ToListAsync();
         }
 
-        public async Task<bool> UpdateUser(User user)
+        public async Task UpdateUser(User user)
         {
-            try
-            {
-                await _userManager.UpdateAsync(user);
-                return true;
-            }
-            catch (System.Exception)
-            {
-                return false;
-            }
-            // The true and false thing is to just make sure that everything is working 😎
+            await _userManager.UpdateAsync(user);
         }
 
         public async Task<User> Authenticate(string username, string password)

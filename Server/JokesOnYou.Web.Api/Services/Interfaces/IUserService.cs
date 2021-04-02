@@ -9,11 +9,11 @@ namespace JokesOnYou.Web.Api.Services.Interfaces
 {
     public interface IUserService
     {
-        IEnumerable<User> GetAll();
-        User GetUserById(string id);
-        void CreateUser(UserRegisterDTO registerDTO);
-        Task<bool> UpdateUser(User user);
-        void DeleteUser(string id);
+        Task DeleteUser(User user);
+        Task<User> CreateUser(UserRegisterDTO registerDTO);
+        Task<User> GetUserById(string id);
+        Task UpdateUser(User user);
         Task<User> Authenticate(string username, string password);
+        Task<IEnumerable<User>> GetAll();
     }
 }
