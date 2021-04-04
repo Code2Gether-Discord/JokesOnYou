@@ -20,7 +20,7 @@ namespace JokesOnYou.Web.Api.Services
         {
             _userRepo = userRepo;
         }
-        public async Task<IEnumerable<User>> GetAll()
+        public async Task<IEnumerable<UserReplyDTO>> GetAll()
         {
             return await _userRepo.GetUsersAsync();
         }
@@ -29,14 +29,14 @@ namespace JokesOnYou.Web.Api.Services
             return await _userRepo.CreateUserAsync(registerDTO);
         }
 
-        public async Task DeleteUser(User user)
+        public async Task DeleteUser(string id)
         {
-            await _userRepo.DeleteUserAsync(user);
+            await _userRepo.DeleteUserAsync(id);
         }
 
-        public async Task<User> GetUserById(string id)
+        public async Task<UserReplyDTO> GetUserReplyById(string id)
         {
-            return await _userRepo.GetUserAsync(id);
+            return await _userRepo.GetUserReplyAsync(id);
         }
 
         public async Task UpdateUser(User user)

@@ -9,15 +9,18 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using AutoMapper;
 
 namespace JokesOnYou.Web.Api.Repositories
 {
     public class UserRepository : IUserRepository
     {
         private readonly UserManager<User> _userManager;
+        readonly IMapper _mapper;
 
-        public UserRepository(UserManager<User> userManager)
+        public UserRepository(UserManager<User> userManager, IMapper mapper)
         {
+            _mapper = mapper;
             _userManager = userManager;
         }
 
@@ -48,42 +51,54 @@ namespace JokesOnYou.Web.Api.Repositories
                 }
 
                 throw new UserRegisterException(message.ToString());
-            }
+            }   
         }
 
-        public async Task DeleteUserAsync(User user)
+        public async Task DeleteUserAsync(string id)
         {
+            var user = await GetUserAsync(id);
             await _userManager.DeleteAsync(user);
         }
 
-        public Task<User> GetUserAsync(string id)
+        public async Task<UserReplyDTO> GetUserReplyAsync(string id)
         {
             //Possibilities 
             //var user = await _userManager.FindByIdAsync(id);
             //var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == id);
-            return _userManager.FindByIdAsync(id);
+            var user = await _userManager.FindByIdAsync(id);
+            
+            return _mapper.Map<UserReplyDTO>(user);
         }
-
+        public async Task<User> GetUserAsync(string id)
+        {
+            //Possibilities 
+            //var user = await _userManager.FindByIdAsync(id);
+            //var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == id);
+            return await _userManager.FindByIdAsync(id);
+        }
         public Task<User> GetUserByEmail(string email)
         {
             return _userManager.FindByEmailAsync(email);
         }
 
-        public async Task<IEnumerable<User>> GetUsersAsync()
+        public async Task<IEnumerable<UserReplyDTO>> GetUsersAsync()
         {
-            //Does not need to be awaited here.
-            return await _userManager.Users.ToListAsync();
+            //Such a waste of bits
+            var users = await _userManager.Users.ToListAsync();
+            
+            return _mapper.Map<List<UserReplyDTO>>(users);
         }
 
         public async Task UpdateUser(User user)
         {
             await _userManager.UpdateAsync(user);
         }
-
+        /*
+         * Commented this out in case someone needs the code :)
         public async Task<User> Authenticate(string username, string password)
         {
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password)) //no point in going forward if either of these is empty
-                return null;
+                    throw new Exception("Password and Username are required");
 
             var user = await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == username);
 
@@ -97,6 +112,6 @@ namespace JokesOnYou.Web.Api.Repositories
             return user;
 
         }
-
+        */
     }
 }

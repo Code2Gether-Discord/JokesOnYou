@@ -34,20 +34,20 @@ namespace JokesOnYou.Web.Api.Controllers
 
         //ok so returning user is dumb, since we return sensitive data, we need better DTO system, Valve plz fix
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsersAsync()
+        public async Task<ActionResult<IEnumerable<UserReplyDTO>>> GetUsers()
         {
             return Ok(await _userService.GetAll());
         }
 
         //idk if its from body or Http get thing
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUserByIdAsync(string id)
+        public async Task<ActionResult<UserReplyDTO>> GetUserById(string id)
         {
             //Haha remove evil brackets
             if (id != ClaimsPrincipalExtension.GetUserId(User))
                 return Unauthorized();
 
-            var user = await _userService.GetUserById(id);
+            var user = await _userService.GetUserReplyById(id);
             if (user != null)
             {
                 return user;
@@ -120,19 +120,14 @@ namespace JokesOnYou.Web.Api.Controllers
         }
         */
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteUserAsync(string id)
+        public async Task<ActionResult> DeleteUser(string id)
         {
             //Haha remove evil brackets
             if (id != ClaimsPrincipalExtension.GetUserId(User))
                 return Unauthorized();
 
-            var user = await _userService.GetUserById(id);
-            if (user == null)
-            {
-                _logger.LogInformation($"Could not delete user id: {user.Id}");
-                return NotFound();
-            }
-            await _userService.DeleteUser(user);
+            
+            await _userService.DeleteUser(id);
             return NoContent();
 
         }
