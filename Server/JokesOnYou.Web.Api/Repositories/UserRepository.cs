@@ -26,10 +26,6 @@ namespace JokesOnYou.Web.Api.Repositories
 
         public async Task<User> CreateUserAsync(UserRegisterDTO userRegisterDTO)
         {
-            // validation thingy
-            if (string.IsNullOrWhiteSpace(userRegisterDTO.Password))
-                throw new Exception("Password is required");
-
             if (_userManager.Users.Any(x => x.Email == userRegisterDTO.Email))
                 throw new Exception($"Email {userRegisterDTO.Email} is already taken");
 
@@ -57,6 +53,8 @@ namespace JokesOnYou.Web.Api.Repositories
         public async Task DeleteUserAsync(string id)
         {
             var user = await GetUserAsync(id);
+            if (user == null)
+                throw new Exception($"Cant find user of id:{id}");
             await _userManager.DeleteAsync(user);
         }
 
