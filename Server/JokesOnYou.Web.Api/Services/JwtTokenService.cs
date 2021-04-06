@@ -16,6 +16,7 @@ namespace JokesOnYou.Web.Api.Services
         public JwtTokenService()
         {
             _tokenHandler = new JwtSecurityTokenHandler();
+            //TODO Add Secret handler for JWT key
             _key = Encoding.ASCII.GetBytes("We need to use a Secret Handler here");
         }
 

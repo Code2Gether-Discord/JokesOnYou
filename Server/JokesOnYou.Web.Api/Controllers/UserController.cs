@@ -22,14 +22,12 @@ namespace JokesOnYou.Web.Api.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Registered")]
         public async Task<ActionResult> GetUsers()
         {
             throw new NotImplementedException();
         }
 
         [HttpGet("{id}")]
-        [Authorize(Roles = "NOROLE")]
         public async Task<ActionResult> GetUser(string id)
         {
             throw new NotImplementedException();

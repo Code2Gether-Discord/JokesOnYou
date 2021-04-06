@@ -24,7 +24,7 @@ namespace JokesOnYou.Web.Api.Controllers
 
         [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<ActionResult<UserLoginDTO>> Login(UserLoginDTO userLoginDto)
+        public async Task<UserReplyDTO> Login(UserLoginDTO userLoginDto)
         {
             try
             {
@@ -46,15 +46,7 @@ namespace JokesOnYou.Web.Api.Controllers
         [HttpPost("Register")]
         public async Task<IActionResult> Register(UserRegisterDTO userRegisterDto)
         {
-            try
-            {
-                var user = await _authService.RegisterAsync(userRegisterDto);
-                return Ok(user);
-            }
-            catch (UserRegisterException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            
         }
     }
 }

@@ -26,32 +26,12 @@ namespace JokesOnYou.Web.Api.Services
 
         public async Task<UserReplyDTO> LoginAsync(UserLoginDTO userLoginDTO)
         {
-            var user = await _userRepo.GetUserByEmail(userLoginDTO.Email);
-            //TODO add user validation Not null
-
-            var result = await _signInManager.CheckPasswordSignInAsync(user, userLoginDTO.Password, false);
-
-            if (result.Succeeded)
-            {
-                //TODO need to assign user a role!
-                UserReplyDTO userReplyDTO = new UserReplyDTO() { Email = user.Email, Id = user.Id, UserName = user.UserName, Role = "Registered" };
-
-                string token = _tokenService.GetToken(user);
-                userReplyDTO.Token = token;
-
-                return userReplyDTO;
-            }
-            else
-            {
-                throw new UserLoginException("Bad UserName or Password!");
-            }
+            throw new NotImplementedException();
         }
 
         public async Task<User> RegisterAsync(UserRegisterDTO userRegisterDTO)
         {
-            var user = await _userRepo.CreateUserAsync(userRegisterDTO);
-            //TODO catch Errors for creating user Account.
-            return user;
+            throw new NotImplementedException();
         }
     }
 }
