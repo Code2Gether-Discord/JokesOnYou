@@ -24,12 +24,12 @@ namespace JokesOnYou.Web.Api.Controllers
 
         [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<IActionResult> Login(UserLoginDTO userLoginDto)
+        public async Task<ActionResult<UserLoginDTO>> Login(UserLoginDTO userLoginDto)
         {
             try
             {
-                var user = await _authService.LoginAsync(userLoginDto);
-                return Ok(user);
+                var userDto = await _authService.LoginAsync(userLoginDto);
+                return Ok(userDto);
             }
             catch (UserLoginException ex)
             {
