@@ -12,11 +12,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Identity;
-// using JokesOnYou.Web.Api.Areas.Identity.Data;
 using JokesOnYou.Web.Api.Data;
 using JokesOnYou.Web.Api.Services.Interfaces;
 using JokesOnYou.Web.Api.DTOs;
-using JokesOnYou.Web.Api.Repositories;
+using JokesOnYou.Web.Api.Repositories.Interfaces;
 
 namespace JokesOnYou.Web.Api.Controllers
 {
@@ -28,19 +27,21 @@ namespace JokesOnYou.Web.Api.Controllers
         private DataContext _dbContext;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        // private readonly JwtTokenService _jwtTokenService;
         private readonly ITokenService _ITokenService;
+        private readonly IUserRepository _IUserRepository;
 
         public AccountController(DataContext dbContext, 
             UserManager<User> userManager, 
             SignInManager<User> signInManager,
-            ITokenService ITokenService
+            ITokenService ITokenService,
+            IUserRepository IUserRepository
             )
         { 
             _dbContext = dbContext;
             _userManager = userManager;
             _signInManager = signInManager;
             _ITokenService = ITokenService;
+            _IUserRepository = IUserRepository;
         }
 
         [AllowAnonymous]
@@ -96,30 +97,8 @@ namespace JokesOnYou.Web.Api.Controllers
         [HttpPost("register")]
         public async Task<ActionResult> Register(UserRegisterDTO userRegister)
         {
-            User myUser = new User()
-            {
-                Email = userRegister.Email,
-                UserName = userRegister.Email,
-                EmailConfirmed = false,
-                Nsfw = false,
-            };
-
-            var result = await _userManager.CreateAsync(myUser, userRegister.Password);
-
-            if (result.Succeeded)
-            {
-                return Ok(new { Result = "Reigster Success" });
-            }
-            else
-            {
-                StringBuilder stringBuilder = new StringBuilder();
-                foreach (var error in result.Errors)
-                {
-                    stringBuilder.Append(error.Description);
-                    stringBuilder.Append("\r\n");
-                }
-                return Ok(new { Result = $"Register Fail: {stringBuilder.ToString()}" });
-            }
+            var result = await _IUserRepository.CreateUserAsync(userRegister);
+            return Ok(result);
         }
     }
 }
