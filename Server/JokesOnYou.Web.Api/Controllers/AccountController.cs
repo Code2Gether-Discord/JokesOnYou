@@ -12,10 +12,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Identity;
-using JokesOnYou.Web.Api.Areas.Identity.Data;
+// using JokesOnYou.Web.Api.Areas.Identity.Data;
 using JokesOnYou.Web.Api.Data;
 using JokesOnYou.Web.Api.Services;
 using JokesOnYou.Web.Api.DTOs;
+using JokesOnYou.Web.Api.Repositories;
 
 namespace JokesOnYou.Web.Api.Controllers
 {
@@ -39,21 +40,20 @@ namespace JokesOnYou.Web.Api.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("getToken")]
-        public async Task<ActionResult> GetToken(UserLoginDTO userLogin)
+        [HttpPost("login")]
+        public async Task<ActionResult> Login (UserLoginDTO userLogin)
         {
             // If user has registered
             var user = _dbContext.Users.FirstOrDefault(x => x.Email == userLogin.Email);
+            // var user = GetUserByEmail(userLogin.Email);
             if (user != null)
             {
                 var signInResult = await _signInManager.CheckPasswordSignInAsync(user, userLogin.Password, false);
 
                 if (signInResult.Succeeded)
                 {
-                    string token = returnTokenString();
-                    string userName = user.Name;
-                    string statement = userName + "'s token is " + token;
-                    return Ok(statement);
+                    var myUserReplyDTO = new UserReplyDTO() { Id = user.Id, Email = user.Email, UserName = user.Email, Role = "not admin", Token = returnTokenString() };
+                    return Ok(myUserReplyDTO);
                 }
                 else
                 {
@@ -68,8 +68,6 @@ namespace JokesOnYou.Web.Api.Controllers
                 Role = "not an admin",
                 Strikes = 0,
             };
-
-            // await AuthService.RegisterAsy
 
             await _userManager.CreateAsync(myUser, "Password123.");
             if (userLogin.Email == myUser.Name)
