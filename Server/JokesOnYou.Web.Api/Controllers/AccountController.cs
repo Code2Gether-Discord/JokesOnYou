@@ -14,7 +14,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using JokesOnYou.Web.Api.Areas.Identity.Data;
 using JokesOnYou.Web.Api.Data;
-using JokesOnYou.Web.Api.Services; 
+using JokesOnYou.Web.Api.Services;
+using JokesOnYou.Web.Api.DTOs;
 
 namespace JokesOnYou.Web.Api.Controllers
 {
@@ -37,30 +38,15 @@ namespace JokesOnYou.Web.Api.Controllers
             _signInManager = signInManager;
         }
 
-        [HttpGet("getFruits")]
-        [AllowAnonymous]
-        public ActionResult GetFruits()
-        {
-            List<string> mylist = new List<string>() { "apples", "bananas" };
-            return Ok(mylist);
-        }
-
-        [HttpGet("getFruitsAuthenticated")]
-        public ActionResult GetFruitsAuthenticated()
-        {
-            List<string> mylist = new List<string>() { "organic apples", "organic bananas" };
-            return Ok(mylist);
-        }
-
         [AllowAnonymous]
         [HttpPost("getToken")]
-        public async Task<ActionResult> GetToken([FromBody] MyLoginModelType myLoginModel)
+        public async Task<ActionResult> GetToken(UserLoginDTO userLogin)
         {
             // If user has registered
-            var user = _dbContext.Users.FirstOrDefault(x => x.Email == myLoginModel.Email);
+            var user = _dbContext.Users.FirstOrDefault(x => x.Email == userLogin.Email);
             if (user != null)
             {
-                var signInResult = await _signInManager.CheckPasswordSignInAsync(user, myLoginModel.Password, false);
+                var signInResult = await _signInManager.CheckPasswordSignInAsync(user, userLogin.Password, false);
 
                 if (signInResult.Succeeded)
                 {
@@ -81,13 +67,12 @@ namespace JokesOnYou.Web.Api.Controllers
                 SignUpDate = DateTime.Now,
                 Role = "not an admin",
                 Strikes = 0,
-                Nsfw = false,
             };
 
-            await AuthService.RegisterAsy
+            // await AuthService.RegisterAsy
 
             await _userManager.CreateAsync(myUser, "Password123.");
-            if (myLoginModel.Email == myUser.Name)
+            if (userLogin.Email == myUser.Name)
             {
                 string tokenString = returnTokenString();
                 string statement = "created user's token is " + tokenString; 
@@ -106,7 +91,7 @@ namespace JokesOnYou.Web.Api.Controllers
                 {
                     Subject = new ClaimsIdentity(new Claim[]
                     {
-                        new Claim(ClaimTypes.Name, myLoginModel.Email)
+                        new Claim(ClaimTypes.Name, userLogin.Email)
                     }),
                     Expires = DateTime.UtcNow.AddDays(1),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -120,17 +105,17 @@ namespace JokesOnYou.Web.Api.Controllers
 
         [AllowAnonymous]
         [HttpPost("register")]
-        public async Task<ActionResult> Register([FromBody] MyLoginModelType myLoginModel)
+        public async Task<ActionResult> Register(UserRegisterDTO userRegister)
         {
             User myUser = new User()
             {
-                Email = myLoginModel.Email,
-                UserName = myLoginModel.Email,
+                Email = userRegister.Email,
+                UserName = userRegister.Email,
                 EmailConfirmed = false,
                 Nsfw = false,
             };
 
-            var result = await _userManager.CreateAsync(myUser, myLoginModel.Password);
+            var result = await _userManager.CreateAsync(myUser, userRegister.Password);
 
             if (result.Succeeded)
             {
