@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 // using JokesOnYou.Web.Api.Areas.Identity.Data;
 using JokesOnYou.Web.Api.Data;
-using JokesOnYou.Web.Api.Services;
+using JokesOnYou.Web.Api.Services.Interfaces;
 using JokesOnYou.Web.Api.DTOs;
 using JokesOnYou.Web.Api.Repositories;
 
@@ -28,15 +28,19 @@ namespace JokesOnYou.Web.Api.Controllers
         private DataContext _dbContext;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        // private readonly 
+        // private readonly JwtTokenService _jwtTokenService;
+        private readonly ITokenService _ITokenService;
 
         public AccountController(DataContext dbContext, 
             UserManager<User> userManager, 
-            SignInManager<User> signInManager)
+            SignInManager<User> signInManager,
+            ITokenService ITokenService
+            )
         { 
             _dbContext = dbContext;
             _userManager = userManager;
             _signInManager = signInManager;
+            _ITokenService = ITokenService;
         }
 
         [AllowAnonymous]
@@ -52,12 +56,18 @@ namespace JokesOnYou.Web.Api.Controllers
 
                 if (signInResult.Succeeded)
                 {
-                    var myUserReplyDTO = new UserReplyDTO() { Id = user.Id, Email = user.Email, UserName = user.Email, Role = "not admin", Token = returnTokenString() };
+                    var myUserReplyDTO = new UserReplyDTO() { 
+                        Id = user.Id, 
+                        Email = user.Email, 
+                        UserName = user.Email, 
+                        Role = "not admin. This uses dependency injection", 
+                        Token = _ITokenService.GetToken(user) 
+                    };
                     return Ok(myUserReplyDTO);
                 }
                 else
                 {
-                    return Ok("failed, try again"); 
+                    return Ok("Password does not match"); 
                 }
             }
 
@@ -72,32 +82,13 @@ namespace JokesOnYou.Web.Api.Controllers
             await _userManager.CreateAsync(myUser, "Password123.");
             if (userLogin.Email == myUser.Name)
             {
-                string tokenString = returnTokenString();
-                string statement = "created user's token is " + tokenString; 
+                string tokenString = _ITokenService.GetToken(myUser);
+                string statement = "CREATED USER's token is " + tokenString; 
                 return Ok(statement);
             }
             else
             {
-                return Unauthorized("try again!");
-            }
-
-            string returnTokenString()
-            {
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes("SECRETThedefaultimplementationofIdentityUser<TKey>whichusesastringasaprimarykey.");
-                var tokenDescriptor = new SecurityTokenDescriptor
-                {
-                    Subject = new ClaimsIdentity(new Claim[]
-                    {
-                        new Claim(ClaimTypes.Name, userLogin.Email)
-                    }),
-                    Expires = DateTime.UtcNow.AddDays(1),
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-                };
-                var token = tokenHandler.CreateToken(tokenDescriptor);
-                var tokenString = tokenHandler.WriteToken(token);
-
-                return tokenString;
+                return Unauthorized("Sorry, we could not find an account with that email");
             }
         }
 
