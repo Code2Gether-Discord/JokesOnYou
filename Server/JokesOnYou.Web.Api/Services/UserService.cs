@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using JokesOnYou.Web.Api.Exceptions;
 
 namespace JokesOnYou.Web.Api.Services
 {
@@ -28,10 +29,13 @@ namespace JokesOnYou.Web.Api.Services
         {
             return await _userRepo.CreateUserAsync(registerDTO);
         }
-
+        
         public async Task DeleteUser(string id)
         {
-            await _userRepo.DeleteUserAsync(id);
+            var user = await _userRepo.GetUserAsync(id);
+            if (user == null)
+                throw new Exception($"Cant find user of id:{id}");
+            await _userRepo.DeleteUserAsync(user);
         }
 
         public async Task<UserReplyDTO> GetUserReplyById(string id)

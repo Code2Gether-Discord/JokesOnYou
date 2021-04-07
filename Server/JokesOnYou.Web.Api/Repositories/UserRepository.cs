@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using AutoMapper;
+using JokesOnYou.Web.Api.Exceptions;
 
 namespace JokesOnYou.Web.Api.Repositories
 {
@@ -27,10 +28,10 @@ namespace JokesOnYou.Web.Api.Repositories
         public async Task<User> CreateUserAsync(UserRegisterDTO userRegisterDTO)
         {
             if (_userManager.Users.Any(x => x.Email == userRegisterDTO.Email))
-                throw new Exception($"Email {userRegisterDTO.Email} is already taken");
+                throw new AppException($"Email {userRegisterDTO.Email} is already taken");
 
             if (_userManager.Users.Any(x => x.UserName == userRegisterDTO.UserName))
-                throw new Exception($"Username: {userRegisterDTO.UserName} is already taken");
+                throw new AppException($"Username: {userRegisterDTO.UserName} is already taken");
 
             var userCreationResult = await _userManager.CreateAsync(new User() { Email = userRegisterDTO.Email, UserName = userRegisterDTO.UserName }, userRegisterDTO.Password);
                 
@@ -50,11 +51,8 @@ namespace JokesOnYou.Web.Api.Repositories
             }   
         }
 
-        public async Task DeleteUserAsync(string id)
+        public async Task DeleteUserAsync(User user)
         {
-            var user = await GetUserAsync(id);
-            if (user == null)
-                throw new Exception($"Cant find user of id:{id}");
             await _userManager.DeleteAsync(user);
         }
 
