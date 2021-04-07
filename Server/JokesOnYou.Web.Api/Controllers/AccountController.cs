@@ -24,20 +24,18 @@ namespace JokesOnYou.Web.Api.Controllers
     [Authorize]
     public class AccountController : ControllerBase
     {
-        private DataContext _dbContext;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly ITokenService _ITokenService;
         private readonly IUserRepository _IUserRepository;
 
-        public AccountController(DataContext dbContext, 
+        public AccountController(
             UserManager<User> userManager, 
             SignInManager<User> signInManager,
             ITokenService ITokenService,
             IUserRepository IUserRepository
             )
         { 
-            _dbContext = dbContext;
             _userManager = userManager;
             _signInManager = signInManager;
             _ITokenService = ITokenService;
@@ -49,8 +47,8 @@ namespace JokesOnYou.Web.Api.Controllers
         public async Task<ActionResult> Login (UserLoginDTO userLogin)
         {
             // If user has registered
-            var user = _dbContext.Users.FirstOrDefault(x => x.Email == userLogin.Email);
-            // var user = GetUserByEmail(userLogin.Email);
+            var user = await _IUserRepository.GetUserByEmail(userLogin.Email);
+
             if (user != null)
             {
                 var signInResult = await _signInManager.CheckPasswordSignInAsync(user, userLogin.Password, false);
@@ -61,7 +59,7 @@ namespace JokesOnYou.Web.Api.Controllers
                         Id = user.Id, 
                         Email = user.Email, 
                         UserName = user.Email, 
-                        Role = "not admin. This uses dependency injection", 
+                        Role = "not admin.", 
                         Token = _ITokenService.GetToken(user) 
                     };
                     return Ok(myUserReplyDTO);
