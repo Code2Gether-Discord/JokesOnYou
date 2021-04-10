@@ -24,8 +24,9 @@ jobs:
         ls -la
     - name: Restore dependencies
       run: dotnet restore
-      working-directory: Server
+      working-directory: Server/JokesOnYou.Web.Api
     - name: Build
       run: dotnet build --no-restore
+      working-directory: Server/JokesOnYou.Web.Api
     - name: Test
       run: dotnet test --no-build --verbosity normal
