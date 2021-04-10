@@ -18,11 +18,9 @@ jobs:
       with:
         dotnet-version: 5.0.x
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore JokesOnYou.Web.Api
       working-directory: JokesOnYou/Server/JokesOnYou.Web.Api
     - name: Build
-      run: dotnet build --no-restore
-      working-directory: JokesOnYou/Server/JokesOnYou.Web.Api
+      run: dotnet build JokesOnYou.Web.Api --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal
-      working-directory: JokesOnYou/Server/JokesOnYou.Web.Api
+      run: dotnet test JokesOnYou.Web.Api --no-build --verbosity normal
