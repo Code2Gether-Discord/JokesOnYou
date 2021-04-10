@@ -19,6 +19,7 @@ jobs:
       with:
         dotnet-version: 5.0.x
     - name: Open Client Directory
+      working-directory: Server
       run: |
         ls -la
     - name: Restore dependencies
