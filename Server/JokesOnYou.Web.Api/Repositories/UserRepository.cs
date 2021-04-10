@@ -27,11 +27,14 @@ namespace JokesOnYou.Web.Api.Repositories
 
         public async Task<User> CreateUserAsync(UserRegisterDTO userRegisterDTO)
         {
+            /* Just in case we need it
             if (_userManager.Users.Any(x => x.Email == userRegisterDTO.Email))
                 throw new AppException($"Email {userRegisterDTO.Email} is already taken");
 
+            
             if (_userManager.Users.Any(x => x.UserName == userRegisterDTO.UserName))
                 throw new AppException($"Username: {userRegisterDTO.UserName} is already taken");
+            */
 
             var userCreationResult = await _userManager.CreateAsync(new User() { Email = userRegisterDTO.Email, UserName = userRegisterDTO.UserName }, userRegisterDTO.Password);
                 
