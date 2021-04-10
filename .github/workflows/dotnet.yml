@@ -19,15 +19,11 @@ jobs:
       with:
         dotnet-version: 5.0.x
     - name: Open Client Directory
-      working-directory: src
       run: |
         ls -la
     - name: Restore dependencies
       run: dotnet restore
-      working-directory: JokesOnYou.Web.Api
     - name: Build
       run: dotnet build --no-restore
-      working-directory: JokesOnYou.Web.Api
     - name: Test
-      run: dotnet test JokesOnYou.Web.Api --no-build --verbosity normal
-      working-directory: JokesOnYou.Web.Api
+      run: dotnet test --no-build --verbosity normal
