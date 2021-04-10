@@ -34,7 +34,7 @@ namespace JokesOnYou.Web.Api.Services
         {
             var user = await _userRepo.GetUserAsync(id);
             if (user == null)
-                throw new Exception($"Cant find user of id:{id}");
+                throw new AppException($"Cant find user of id:{id}");
             await _userRepo.DeleteUserAsync(user);
         }
 

@@ -94,7 +94,7 @@ namespace JokesOnYou.Web.Api.Repositories
         public async Task<User> Authenticate(string username, string password)
         {
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password)) //no point in going forward if either of these is empty
-                    throw new Exception("Password and Username are required");
+                    throw new AppException("Password and Username are required");
 
             var user = await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == username);
 
