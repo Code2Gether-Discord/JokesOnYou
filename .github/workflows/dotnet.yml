@@ -19,11 +19,12 @@ jobs:
       with:
         dotnet-version: 5.0.x
     - name: Open Client Directory
-      working-directory: Server
+      working-directory: Server/JokesOnYou.Web.Api
       run: |
         ls -la
     - name: Restore dependencies
       run: dotnet restore
+      working-directory: Server
     - name: Build
       run: dotnet build --no-restore
     - name: Test
