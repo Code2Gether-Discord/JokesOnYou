@@ -12,9 +12,10 @@ namespace JokesOnYou.Web.Api.Profiles
     {
         public UsersProfile()
         {
-            CreateMap<User, UserLoginDTO>();
-            CreateMap<User, UserRegisterDTO>();
-            CreateMap<User, UserUpdateDTO>();
+            CreateMap<UserLoginDTO, User>();
+            CreateMap<UserRegisterDTO, User>();
+            CreateMap<UserUpdateDTO, User>();
+            CreateMap<User, UserReplyDTO>();
         }
     }
 }

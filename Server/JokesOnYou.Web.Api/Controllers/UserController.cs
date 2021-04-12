@@ -22,36 +22,29 @@ namespace JokesOnYou.Web.Api.Controllers
 
         readonly IUserService _userService;
         readonly ILogger<UserController> _logger;
-        readonly IMapper _mapper;
-        readonly ITokenService _tokenService;
-        public UserController(IUserService userService, ILogger<UserController> logger, IMapper mapper, ITokenService tokenService)
+
+        public UserController(IUserService userService, ILogger<UserController> logger)
         {
             _logger = logger;
-            _mapper = mapper;
             _userService = userService;
-            _tokenService = tokenService;
         }
 
         //ok so returning user is dumb, since we return sensitive data, we need better DTO system, Valve plz fix
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserReplyDTO>>> GetUsers()
-        {
-            return Ok(await _userService.GetAll());
-        }
+        public async Task<ActionResult<IEnumerable<UserReplyDTO>>> GetUsers() 
+            => Ok(await _userService.GetAll());
 
         //idk if its from body or Http get thing
         [HttpGet("{id}")]
         public async Task<ActionResult<UserReplyDTO>> GetUserById(string id)
         {
             //Haha remove evil brackets
-            if (id != ClaimsPrincipalExtension.GetUserId(User))
-                return Unauthorized();
+            if (id != ClaimsPrincipalExtension.GetUserId(User)) return Unauthorized();
 
             var user = await _userService.GetUserReplyById(id);
-            if (user != null)
-            {
-                return user;
-            }
+
+            if (user != null) return user;
+
             _logger.LogInformation($"User not found; id: {id}");
             return NotFound();
 
@@ -60,21 +53,10 @@ namespace JokesOnYou.Web.Api.Controllers
         public async Task<ActionResult> UpdateUser(string id, UserUpdateDTO userUpdateDTO)
         {
             //Haha remove evil brackets
-            if (id != ClaimsPrincipalExtension.GetUserId(User))
-                return Unauthorized();
+            if (id != ClaimsPrincipalExtension.GetUserId(User)) return Unauthorized();
 
-            var user = _mapper.Map<User>(userUpdateDTO);
-            try
-            {
-                await _userService.UpdateUser(user);
-                return NoContent();
-            }
-            catch (Exception)
-            {
-                _logger.LogInformation($"Something went wrong with updating user that had id {user.Id}");
-                return NotFound();
-            }
-
+            await _userService.UpdateUser(userUpdateDTO);
+            return NoContent();
         }
         //Commented this just in case someone needs it ;)
         /*
@@ -123,19 +105,23 @@ namespace JokesOnYou.Web.Api.Controllers
         public async Task<ActionResult> DeleteUser(string id)
         {
             //Haha remove evil brackets
-            if (id != ClaimsPrincipalExtension.GetUserId(User))
-                return Unauthorized();
+            if (id != ClaimsPrincipalExtension.GetUserId(User)) return Unauthorized();
 
             
             await _userService.DeleteUser(id);
             return NoContent();
 
         }
-
+        /*
         [AllowAnonymous]
         [HttpPost]
         public ActionResult Register(UserRegisterDTO userDto)
         {
+
+            _userService.CreateUser(userDto);
+            return Ok(); 
+            //no need for the try catch since we will have global exception catcher?
+            
             try
             {
                 _userService.CreateUser(userDto);
@@ -147,6 +133,8 @@ namespace JokesOnYou.Web.Api.Controllers
                 _logger.LogInformation($"Could not register user; reason: {ex}");
                 return BadRequest(ex.Message);
             }
+            
         }
+    */
     }
 }

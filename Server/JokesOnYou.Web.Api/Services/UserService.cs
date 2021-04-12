@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using JokesOnYou.Web.Api.Exceptions;
+using AutoMapper;
 
 namespace JokesOnYou.Web.Api.Services
 {
@@ -17,19 +18,22 @@ namespace JokesOnYou.Web.Api.Services
     public class UserService : IUserService
     {
         readonly IUserRepository _userRepo;
-        public  UserService(IUserRepository userRepo)
+        readonly IMapper _mapper;
+        public  UserService(IUserRepository userRepo, IMapper mapper)
         {
             _userRepo = userRepo;
+            _mapper = mapper;
         }
         public async Task<IEnumerable<UserReplyDTO>> GetAll()
         {
             return await _userRepo.GetUsersAsync();
         }
+        /*
         public async Task<User> CreateUser(UserRegisterDTO registerDTO)
         {
             return await _userRepo.CreateUserAsync(registerDTO);
         }
-        
+        */
         public async Task DeleteUser(string id)
         {
             var user = await _userRepo.GetUserAsync(id);
@@ -43,8 +47,9 @@ namespace JokesOnYou.Web.Api.Services
             return await _userRepo.GetUserReplyAsync(id);
         }
 
-        public async Task UpdateUser(User user)
+        public async Task UpdateUser(UserUpdateDTO userDTO)
         {
+            var user = _mapper.Map<User>(userDTO);
             await _userRepo.UpdateUser(user); 
         }
 

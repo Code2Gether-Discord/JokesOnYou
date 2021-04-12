@@ -36,8 +36,8 @@ namespace JokesOnYou.Web.Api.Repositories
                 throw new AppException($"Username: {userRegisterDTO.UserName} is already taken");
             */
 
-            var userCreationResult = await _userManager.CreateAsync(new User() { Email = userRegisterDTO.Email, UserName = userRegisterDTO.UserName }, userRegisterDTO.Password);
-                
+            var userCreationResult = await _userManager.CreateAsync(new User() { Email = userRegisterDTO.Email,
+                UserName = userRegisterDTO.UserName }, userRegisterDTO.Password);
             if (userCreationResult.Succeeded)
             {
                 return await _userManager.FindByEmailAsync(userRegisterDTO.Email);
@@ -51,7 +51,7 @@ namespace JokesOnYou.Web.Api.Repositories
                 }
 
                 throw new UserRegisterException(message.ToString(), new ArgumentException());
-            }   
+            }
         }
 
         public async Task DeleteUserAsync(User user)
@@ -65,7 +65,7 @@ namespace JokesOnYou.Web.Api.Repositories
             //var user = await _userManager.FindByIdAsync(id);
             //var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == id);
             var user = await _userManager.FindByIdAsync(id);
-            
+
             return _mapper.Map<UserReplyDTO>(user);
         }
         public async Task<User> GetUserAsync(string id)
@@ -84,7 +84,7 @@ namespace JokesOnYou.Web.Api.Repositories
         {
             //Such a waste of bits
             var users = await _userManager.Users.ToListAsync();
-            
+
             return _mapper.Map<List<UserReplyDTO>>(users);
         }
 
