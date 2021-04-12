@@ -50,7 +50,7 @@ namespace JokesOnYou.Web.Api.Repositories
                     message.AppendLine(error.Description);
                 }
 
-                throw new UserRegisterException(message.ToString());
+                throw new UserRegisterException(message.ToString(), new ArgumentException());
             }   
         }
 
