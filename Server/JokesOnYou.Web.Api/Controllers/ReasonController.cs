@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Controllers
 {
-    public class FlagController : ControllerBase
+    public class ReasonController : ControllerBase
     {
-        private readonly IFlagService _flagService;
+        private readonly IReasonService _reasonService;
 
-        public FlagController(IFlagService flagService)
+        public ReasonController(IReasonService reasonService)
         {
-            _flagService = flagService;
+            _reasonService = reasonService;
         }
     }
 }
