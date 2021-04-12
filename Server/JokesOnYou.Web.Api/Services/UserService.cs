@@ -26,7 +26,8 @@ namespace JokesOnYou.Web.Api.Services
         }
         public async Task<IEnumerable<UserReplyDTO>> GetAll()
         {
-            return await _userRepo.GetUsersAsync();
+             var users = await _userRepo.GetUsersAsync();
+            return _mapper.Map<List<UserReplyDTO>>(users);
         }
         /*
         public async Task<User> CreateUser(UserRegisterDTO registerDTO)

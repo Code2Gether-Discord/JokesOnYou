@@ -80,12 +80,12 @@ namespace JokesOnYou.Web.Api.Repositories
             return _userManager.FindByEmailAsync(email);
         }
 
-        public async Task<IEnumerable<UserReplyDTO>> GetUsersAsync()
+        public async Task<IEnumerable<User>> GetUsersAsync()
         {
             //Such a waste of bits
-            var users = await _userManager.Users.ToListAsync();
+            return await _userManager.Users.ToListAsync();
 
-            return _mapper.Map<List<UserReplyDTO>>(users);
+             
         }
 
         public async Task UpdateUser(User user)

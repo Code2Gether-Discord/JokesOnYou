@@ -12,7 +12,7 @@ namespace JokesOnYou.Web.Api.Repositories.Interfaces
         Task<User> CreateUserAsync(UserRegisterDTO userRegisterDTO);
         Task DeleteUserAsync(User user);
         Task<UserReplyDTO> GetUserReplyAsync(string id);
-        Task<IEnumerable<UserReplyDTO>> GetUsersAsync();
+        Task<IEnumerable<User>> GetUsersAsync()
         Task UpdateUser(User user);
     }
 }
