@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Text.Json.Serialization;
 using JokesOnYou.Web.Api.Extensions;
+using JokesOnYou.Web.Api.Middlewares;
 using JokesOnYou.Web.Api.Repositories;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
 using JokesOnYou.Web.Api.Services;
@@ -65,6 +66,8 @@ namespace JokesOnYou.Web.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseHttpsRedirection();
 

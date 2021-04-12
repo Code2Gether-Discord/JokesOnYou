@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using JokesOnYou.Web.Api.DTOs;
@@ -54,10 +54,7 @@ namespace JokesOnYou.Web.Api.Repositories
             }
         }
 
-        public async Task DeleteUserAsync(User user)
-        {
-            await _userManager.DeleteAsync(user);
-        }
+        public Task DeleteUserAsync(User user) => _userManager.DeleteAsync(user);
 
         public async Task<UserReplyDTO> GetUserReplyAsync(string id)
         {
