@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JokesOnYou.Web.Api.Models.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,5 +12,6 @@ namespace JokesOnYou.Web.Api.Models
         public Reason Reason { get; set; }
         public User Issuer { get; set; }
         public DateTime Created { get; set; }
+        public IFlaggable Flagged { get; set; }
     }
 }

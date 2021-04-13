@@ -10,6 +10,7 @@ namespace JokesOnYou.Web.Api.Models
         public int Id { get; set; }
         public Joke Joke { get; set; }
         public DateTime SavedDate { get; set; }
+        public List<Tag> Tags { get; set; }
         public User User { get; set; }
     }
 }
