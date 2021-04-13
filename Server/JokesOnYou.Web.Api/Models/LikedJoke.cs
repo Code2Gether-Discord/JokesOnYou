@@ -7,5 +7,10 @@ namespace JokesOnYou.Web.Api.Models
 {
     public class LikedJoke
     {
+        public int Id { get; set; }
+        public Joke Joke { get; set; }
+        public bool Liked { get; set; }
+        public DateTime LikeDate { get; set; }
+        public User User { get; set; }
     }
 }
