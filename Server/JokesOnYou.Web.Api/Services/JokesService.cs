@@ -1,4 +1,5 @@
-﻿using JokesOnYou.Web.Api.DTOs;
+﻿using AutoMapper;
+using JokesOnYou.Web.Api.DTOs;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
 using JokesOnYou.Web.Api.Services.Interfaces;
 using System;
@@ -11,15 +12,21 @@ namespace JokesOnYou.Web.Api.Services
     public class JokesService : IJokesService
     {
         private readonly IJokesRepository _jokesRepo;
+        private readonly IMapper _mapper;
 
-        public JokesService(IJokesRepository jokesRepo)
+        public JokesService(IJokesRepository jokesRepo, IMapper mapper)
         {
             _jokesRepo = jokesRepo;
+            _mapper = mapper;
         }
 
         public async Task<IEnumerable<JokeReplyDto>> GetAllJokesAsync()
         {
-            throw new NotImplementedException();
+            var jokes = await _jokesRepo.GetAllJokesAsync();
+
+            IEnumerable<JokeReplyDto> jokesDto = _mapper.Map<IEnumerable<JokeReplyDto>>(jokes);
+
+            return jokesDto;
         }
     }
 }

@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using AutoMapper;
 
 namespace JokesOnYou.Web.Api
 {
@@ -37,11 +38,14 @@ namespace JokesOnYou.Web.Api
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+
             services.AddMvc()
             .AddJsonOptions(o => {
                 o.JsonSerializerOptions
                     .ReferenceHandler = ReferenceHandler.Preserve;
             });
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddSwaggerGen(config =>
             {

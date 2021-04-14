@@ -10,6 +10,8 @@ using JokesOnYou.Web.Api.Repositories.Interfaces;
 using JokesOnYou.Web.Api.Services;
 using JokesOnYou.Web.Api.Models;
 using JokesOnYou.Web.Api.DTOs;
+using AutoMapper;
+using JokesOnYou.Web.Api.Profiles;
 
 namespace Tests.Server
 {
@@ -19,7 +21,8 @@ namespace Tests.Server
         public void GetAllUsers_Returns_ListOfJokesDto()
         {
             var repo = new Mock<IJokesRepository>();
-            var service = new JokesService(repo.Object);
+            var mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile<JokesProfile>()));
+            var service = new JokesService(repo.Object, mapper);
             List<Joke> Jokes = new List<Joke>() {
                 new Joke() { Id = 1, Premise = "1", Punchline = "1", Likes = 1, Dislikes = 0},
                 new Joke() { Id = 2, Premise = "2", Punchline = "2", Likes = 2, Dislikes = 0}
