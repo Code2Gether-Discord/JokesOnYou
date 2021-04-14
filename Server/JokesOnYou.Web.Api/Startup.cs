@@ -37,7 +37,8 @@ namespace JokesOnYou.Web.Api
             services.AddScoped<ITokenService, JwtTokenService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-
+            services.AddScoped<IJokesRepository, JokesRepository>();
+            services.AddScoped<IJokesService, JokesService>();
 
             services.AddMvc()
             .AddJsonOptions(o => {
