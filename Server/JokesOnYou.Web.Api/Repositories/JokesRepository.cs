@@ -1,4 +1,5 @@
-﻿using JokesOnYou.Web.Api.Models;
+﻿using JokesOnYou.Web.Api.Data;
+using JokesOnYou.Web.Api.Models;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,13 @@ namespace JokesOnYou.Web.Api.Repositories
 {
     public class JokesRepository : IJokesRepository
     {
+        private readonly DataContext _context;
+
+        public JokesRepository(DataContext context)
+        {
+            _context = context;
+        }
+
         public async Task<IEnumerable<Joke>> GetAllJokesAsync()
         {
             throw new NotImplementedException();
