@@ -17,12 +17,13 @@ namespace Tests.Server
 {
     public class JokesServiceTests
     {
+        private readonly IMapper _mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile<JokesProfile>()));
+
         [Fact]
         public void GetAllUsers_Returns_ListOfJokesDto()
         {
             var repo = new Mock<IJokesRepository>();
-            var mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile<JokesProfile>()));
-            var service = new JokesService(repo.Object, mapper);
+            var service = new JokesService(repo.Object, _mapper);
             List<Joke> Jokes = new List<Joke>() {
                 new Joke() { Id = 1, Premise = "1", Punchline = "1", Likes = 1, Dislikes = 0},
                 new Joke() { Id = 2, Premise = "2", Punchline = "2", Likes = 2, Dislikes = 0}
