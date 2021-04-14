@@ -1,6 +1,7 @@
 ﻿using JokesOnYou.Web.Api.Data;
 using JokesOnYou.Web.Api.Models;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,8 @@ namespace JokesOnYou.Web.Api.Repositories
 
         public async Task<IEnumerable<Joke>> GetAllJokesAsync()
         {
-            throw new NotImplementedException();
+            var jokes = await _context.Jokes.ToListAsync();
+            return jokes;
         }
     }
 }
