@@ -1,4 +1,5 @@
-﻿using JokesOnYou.Web.Api.Repositories.Interfaces;
+﻿using JokesOnYou.Web.Api.DTOs;
+using JokesOnYou.Web.Api.Repositories.Interfaces;
 using JokesOnYou.Web.Api.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,11 @@ namespace JokesOnYou.Web.Api.Services
         public JokesService(IJokesRepository jokesRepo)
         {
             _jokesRepo = jokesRepo;
+        }
+
+        public async Task<IEnumerable<JokeReplyDto>> GetAllJokesAsync()
+        {
+            throw new NotImplementedException();
         }
     }
 }

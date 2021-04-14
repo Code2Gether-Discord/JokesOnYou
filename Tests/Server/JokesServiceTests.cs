@@ -33,7 +33,7 @@ namespace Tests.Server
 
             var actualList = service.GetAllJokesAsync().Result;
 
-            actualList.Should().Be(expected);
+            actualList.Should().BeEquivalentTo(expected);
 
         }
 
