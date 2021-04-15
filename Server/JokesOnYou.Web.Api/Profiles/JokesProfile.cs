@@ -12,7 +12,11 @@ namespace JokesOnYou.Web.Api.Profiles
     {
         public JokesProfile()
         {
-            CreateMap<Joke, JokeReplyDto>();
+            CreateMap<Joke, JokeReplyDto>()
+                .ForPath(destination => destination.Author.Id, options =>
+                    options.MapFrom(Source => Source.Author.Id))
+                .ForPath(destination => destination.Author.UserName, options =>
+                    options.MapFrom(source => source.Author.UserName));
         }
     }
 }
