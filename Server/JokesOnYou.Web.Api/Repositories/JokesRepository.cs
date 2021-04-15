@@ -20,7 +20,7 @@ namespace JokesOnYou.Web.Api.Repositories
 
         public async Task<IEnumerable<Joke>> GetAllJokesAsync()
         {
-            var jokes = await _context.Jokes.ToListAsync();
+            var jokes = await _context.Jokes.Include(joke => joke.Author).ToListAsync();
             return jokes;
         }
     }
