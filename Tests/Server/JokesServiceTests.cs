@@ -17,30 +17,6 @@ namespace Tests.Server
 {
     public class JokesServiceTests
     {
-        private readonly IMapper _mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile<JokesProfile>()));
-
-        [Fact]
-        public void GetAllUsers_Returns_ListOfJokesDto()
-        {
-            var repo = new Mock<IJokesRepository>();
-            var service = new JokesService(repo.Object, _mapper);
-            List<Joke> Jokes = new List<Joke>() {
-                new Joke() { Id = 1, Premise = "1", Punchline = "1", Likes = 1, Dislikes = 0},
-                new Joke() { Id = 2, Premise = "2", Punchline = "2", Likes = 2, Dislikes = 0}
-            };
-            repo.Setup(r => r.GetAllJokesAsync().Result).Returns(Jokes);
-            List<JokeReplyDto> expected = new List<JokeReplyDto>();
-            foreach (Joke joke in Jokes)
-            {
-                expected.Add(new JokeReplyDto() { Id = joke.Id, Premise = joke.Premise, Punchline = joke.Punchline, Likes = joke.Likes, Dislikes = joke.Dislikes });
-            }
-
-            var actualList = service.GetAllJokesAsync().Result;
-
-            actualList.Should().BeEquivalentTo(expected);
-
-        }
-
         /*
          * These are example Tests
         [Fact]
