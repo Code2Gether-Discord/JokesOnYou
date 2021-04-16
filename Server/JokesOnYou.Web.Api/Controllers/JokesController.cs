@@ -22,7 +22,7 @@ namespace JokesOnYou.Web.Api.Controllers
             _jokesService = jokesService;
         }
 
-        [Authorize(Roles = "registered,admin")]
+        [Authorize(Roles = "Registered,Admin")]
         [HttpPost]
         public async Task<ActionResult<JokeReplyDto>> CreateJokeAsync(JokeCreateDto jokeCreateDto)
         {
