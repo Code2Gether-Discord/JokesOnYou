@@ -26,6 +26,13 @@ namespace JokesOnYou.Web.Api.Repositories
             await _context.Jokes.AddAsync(joke);
         }
 
+        public async Task<IEnumerable<Joke>> GetJokesByPremiseAsync(string premise)
+        {
+            var jokes = await _context.Jokes.Where(joke => joke.Premise == premise).ToListAsync();
+
+            return jokes;
+        }
+
         public async Task<IEnumerable<Joke>> GetAllJokesAsync()
         {
             var jokes = await _context.Jokes.Include( joke => joke.Author).ToListAsync();

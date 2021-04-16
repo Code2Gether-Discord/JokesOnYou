@@ -11,6 +11,7 @@ namespace JokesOnYou.Web.Api.Repositories.Interfaces
     {
         public Task CreateJokeAsync(Joke joke);
         public Task<IEnumerable<Joke>> GetAllJokesAsync();
+        public Task<IEnumerable<Joke>> GetJokesByPremiseAsync(string premise);
         public Task<IEnumerable<JokeReplyDto>> GetAllJokeDtosAsync();
     }
 }
