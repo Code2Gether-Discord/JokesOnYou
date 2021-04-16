@@ -25,7 +25,7 @@ namespace JokesOnYou.Web.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<JokeReplyDto>>> GetAllJokesAsync()
         {
-            var jokeDtos = await _jokesService.GetAllJokesAsync();
+            var jokeDtos = await _jokesService.GetAllJokeDtosAsync();
             return Ok(jokeDtos);
         }
 

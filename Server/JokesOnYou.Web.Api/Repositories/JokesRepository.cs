@@ -1,4 +1,7 @@
-﻿using JokesOnYou.Web.Api.Data;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using JokesOnYou.Web.Api.Data;
+using JokesOnYou.Web.Api.DTOs;
 using JokesOnYou.Web.Api.Models;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -20,8 +23,21 @@ namespace JokesOnYou.Web.Api.Repositories
 
         public async Task<IEnumerable<Joke>> GetAllJokesAsync()
         {
-            var jokes = await _context.Jokes.Include(joke => joke.Author).ToListAsync();
+            var jokes = await _context.Jokes.Include( joke => joke.Author).ToListAsync();
             return jokes;
+        }
+
+        public async Task<IEnumerable<JokeReplyDto>> GetAllJokeDtosAsync()
+        {
+            var configuration = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Joke, JokeReplyDto>();
+                cfg.CreateMap<User, JokeAuthorDto>();
+            });
+
+            var jokeDtos = await _context.Jokes.ProjectTo<JokeReplyDto>(configuration).ToListAsync();
+
+            return jokeDtos;
         }
     }
 }

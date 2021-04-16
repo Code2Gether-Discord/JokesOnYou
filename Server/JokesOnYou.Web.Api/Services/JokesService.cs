@@ -20,13 +20,11 @@ namespace JokesOnYou.Web.Api.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<JokeReplyDto>> GetAllJokesAsync()
+        public async Task<IEnumerable<JokeReplyDto>> GetAllJokeDtosAsync()
         {
-            var jokes = await _jokesRepo.GetAllJokesAsync();
+            var jokeDtos = await _jokesRepo.GetAllJokeDtosAsync();
 
-            IEnumerable<JokeReplyDto> jokesDto = _mapper.Map<IEnumerable<JokeReplyDto>>(jokes);
-
-            return jokesDto;
+            return jokeDtos;
         }
     }
 }
