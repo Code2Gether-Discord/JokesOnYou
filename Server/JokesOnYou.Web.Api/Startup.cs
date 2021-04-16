@@ -40,12 +40,6 @@ namespace JokesOnYou.Web.Api
             services.AddScoped<IJokesRepository, JokesRepository>();
             services.AddScoped<IJokesService, JokesService>();
 
-            services.AddMvc()
-            .AddJsonOptions(o => {
-                o.JsonSerializerOptions
-                    .ReferenceHandler = ReferenceHandler.Preserve;
-            });
-
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddSwaggerGen(config =>
