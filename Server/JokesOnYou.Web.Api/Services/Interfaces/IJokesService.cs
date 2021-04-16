@@ -8,6 +8,7 @@ namespace JokesOnYou.Web.Api.Services.Interfaces
 {
     public interface IJokesService
     {
+        public Task<JokeReplyDto> CreateJokeAsync(JokeCreateDto jokeCreateDto, string userId);
         public Task<IEnumerable<JokeReplyDto>> GetAllJokeDtosAsync();
     }
 }

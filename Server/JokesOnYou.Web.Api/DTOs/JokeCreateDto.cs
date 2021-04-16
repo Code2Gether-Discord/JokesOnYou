@@ -7,5 +7,7 @@ namespace JokesOnYou.Web.Api.DTOs
 {
     public class JokeCreateDto
     {
+        public string Premise { get; set; }
+        public string Punchline { get; set; }
     }
 }
