@@ -7,5 +7,9 @@ namespace JokesOnYou.Web.Api.Models
 {
     public class SavedJoke
     {
+        public int Id { get; set; }
+        public Joke Joke { get; set; }
+        public DateTime SavedDate { get; set; }
+        public User User { get; set; }
     }
 }
