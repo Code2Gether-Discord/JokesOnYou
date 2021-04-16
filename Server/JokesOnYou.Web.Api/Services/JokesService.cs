@@ -30,17 +30,10 @@ namespace JokesOnYou.Web.Api.Services
             jokeCreateDto.Premise = jokeCreateDto.Premise.Trim();
             jokeCreateDto.Punchline = jokeCreateDto.Punchline.Trim();
 
-            var jokes = await _jokesRepo.GetJokesByPremiseAsync(jokeCreateDto.Premise);
-
-            if (jokes.Any())
+            var isDuplicate = await IsJokeDuplicate(jokeCreateDto);
+            if (isDuplicate)
             {
-                foreach (var foundJoke in jokes)
-                {
-                    if (foundJoke.Punchline == jokeCreateDto.Punchline)
-                    {
-                        throw new AppException("Joke Already exists.");
-                    }
-                }
+                throw new AppException("Joke Already exists.");
             }
 
             var user = await _userRepository.GetUserAsync(userId);
@@ -58,6 +51,24 @@ namespace JokesOnYou.Web.Api.Services
             var jokeReplyDto = _mapper.Map<JokeReplyDto>(joke);
 
             return jokeReplyDto;
+        }
+
+        private async Task<bool> IsJokeDuplicate(JokeCreateDto jokeCreateDto)
+        {
+            var jokes = await _jokesRepo.GetJokesByPremiseAsync(jokeCreateDto.Premise);
+
+            if (jokes.Any())
+            {
+                var lowerPunchline = jokeCreateDto.Punchline.ToLower();
+                foreach (var foundJoke in jokes)
+                {
+                    if (foundJoke.Punchline.ToLower() == lowerPunchline)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         public async Task<IEnumerable<JokeReplyDto>> GetAllJokeDtosAsync()

@@ -28,7 +28,8 @@ namespace JokesOnYou.Web.Api.Repositories
 
         public async Task<IEnumerable<Joke>> GetJokesByPremiseAsync(string premise)
         {
-            var jokes = await _context.Jokes.Where(joke => joke.Premise == premise).ToListAsync();
+            var lowerPremise = premise.ToLower();
+            var jokes = await _context.Jokes.Where(joke => joke.Premise.ToLower() == lowerPremise).ToListAsync();
 
             return jokes;
         }
