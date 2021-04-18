@@ -21,7 +21,6 @@ namespace JokesOnYou.Web.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class AccountController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
@@ -45,7 +44,6 @@ namespace JokesOnYou.Web.Api.Controllers
             _IUserService = IUserService;
         }
 
-        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult> Login (UserLoginDTO userLogin)
         {
@@ -53,7 +51,6 @@ namespace JokesOnYou.Web.Api.Controllers
             return Ok(loginResult); 
         }
 
-        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<ActionResult> Register(UserRegisterDTO userRegister)
         {

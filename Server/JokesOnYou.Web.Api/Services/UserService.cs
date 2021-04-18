@@ -16,13 +16,13 @@ namespace JokesOnYou.Web.Api.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly SignInManager<User> _signInManager;
-        private readonly ITokenService _ITokenService;
+        private readonly ITokenService _tokenService;
 
-        public UserService(IUserRepository userRepository, SignInManager<User> signInManager, ITokenService ITokenService)
+        public UserService(IUserRepository userRepository, SignInManager<User> signInManager, ITokenService tokenService)
         {
             _userRepository = userRepository;
             _signInManager = signInManager;
-            _ITokenService = ITokenService;
+            _tokenService = tokenService;
         }
 
         public async Task DeleteUser(string id)
@@ -47,7 +47,6 @@ namespace JokesOnYou.Web.Api.Services
 
         public async Task<UserReplyDTO> LoginUser(UserLoginDTO userLogin)
         {
-            UserReplyDTO myUserReplyDTO = null; 
             var user = await _userRepository.GetUserByEmail(userLogin.Email);
             if (user != null)
             {
@@ -55,17 +54,25 @@ namespace JokesOnYou.Web.Api.Services
 
                 if (signInResult.Succeeded)
                 {
-                    myUserReplyDTO = new UserReplyDTO()
+                    var userReplyDTO = new UserReplyDTO()
                     {
                         Id = user.Id,
                         Email = user.Email,
                         UserName = user.Email,
                         Role = "",
-                        Token = _ITokenService.GetToken(user)
+                        Token = _tokenService.GetToken(user)
                     };
+                    return userReplyDTO;
+                }
+                else
+                {
+                    throw new NotImplementedException("Sign in failed");
                 }
             }
-            return myUserReplyDTO;
+            else
+            {
+                throw new NotImplementedException("User not found"); 
+            }
         }
     }
 }
