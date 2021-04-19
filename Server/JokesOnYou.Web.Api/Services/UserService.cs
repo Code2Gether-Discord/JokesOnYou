@@ -74,5 +74,10 @@ namespace JokesOnYou.Web.Api.Services
                 throw new NotImplementedException("User not found"); 
             }
         }
+
+        public async Task<User> RegisterUser (UserRegisterDTO userRegisterDTO)
+        {
+            return await _userRepository.CreateUserAsync(userRegisterDTO); 
+        }
     }
 }

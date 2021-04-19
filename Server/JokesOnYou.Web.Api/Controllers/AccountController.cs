@@ -23,38 +23,24 @@ namespace JokesOnYou.Web.Api.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
-        private readonly ITokenService _ITokenService;
-        private readonly IUserRepository _IUserRepository;
-        private readonly IUserService _IUserService; 
+        private readonly IUserService _userService; 
 
-        public AccountController(
-            UserManager<User> userManager, 
-            SignInManager<User> signInManager,
-            ITokenService ITokenService,
-            IUserRepository IUserRepository,
-            IUserService IUserService
-            )
+        public AccountController(IUserService userService)
         { 
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _ITokenService = ITokenService;
-            _IUserRepository = IUserRepository;
-            _IUserService = IUserService;
+            _userService = userService;
         }
 
         [HttpPost("login")]
         public async Task<ActionResult> Login (UserLoginDTO userLogin)
         {
-            var loginResult = await _IUserService.LoginUser(userLogin);
+            var loginResult = await _userService.LoginUser(userLogin);
             return Ok(loginResult); 
         }
 
         [HttpPost("register")]
         public async Task<ActionResult> Register(UserRegisterDTO userRegister)
         {
-            var result = await _IUserRepository.CreateUserAsync(userRegister);
+            var result = await _userService.RegisterUser(userRegister);
             return Ok(result);
         }
     }

@@ -16,5 +16,6 @@ namespace JokesOnYou.Web.Api.Services.Interfaces
         Task UpdateUser(UserUpdateDTO updateDTO);
         Task DeleteUser(string id);
         Task<UserReplyDTO> LoginUser(UserLoginDTO userLoginDTO);
+        Task<User> RegisterUser (UserRegisterDTO userRegisterDTO);
     }
 }
