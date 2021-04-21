@@ -52,26 +52,25 @@ namespace JokesOnYou.Web.Api.Services
             {
                 var signInResult = await _signInManager.CheckPasswordSignInAsync(user, userLogin.Password, false);
 
-                if (signInResult.Succeeded)
+                if (!signInResult.Succeeded)
+                {
+                    throw new ApplicationException("Sign in failed");
+                }
+                else
                 {
                     var userReplyDTO = new UserReplyDTO()
                     {
                         Id = user.Id,
                         Email = user.Email,
                         UserName = user.Email,
-                        Role = "",
                         Token = _tokenService.GetToken(user)
                     };
                     return userReplyDTO;
                 }
-                else
-                {
-                    throw new NotImplementedException("Sign in failed");
-                }
             }
             else
             {
-                throw new NotImplementedException("User not found"); 
+                throw new ApplicationException("User not found"); 
             }
         }
 
