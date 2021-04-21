@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using JokesOnYou.Web.Api.Exceptions;
 
 namespace JokesOnYou.Web.Api.Services
 {
@@ -54,7 +55,7 @@ namespace JokesOnYou.Web.Api.Services
 
                 if (!signInResult.Succeeded)
                 {
-                    throw new ApplicationException("Sign in failed");
+                    throw new AppException("Sign in failed");
                 }
                 else
                 {
@@ -70,13 +71,18 @@ namespace JokesOnYou.Web.Api.Services
             }
             else
             {
-                throw new ApplicationException("User not found"); 
+                throw new AppException("User not found");
             }
         }
 
-        public async Task<User> RegisterUser (UserRegisterDTO userRegisterDTO)
+        public async Task RegisterUser(UserRegisterDTO userRegisterDTO)
         {
-            return await _userRepository.CreateUserAsync(userRegisterDTO); 
+            var user = await _userRepository.CreateUserAsync(userRegisterDTO);
+
+            if (user == null)
+            {
+                throw new AppException("Failed to find user in the Database.");
+            }
         }
     }
 }
