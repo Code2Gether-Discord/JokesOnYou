@@ -33,6 +33,12 @@ namespace JokesOnYou.Web.Api.Controllers
             throw new NotImplementedException();
         }
 
+        [HttpGet("GetAllUsers")]
+        public async Task<ActionResult> GetAll()
+        {
+            return Ok(_userService.GetAll());
+        }
+
         [HttpPatch]
         public async Task<ActionResult> UpdateUser(UserUpdateDTO userUpdateDTO)
         {

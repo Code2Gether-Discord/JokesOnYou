@@ -25,7 +25,7 @@ namespace JokesOnYou.Web.Api.Services
 
         public async Task<IEnumerable<User>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _userRepository.GetUsersAsync();
         }
 
         public async Task<User> GetUserById(string id)
