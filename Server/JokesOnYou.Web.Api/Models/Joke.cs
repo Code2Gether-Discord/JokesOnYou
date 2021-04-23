@@ -9,7 +9,9 @@ namespace JokesOnYou.Web.Api.Models
     {
         public int Id { get; set; }
         public string Premise { get; set; }
+        public string NormalizedPremise { get; set; }
         public string Punchline { get; set; }
+        public string NormalizedPunchLine { get; set; }
         public User Author { get; set; }
         public DateTime UploadDate { get; set; } = DateTime.Now;
         public int TimesFlagged { get; set; }
