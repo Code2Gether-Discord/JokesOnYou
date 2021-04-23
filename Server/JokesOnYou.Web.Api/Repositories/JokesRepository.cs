@@ -15,10 +15,12 @@ namespace JokesOnYou.Web.Api.Repositories
     public class JokesRepository : IJokesRepository
     {
         private readonly DataContext _context;
+        private readonly IMapper _mapper;
 
-        public JokesRepository(DataContext context)
+        public JokesRepository(DataContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task CreateJokeAsync(Joke joke)
@@ -42,13 +44,7 @@ namespace JokesOnYou.Web.Api.Repositories
 
         public async Task<IEnumerable<JokeReplyDto>> GetAllJokeDtosAsync()
         {
-            var configuration = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<Joke, JokeReplyDto>();
-                cfg.CreateMap<User, JokeAuthorDto>();
-            });
-
-            var jokeDtos = await _context.Jokes.ProjectTo<JokeReplyDto>(configuration).ToListAsync();
+            var jokeDtos = await _context.Jokes.ProjectTo<JokeReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
 
             return jokeDtos;
         }
