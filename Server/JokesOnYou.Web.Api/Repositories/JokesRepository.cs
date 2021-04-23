@@ -23,11 +23,6 @@ namespace JokesOnYou.Web.Api.Repositories
             _mapper = mapper;
         }
 
-        public async Task CreateJokeAsync(Joke joke)
-        {
-            await _context.Jokes.AddAsync(joke);
-        }
-
         public async Task<IEnumerable<Joke>> GetJokesByPremiseAsync(string premise)
         {
             var lowerPremise = premise.ToLower();
@@ -36,17 +31,8 @@ namespace JokesOnYou.Web.Api.Repositories
             return jokes;
         }
 
-        public async Task<IEnumerable<Joke>> GetAllJokesAsync()
-        {
-            var jokes = await _context.Jokes.Include( joke => joke.Author).ToListAsync();
-            return jokes;
-        }
-
-        public async Task<IEnumerable<JokeReplyDto>> GetAllJokeDtosAsync()
-        {
-            var jokeDtos = await _context.Jokes.ProjectTo<JokeReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
-
-            return jokeDtos;
-        }
+        public Task CreateJokeAsync(Joke joke) => _context.Jokes.AddAsync(joke).AsTask();
+        public Task<List<Joke>> GetAllJokesAsync() => _context.Jokes.Include(joke => joke.Author).ToListAsync();
+        public Task<List<JokeReplyDto>> GetAllJokeDtosAsync() => _context.Jokes.ProjectTo<JokeReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
     }
 }

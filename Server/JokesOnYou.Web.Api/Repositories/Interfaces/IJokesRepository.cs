@@ -10,8 +10,8 @@ namespace JokesOnYou.Web.Api.Repositories.Interfaces
     public interface IJokesRepository
     {
         public Task CreateJokeAsync(Joke joke);
-        public Task<IEnumerable<Joke>> GetAllJokesAsync();
+        public Task<List<Joke>> GetAllJokesAsync();
         public Task<IEnumerable<Joke>> GetJokesByPremiseAsync(string premise);
-        public Task<IEnumerable<JokeReplyDto>> GetAllJokeDtosAsync();
+        public Task<List<JokeReplyDto>> GetAllJokeDtosAsync();
     }
 }
