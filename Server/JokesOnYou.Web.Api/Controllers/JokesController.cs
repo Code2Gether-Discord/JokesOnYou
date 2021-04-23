@@ -27,8 +27,8 @@ namespace JokesOnYou.Web.Api.Controllers
         public async Task<ActionResult<JokeReplyDto>> CreateJokeAsync(JokeCreateDto jokeCreateDto)
         {
 
-            var userId = ClaimsPrincipalExtension.GetUserId(User);
-            var jokeReplyDto = await _jokesService.CreateJokeAsync(jokeCreateDto, userId);
+            jokeCreateDto.UserId = ClaimsPrincipalExtension.GetUserId(User);
+            var jokeReplyDto = await _jokesService.CreateJokeAsync(jokeCreateDto);
 
             return Ok(jokeReplyDto);
         }
