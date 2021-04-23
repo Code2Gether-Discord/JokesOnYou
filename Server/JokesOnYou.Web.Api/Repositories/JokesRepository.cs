@@ -23,14 +23,9 @@ namespace JokesOnYou.Web.Api.Repositories
             _mapper = mapper;
         }
 
-        //TODO change tolower use normalized premise And add normalizedPunchline check after that.
-        public async Task<IEnumerable<Joke>> GetJokesByPremiseAsync(string premise)
-        {
-            var lowerPremise = premise.ToLower();
-            var jokes = await _context.Jokes.Where(joke => joke.Premise.ToLower() == lowerPremise).ToListAsync();
-
-            return jokes;
-        }
+        public Task<bool> DoesJokeExist(JokeCreateDto jokeCreateDto) =>
+            _context.Jokes.AnyAsync(joke => joke.NormalizedPremise == jokeCreateDto.NormalizedPremise &&
+                                            joke.NormalizedPunchLine == jokeCreateDto.NormalizedPunchline);
 
         public Task CreateJokeAsync(Joke joke) => _context.Jokes.AddAsync(joke).AsTask();
         public Task<List<Joke>> GetAllJokesAsync() => _context.Jokes.ToListAsync();

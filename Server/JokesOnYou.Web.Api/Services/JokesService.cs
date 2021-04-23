@@ -26,14 +26,11 @@ namespace JokesOnYou.Web.Api.Services
             _unitOfWork = unitOfWork;
         }
 
-        //TODO Add NormalizedJokes.
-        //TODO change checks.
         public async Task<JokeReplyDto> CreateJokeAsync(JokeCreateDto jokeCreateDto)
         {
-            jokeCreateDto.Premise = jokeCreateDto.Premise.Trim();
-            jokeCreateDto.Punchline = jokeCreateDto.Punchline.Trim();
+            TrimAndNormalizeJokeDto(jokeCreateDto);
 
-            var isDuplicate = await IsJokeDuplicate(jokeCreateDto);
+            var isDuplicate = await _jokesRepo.DoesJokeExist(jokeCreateDto);
             if (isDuplicate)
             {
                 throw new AppException("Joke Already exists.");
@@ -41,7 +38,7 @@ namespace JokesOnYou.Web.Api.Services
 
             var user = await _userRepository.GetUserAsync(jokeCreateDto.UserId);
 
-            if(user == null)
+            if (user == null)
             {
                 throw new AppException($"No user with this id:\"{jokeCreateDto.UserId}\" found in the Database.");
             }
@@ -61,22 +58,12 @@ namespace JokesOnYou.Web.Api.Services
             return jokeReplyDto;
         }
 
-        private async Task<bool> IsJokeDuplicate(JokeCreateDto jokeCreateDto)
+        private static void TrimAndNormalizeJokeDto(JokeCreateDto jokeCreateDto)
         {
-            var jokes = await _jokesRepo.GetJokesByPremiseAsync(jokeCreateDto.Premise);
-
-            if (jokes.Any())
-            {
-                var lowerPunchline = jokeCreateDto.Punchline.ToLower();
-                foreach (var foundJoke in jokes)
-                {
-                    if (foundJoke.Punchline.ToLower() == lowerPunchline)
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
+            jokeCreateDto.Premise = jokeCreateDto.Premise.Trim();
+            jokeCreateDto.Punchline = jokeCreateDto.Punchline.Trim();
+            jokeCreateDto.NormalizedPremise = jokeCreateDto.Premise.ToUpper();
+            jokeCreateDto.NormalizedPunchline = jokeCreateDto.Punchline.ToUpper();
         }
 
         public async Task<IEnumerable<JokeReplyDto>> GetAllJokeDtosAsync()
