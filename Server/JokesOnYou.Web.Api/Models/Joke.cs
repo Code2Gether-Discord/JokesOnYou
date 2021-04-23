@@ -11,7 +11,7 @@ namespace JokesOnYou.Web.Api.Models
         public string Premise { get; set; }
         public string Punchline { get; set; }
         public User Author { get; set; }
-        public DateTime UploadDate { get; } = DateTime.Now;
+        public DateTime UploadDate { get; set; } = DateTime.Now;
         public int TimesFlagged { get; set; }
         public int Likes { get; set; }
         public int Dislikes { get; set; }

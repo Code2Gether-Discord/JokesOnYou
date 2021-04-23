@@ -10,7 +10,7 @@ namespace JokesOnYou.Web.Api.Models
         public int Id { get; set; }
         public Joke Joke { get; set; }
         public bool Liked { get; set; }
-        public DateTime LikeDate { get; } = DateTime.Now;
+        public DateTime LikeDate { get; set; } = DateTime.Now;
         public User User { get; set; }
     }
 }
