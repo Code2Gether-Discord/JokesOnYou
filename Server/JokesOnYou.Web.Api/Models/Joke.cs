@@ -12,7 +12,7 @@ namespace JokesOnYou.Web.Api.Models
         public string NormalizedPremise { get; set; }
         public string Punchline { get; set; }
         public string NormalizedPunchLine { get; set; }
-        public User Author { get; set; }
+        public string AuthorID { get; set; }
         public DateTime UploadDate { get; set; } = DateTime.Now;
         public int TimesFlagged { get; set; }
         public int Likes { get; set; }

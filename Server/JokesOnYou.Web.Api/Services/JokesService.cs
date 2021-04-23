@@ -25,6 +25,9 @@ namespace JokesOnYou.Web.Api.Services
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
         }
+
+        //TODO Add NormalizedJokes.
+        //TODO change checks.
         public async Task<JokeReplyDto> CreateJokeAsync(JokeCreateDto jokeCreateDto)
         {
             jokeCreateDto.Premise = jokeCreateDto.Premise.Trim();

@@ -23,6 +23,7 @@ namespace JokesOnYou.Web.Api.Repositories
             _mapper = mapper;
         }
 
+        //TODO change tolower use normalized premise And add normalizedPunchline check after that.
         public async Task<IEnumerable<Joke>> GetJokesByPremiseAsync(string premise)
         {
             var lowerPremise = premise.ToLower();

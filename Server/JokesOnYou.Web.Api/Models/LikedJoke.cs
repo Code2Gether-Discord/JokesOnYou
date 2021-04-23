@@ -8,9 +8,9 @@ namespace JokesOnYou.Web.Api.Models
     public class LikedJoke
     {
         public int Id { get; set; }
-        public Joke Joke { get; set; }
+        public int JokeId { get; set; }
         public bool Liked { get; set; }
         public DateTime LikeDate { get; set; } = DateTime.Now;
-        public User User { get; set; }
+        public string UserId { get; set; }
     }
 }
