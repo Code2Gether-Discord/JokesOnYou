@@ -33,7 +33,7 @@ namespace JokesOnYou.Web.Api.Repositories
         }
 
         public Task CreateJokeAsync(Joke joke) => _context.Jokes.AddAsync(joke).AsTask();
-        public Task<List<Joke>> GetAllJokesAsync() => _context.Jokes.Include(joke => joke.Author).ToListAsync();
+        public Task<List<Joke>> GetAllJokesAsync() => _context.Jokes.ToListAsync();
         public Task<List<JokeReplyDto>> GetAllJokeDtosAsync() => _context.Jokes.ProjectTo<JokeReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
     }
 }

@@ -40,8 +40,14 @@ namespace JokesOnYou.Web.Api.Services
             }
 
             var user = await _userRepository.GetUserAsync(jokeCreateDto.UserId);
+
+            if(user == null)
+            {
+                throw new AppException($"No user with this id:\"{jokeCreateDto.UserId}\" found in the Database.");
+            }
+
             var joke = _mapper.Map<Joke>(jokeCreateDto);
-            joke.Author = user;
+            joke.AuthorId = user.Id;
 
             await _jokesRepo.CreateJokeAsync(joke);
             var saved = await _unitOfWork.SaveAsync();
