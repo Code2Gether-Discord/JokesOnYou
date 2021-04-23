@@ -10,7 +10,6 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-
 using Microsoft.AspNetCore.Identity;
 using JokesOnYou.Web.Api.Data;
 using JokesOnYou.Web.Api.Services.Interfaces;
@@ -34,7 +33,7 @@ namespace JokesOnYou.Web.Api.Controllers
         public async Task<ActionResult<UserReplyDTO>> Login (UserLoginDTO userLogin)
         {
             var userReplyDTO = await _userService.LoginUser(userLogin);
-            return Ok(userReplyDTO);
+            return userReplyDTO;
         }
 
         [HttpPost("register")]
