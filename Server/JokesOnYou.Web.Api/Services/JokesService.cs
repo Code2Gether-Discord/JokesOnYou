@@ -38,7 +38,6 @@ namespace JokesOnYou.Web.Api.Services
 
             var user = await _userRepository.GetUserAsync(userId);
             var joke = _mapper.Map<Joke>(jokeCreateDto);
-            joke.UploadDate = DateTime.Now;
             joke.Author = user;
 
             await _jokesRepo.CreateJokeAsync(joke);
