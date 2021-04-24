@@ -13,5 +13,7 @@ namespace JokesOnYou.Web.Api.Repositories.Interfaces
         public Task<List<Joke>> GetAllJokesAsync();
         public Task<bool> DoesJokeExist(JokeCreateDto jokeCreateDto);
         public Task<List<JokeReplyDto>> GetAllJokeDtosAsync();
+        Task<JokeReplyDto> GetJokeDtoAsync(int id);
     }
+}
 }
