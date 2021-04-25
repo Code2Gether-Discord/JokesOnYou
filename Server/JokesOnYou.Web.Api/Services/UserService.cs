@@ -29,12 +29,7 @@ namespace JokesOnYou.Web.Api.Services
              var users = await _userRepo.GetUsersAsync();
             return _mapper.Map<List<UserReplyDTO>>(users);
         }
-        /*
-        public async Task<User> CreateUser(UserRegisterDTO registerDTO)
-        {
-            return await _userRepo.CreateUserAsync(registerDTO);
-        }
-        */
+        
         public async Task DeleteUser(string id)
         {
             var user = await _userRepo.GetUserAsync(id);
@@ -54,9 +49,5 @@ namespace JokesOnYou.Web.Api.Services
             await _userRepo.UpdateUser(user); 
         }
 
-        public async Task<User> Authenticate(string username, string password)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

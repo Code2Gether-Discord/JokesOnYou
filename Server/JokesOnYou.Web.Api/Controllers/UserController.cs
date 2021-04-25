@@ -1,15 +1,10 @@
-﻿using AutoMapper;
-using JokesOnYou.Web.Api.DTOs;
+﻿using JokesOnYou.Web.Api.DTOs;
 using JokesOnYou.Web.Api.Extensions;
-using JokesOnYou.Web.Api.Models;
 using JokesOnYou.Web.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Controllers
@@ -29,17 +24,16 @@ namespace JokesOnYou.Web.Api.Controllers
             _userService = userService;
         }
 
-        //ok so returning user is dumb, since we return sensitive data, we need better DTO system, Valve plz fix
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserReplyDTO>>> GetUsers() 
-            => Ok(await _userService.GetAll());
+        public async Task<ActionResult<IEnumerable<UserReplyDTO>>> GetUsers()
+        {
+            return Ok(await _userService.GetAll());
+        }
 
-        //idk if its from body or Http get thing
         [HttpGet("{id}")]
         public async Task<ActionResult<UserReplyDTO>> GetUserById(string id)
         {
-            //Haha remove evil brackets
-            if (id != ClaimsPrincipalExtension.GetUserId(User)) return Unauthorized();
+
 
             var user = await _userService.GetUserReplyById(id);
 
@@ -52,89 +46,28 @@ namespace JokesOnYou.Web.Api.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateUser(string id, UserUpdateDTO userUpdateDTO)
         {
-            //Haha remove evil brackets
-            if (id != ClaimsPrincipalExtension.GetUserId(User)) return Unauthorized();
+            if (id != ClaimsPrincipalExtension.GetUserId(User))
+            {
+                return Unauthorized();
+            }
 
             await _userService.UpdateUser(userUpdateDTO);
             return NoContent();
         }
-        //Commented this just in case someone needs it ;)
-        /*
-        [AllowAnonymous]
-        [HttpPost("authenticate")]
-        public async Task<ActionResult> Authenticate(UserLoginDTO userDto)
-        {
-            User user;
-            if (string.IsNullOrWhiteSpace(userDto.Password))
-            {
-                return Unauthorized(); //or something else, idk
-            }
 
-            //maybe use a switch? should be much different
-            if (!string.IsNullOrWhiteSpace(userDto.Username))
-            {
-                user =await _userService.Authenticate(userDto.Username, userDto.Password);
-            }
-            else if (!string.IsNullOrWhiteSpace(userDto.Email))
-            {
-                user =await _userService.Authenticate(userDto.Email, userDto.Password);
-            }
-            else
-            {
-                return Unauthorized();
-            }
-
-            if (user == null)
-            {
-                _logger.LogInformation($"User / possible attacker inserted wrong password on account id: {user.Id}");
-                return Unauthorized();
-            }
-                
-
-            _tokenService.GetToken(user);
-            return Ok(new
-            {
-                Id = user.Id,
-                Username = user.UserName,
-                Email = user.Email,
-                Token = _tokenService.GetToken(user)
-        });
-        }
-        */
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteUser(string id)
         {
-            //Haha remove evil brackets
-            if (id != ClaimsPrincipalExtension.GetUserId(User)) return Unauthorized();
+            if (id != ClaimsPrincipalExtension.GetUserId(User))
+            {
+                return Unauthorized();
+            }
 
-            
+
             await _userService.DeleteUser(id);
             return NoContent();
 
         }
-        /*
-        [AllowAnonymous]
-        [HttpPost]
-        public ActionResult Register(UserRegisterDTO userDto)
-        {
 
-            _userService.CreateUser(userDto);
-            return Ok(); 
-            //no need for the try catch since we will have global exception catcher?
-            
-            try
-            {
-                _userService.CreateUser(userDto);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                // return error message if there was an exception
-                _logger.LogInformation($"Could not register user; reason: {ex}");
-                return BadRequest(ex.Message);
-            }
-            
-        }
-    */
     }
 }
