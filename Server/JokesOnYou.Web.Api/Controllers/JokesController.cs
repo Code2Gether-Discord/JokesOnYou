@@ -29,5 +29,12 @@ namespace JokesOnYou.Web.Api.Controllers
             return Ok(jokeDtos);
         }
 
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<IEnumerable<JokeReplyDto>>> DeleteJoke(int id)
+        {
+            await _jokesService.RemoveJokeAsync(id);
+            return Ok();
+        }
+
     }
 }

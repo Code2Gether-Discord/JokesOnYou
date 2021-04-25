@@ -26,5 +26,12 @@ namespace JokesOnYou.Web.Api.Services
 
             return jokeDtos;
         }
+
+        public async Task RemoveJokeAsync(int id)
+        {
+            _jokesRepo.DeleteJoke(
+                await _jokesRepo.GetJokeByIdAsync(id)
+                );
+        }
     }
 }
