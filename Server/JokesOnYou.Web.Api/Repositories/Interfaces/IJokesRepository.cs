@@ -16,4 +16,3 @@ namespace JokesOnYou.Web.Api.Repositories.Interfaces
         Task<JokeReplyDto> GetJokeDtoAsync(int id);
     }
 }
-}
