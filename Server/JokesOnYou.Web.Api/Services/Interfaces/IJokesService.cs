@@ -9,5 +9,9 @@ namespace JokesOnYou.Web.Api.Services.Interfaces
     public interface IJokesService
     {
         public Task<IEnumerable<JokeReplyDto>> GetAllJokeDtosAsync();
+
+        public Task UpdateJoke(JokeUpdateDTO jokeUpdateDTO);
+
+        public Task<JokeReplyDto> GetJokeReplyById(int id);
     }
 }
