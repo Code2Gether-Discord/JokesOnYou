@@ -59,13 +59,8 @@ namespace JokesOnYou.Web.Api.Repositories
             {
                 throw new NotImplementedException("can't find joke"); 
             }
-            var jokeReplyDto = new JokeReplyDto()
-            {
-                Id = joke.Id,
-                Premise = joke.Premise,
-                Punchline = joke.Punchline,
-                UploadDate = joke.UploadDate, 
-            };
+
+            var jokeReplyDto = _mapper.Map<Joke, JokeReplyDto>(joke);
             return jokeReplyDto;
         }
 
