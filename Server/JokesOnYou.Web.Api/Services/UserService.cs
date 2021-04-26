@@ -19,23 +19,31 @@ namespace JokesOnYou.Web.Api.Services
     {
         readonly IUserRepository _userRepo;
         readonly IMapper _mapper;
-        public  UserService(IUserRepository userRepo, IMapper mapper)
+        private IUnitOfWork _unitOfWork;
+
+        public  UserService(IUserRepository userRepo, IMapper mapper, IUnitOfWork unitOfWork)
         {
             _userRepo = userRepo;
             _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
         public async Task<IEnumerable<UserReplyDTO>> GetAll()
         {
              var users = await _userRepo.GetUsersAsync();
             return _mapper.Map<List<UserReplyDTO>>(users);
         }
-        
+
         public async Task DeleteUser(string id)
         {
             var user = await _userRepo.GetUserAsync(id);
-            if (user == null)
-                throw new AppException($"Cant find user of id:{id}");
+            if (user == null)                                                                                                       { 
+            throw new AppException($"Cant find user of id:{id}");                                                                    }
             await _userRepo.DeleteUserAsync(user);
+
+            if (!await _unitOfWork.SaveAsync())
+            {
+                throw new AppException("Failed to remove joke");
+            }
         }
 
         public async Task<UserReplyDTO> GetUserReplyById(string id)
