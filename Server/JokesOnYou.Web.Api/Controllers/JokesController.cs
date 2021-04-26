@@ -35,12 +35,11 @@ namespace JokesOnYou.Web.Api.Controllers
         [HttpGet("{id}")]
         public async Task<JokeReplyDto> GetJokeById(int id)
         {
-            var joke = await _jokesService.GetJokeById(id);
-            return joke;
+            var jokeReplyDto = await _jokesService.GetJokeReplyById(id);
+            return jokeReplyDto;
         }
 
         // Create the whole line for Update Joke API call.
-
         // UpdateJoke inside controller HTTP put
         // UpdateJoke inside JokeService
         // UpdateJoke inside JokeRepository
