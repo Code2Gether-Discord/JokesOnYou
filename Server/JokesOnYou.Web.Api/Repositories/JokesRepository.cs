@@ -35,5 +35,45 @@ namespace JokesOnYou.Web.Api.Repositories
 
             return jokeDtos;
         }
+
+        public async Task<Joke> GetJokeToUpdate(JokeUpdateDTO jokeUpdateDTO)
+        {
+            var jokeToUpdate = await GetJokeById(jokeUpdateDTO.Id);
+            
+            //var jokeUpdateDto = await _context.Jokes.ProjectTo<JokeUpdateDTO>(_mapper.ConfigurationProvider)
+            //    .FirstOrDefaultAsync(x => x.Id == jokeUpdateDTO.Id);
+
+            return jokeToUpdate;
+        }
+
+        public async Task Save()
+        {
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<JokeReplyDto> GetJokeReplyById(int id)
+        {
+            var joke = await GetJokeById(id); 
+
+            if (joke == null)
+            {
+                throw new NotImplementedException("can't find joke"); 
+            }
+            var jokeReplyDto = new JokeReplyDto()
+            {
+                Id = joke.Id,
+                Premise = joke.Premise,
+                Punchline = joke.Punchline,
+                UploadDate = joke.UploadDate, 
+            };
+            return jokeReplyDto;
+        }
+
+        public async Task<Joke> GetJokeById(int id)
+        {
+            var joke = await _context.Jokes.FirstOrDefaultAsync(x => x.Id == id);
+            return joke;
+        }
     }
+
 }
