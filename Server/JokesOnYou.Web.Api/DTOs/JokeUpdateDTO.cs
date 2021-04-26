@@ -8,6 +8,7 @@ namespace JokesOnYou.Web.Api.DTOs
     // Does not update joke's id, likes, author, uploaddate, or dislikes. Just Premise and Punchline
     public class JokeUpdateDTO
     {
+        public int Id { get; set; }
         public string Premise { get; set; }
         public string Punchline { get; set; }
     }
