@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using JokesOnYou.Web.Api.Models;
+
 namespace JokesOnYou.Web.Api.Controllers
 {
     [Route("api/[controller]")]
@@ -29,5 +31,27 @@ namespace JokesOnYou.Web.Api.Controllers
             return Ok(jokeDtos);
         }
 
+        [AllowAnonymous]
+        [HttpGet("{id}")]
+        public async Task<JokeReplyDto> GetJokeById(int id)
+        {
+            var joke = await _jokesService.GetJokeById(id);
+            return joke;
+        }
+
+        // Create the whole line for Update Joke API call.
+
+        // UpdateJoke inside controller HTTP put
+        // UpdateJoke inside JokeService
+        // UpdateJoke inside JokeRepository
+        // Use AutoMapper if you can.
+
+        [HttpPatch]
+        [AllowAnonymous]
+        public async Task<ActionResult<JokeUpdateDTO>> UpdateJoke(JokeUpdateDTO jokeUpdateDTO)
+        {
+            await _jokesService.UpdateJoke(jokeUpdateDTO);
+            return Ok(); 
+        }
     }
 }
