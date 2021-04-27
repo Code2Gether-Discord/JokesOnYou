@@ -30,7 +30,7 @@ namespace JokesOnYou.Web.Api.Controllers
             jokeCreateDto.UserId = ClaimsPrincipalExtension.GetUserId(User);
             var jokeReplyDto = await _jokesService.CreateJokeAsync(jokeCreateDto);
 
-            return Ok(jokeReplyDto);
+            return jokeReplyDto;
         }
         [AllowAnonymous]
         [HttpGet]
