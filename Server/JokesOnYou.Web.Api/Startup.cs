@@ -39,6 +39,8 @@ namespace JokesOnYou.Web.Api
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IJokesRepository, JokesRepository>();
             services.AddScoped<IJokesService, JokesService>();
+            services.AddScoped<ITagService, TagService>();
+            services.AddScoped<ITagRepository, TagRepository>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

@@ -7,5 +7,11 @@ namespace JokesOnYou.Web.Api.DTOs
 {
     public class TagReplyDto
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public DateTime Created { get; set; }
+        public List<JokeReplyDto> Jokes { get; set; }
+        public UserReplyDTO Owner { get; set; }
+        public int Likes { get; set; }
     }
 }
