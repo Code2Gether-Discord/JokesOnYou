@@ -1,0 +1,32 @@
+version: '3.4'
+
+networks:
+  jokes-on-you-dev:
+    driver: bridge
+
+services:
+  web_api:
+    image: ${DOCKER_REGISTRY-}jokesonyouwebapi
+    build:
+      context: .
+      dockerfile: Server/JokesOnYou.Web.Api/Dockerfile
+    depends_on:
+        - "db"
+    ports:
+        - 8000:80
+    environment:
+        DB_CONNECTION_STRING: "host =postgres_image;port=5342;database=jokedb;username=jokeuser;password=password"
+    networks:
+        - jokes-on-you-dev
+
+  db:
+    image: postgres:latest
+    restart: always
+    ports:
+        - "5432"
+    environment:
+      POSTGRES_USER: "jokeuser"
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: "jokesdb"
+    networks:
+        - jokes-on-you-dev

@@ -10,8 +10,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{C308B76F-F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{1A2E150B-D6D9-4AA5-92FD-806A4448CABF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{5A3E478B-3F00-4343-A897-5C1DDC449F91}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JokesOnYou.Web.Api", "Server\JokesOnYou.Web.Api\JokesOnYou.Web.Api.csproj", "{1F005C86-5DE0-4480-BB20-9326F2C11F23}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UseCases", "UseCases", "{A7A355E6-6931-4D8C-8F3A-14A5FC2E0DE3}"
@@ -64,6 +62,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{8529E9
 		Docs\Images\ProjectBoard.png = Docs\Images\ProjectBoard.png
 	EndProjectSection
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{53B5F5C5-712F-4CCB-86AD-398413F760CA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -82,6 +82,10 @@ Global
 		{CB2D9186-2B28-418B-A052-8403DEC8E5AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CB2D9186-2B28-418B-A052-8403DEC8E5AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CB2D9186-2B28-418B-A052-8403DEC8E5AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53B5F5C5-712F-4CCB-86AD-398413F760CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53B5F5C5-712F-4CCB-86AD-398413F760CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53B5F5C5-712F-4CCB-86AD-398413F760CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53B5F5C5-712F-4CCB-86AD-398413F760CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -89,7 +93,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{1F005C86-5DE0-4480-BB20-9326F2C11F23} = {1A2E150B-D6D9-4AA5-92FD-806A4448CABF}
 		{A7A355E6-6931-4D8C-8F3A-14A5FC2E0DE3} = {C308B76F-F38B-4076-BBA7-C70599433A9B}
-		{14753EDA-BD2C-43E5-88CC-1E045976D0E8} = {5A3E478B-3F00-4343-A897-5C1DDC449F91}
 		{52AFA9BC-AE1C-4B14-BE8B-7F79FE38D5D8} = {C308B76F-F38B-4076-BBA7-C70599433A9B}
 		{8529E965-030E-4F9E-9BC5-EB7D8119E197} = {C308B76F-F38B-4076-BBA7-C70599433A9B}
 	EndGlobalSection
