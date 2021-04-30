@@ -10,7 +10,7 @@ namespace JokesOnYou.Web.Api.Models
         [Required]
         public string Name { get; set; }
 
-        [Range(1, 5)]
+        [Range(1, 50)]
         public int Severity { get; set; }
     }
 }

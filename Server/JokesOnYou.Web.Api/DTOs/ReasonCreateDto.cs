@@ -8,7 +8,7 @@ namespace JokesOnYou.Web.Api.DTOs
         [Required]
         public string Name { get; set; }
 
-        [Required, Range(1, 5)]
+        [Required, Range(1, 50)]
         public int Severity { get; set; }
     }
 }
