@@ -8,6 +8,6 @@ namespace JokesOnYou.Web.Api.Repositories.Interfaces
 {
     public interface ITagRepository
     {
-        public Task<IEnumerable<TagReplyDto>> GetAllTagDtosAsync();
+        Task<IEnumerable<TagReplyDto>> GetAllTagDtosAsync();
     }
 }
