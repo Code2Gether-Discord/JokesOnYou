@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.DTOs
 {
-    public class TagReplyDto
+    public class TagUserDTO
     {
-        public UserReplyDTO UserReplyDTO { get; set; }
+        public int Id { get; set; }
+        public string Role { get; set; }
     }
 }
