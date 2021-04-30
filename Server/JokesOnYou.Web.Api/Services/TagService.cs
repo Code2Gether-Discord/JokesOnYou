@@ -1,29 +1,39 @@
-﻿using JokesOnYou.Web.Api.DTOs;
+﻿using AutoMapper;
+using JokesOnYou.Web.Api.Data;
+using JokesOnYou.Web.Api.DTOs;
+using JokesOnYou.Web.Api.Repositories;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
 using JokesOnYou.Web.Api.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Services
 {
-    public class TagService : ITagService
+    public class TagService : UnitOfWork,ITagService
     {
         private readonly ITagRepository _tagRepo;
-
-        public TagService(ITagRepository tagRepo)
+        private readonly IMapper _mapper;
+        public TagService(DataContext context, ITagRepository tagRepo,IMapper mapper):base(context)
         {
             _tagRepo = tagRepo;
+            _mapper = mapper;
         }
-        /// <summary>
-        /// Deletes given <paramref name="tag"/>
-        /// </summary>
-        /// <param name="tag"></param>
-        /// <returns></returns>
-        public async Task<bool> DeleteTag(TagCreateDto tag)
+
+        public async Task<TagReplyDto> GetTag(int id)
         {
-            return await _tagRepo.Delete(tag);
+            var entity = await _tagRepo.Find(id);
+            //TODO: DTO should be implemented
+            return _mapper.Map<TagReplyDto>(entity);
+        }
+
+        public async Task<List<TagReplyDto>> GetTags(int[] ids)
+        {
+            var entity = await _tagRepo.GetTags(ids);
+            //TODO: DTO should be implemented
+            return _mapper.Map<List<TagReplyDto>>(entity);
         }
 
         /// <summary>
@@ -31,20 +41,10 @@ namespace JokesOnYou.Web.Api.Services
         /// </summary>
         /// <param name="tagId"></param>
         /// <returns></returns>
-        public async Task<bool> DeleteTag(int tagId)
+        public async Task DeleteTag(int tagId)
         {
-            return await _tagRepo.Delete(tagId);
-        }
-
-
-        /// <summary>
-        /// Deletes all given <paramref name="tags"/>
-        /// </summary>
-        /// <param name="tags"></param>
-        /// <returns></returns>
-        public async Task<bool> DeleteMultipleTag(List<TagCreateDto> tags)
-        {
-            return await _tagRepo.DeleteRange(tags);
+            await _tagRepo.Delete(tagId);
+            await SaveAsync();
         }
 
 
@@ -53,9 +53,11 @@ namespace JokesOnYou.Web.Api.Services
         /// </summary>
         /// <param name="tagIds"></param>
         /// <returns></returns>
-        public async Task<bool> DeleteMultipleTag(int[] tagIds)
+        public async Task DeleteMultipleTag(int[] tagIds)
         {
-            return await _tagRepo.DeleteRange(tagIds);
+            await _tagRepo.DeleteRange(tagIds);
+            await SaveAsync();
         }
+
     }
 }

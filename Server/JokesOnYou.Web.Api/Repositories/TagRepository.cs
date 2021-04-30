@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using JokesOnYou.Web.Api.Data;
-using JokesOnYou.Web.Api.DTOs;
 using JokesOnYou.Web.Api.Models;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,38 +10,37 @@ using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Repositories
 {
-    public class TagRepository : UnitOfWork,ITagRepository
+    public class TagRepository : ITagRepository
     {
         private readonly DataContext _context;
-        private readonly IMapper _mapper;
-        public TagRepository(DataContext context,IMapper mapper):base(context)
+        public TagRepository(DataContext context)
         {
             _context = context;
-            _mapper = mapper;
         }
         /// <summary>
-        /// Deletes given <paramref name="tag"/>
+        /// Find Tag by given id
         /// </summary>
-        /// <param name="tag"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<bool> Delete(TagCreateDto tag)
+        public async Task<Tag> Find(int id)
         {
-            var entity = _mapper.Map<Tag>(tag);
-            _context.Remove(entity);
-            return await SaveAsync();
+            return await _context.Tags.FindAsync(id);
         }
 
-
+        public async Task<List<Tag>> GetTags(int[] ids)
+        {
+            return await _context.Tags.Where(x => ids.Contains(x.Id)).ToListAsync();
+        }
+       
         /// <summary>
         /// Deletes given <paramref name="tagId"/>
         /// </summary>
         /// <param name="tagId"></param>
         /// <returns></returns>
-        public async Task<bool> Delete(int tagId)
+        public async Task Delete(int tagId)
         {
-            var entity = _context.Tags.Find(tagId);
+            var entity = await this.Find(tagId);
             _context.Remove(entity);
-            return await SaveAsync();
         }
 
 
@@ -50,24 +49,10 @@ namespace JokesOnYou.Web.Api.Repositories
         /// </summary>
         /// <param name="tags"></param>
         /// <returns></returns>
-        public async Task<bool> DeleteRange(List<TagCreateDto> tags)
+        public async Task DeleteRange(int[] tags)
         {
-            var entity = _mapper.Map<List<Tag>>(tags);
-            _context.RemoveRange(entity);
-            return await SaveAsync();
-        }
-
-
-        /// <summary>
-        /// Deletes all given <paramref name="tags"/>
-        /// </summary>
-        /// <param name="tags"></param>
-        /// <returns></returns>
-        public async Task<bool> DeleteRange(int[] tags)
-        {
-            var entities = _context.Tags.Where(x=>tags.Contains(x.Id)).ToList();
+            var entities = await _context.Tags.Where(x=>tags.Contains(x.Id)).ToListAsync();
             _context.RemoveRange(entities);
-            return await SaveAsync();
         }
     }
 }

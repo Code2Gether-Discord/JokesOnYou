@@ -1,4 +1,4 @@
-﻿using JokesOnYou.Web.Api.DTOs;
+﻿using JokesOnYou.Web.Api.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -6,9 +6,9 @@ namespace JokesOnYou.Web.Api.Repositories.Interfaces
 {
     public interface ITagRepository
     {
-        Task<bool> Delete(TagCreateDto tag);
-        Task<bool> Delete(int tagId);
-        Task<bool> DeleteRange(List<TagCreateDto> tags);
-        Task<bool> DeleteRange(int[] tagIds);
+        Task Delete(int tagId);
+        Task DeleteRange(int[] tagIds);
+        Task<Tag> Find(int id);
+        Task<List<Tag>> GetTags(int[] ids);
     }
 }
