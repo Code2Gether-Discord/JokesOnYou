@@ -23,7 +23,7 @@ namespace JokesOnYou.Web.Api.Repositories
         }
         public async Task<IEnumerable<TagReplyDto>> GetAllTagDtosAsync()
         {
-            var tagDtos = await _context.Tag.ProjectTo<TagReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
+            var tagDtos = await _context.Tags.ProjectTo<TagReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
 
             return tagDtos;
         }

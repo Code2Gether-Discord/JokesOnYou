@@ -23,7 +23,7 @@ namespace JokesOnYou.Web.Api.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TagReplyDto>>> GetAllJokesAsync()
+        public async Task<ActionResult<IEnumerable<TagReplyDto>>> GetAllTagsAsync()
         {
             var tagDtos = await _tagService.GetAllTagDtosAsync();
             return Ok(tagDtos);
