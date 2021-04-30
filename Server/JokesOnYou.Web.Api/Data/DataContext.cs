@@ -1,7 +1,6 @@
 using JokesOnYou.Web.Api.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JokesOnYou.Web.Api.Data
 {
@@ -17,7 +16,5 @@ namespace JokesOnYou.Web.Api.Data
         }
 
         public DbSet<Joke> Jokes { get; set; }
-
-        public DbSet<User> Users { get; set; }
     }
 }
