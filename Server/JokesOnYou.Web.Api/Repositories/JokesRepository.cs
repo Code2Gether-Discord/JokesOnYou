@@ -23,9 +23,9 @@ namespace JokesOnYou.Web.Api.Repositories
             _mapper = mapper;
         }
 
-        public Task<bool> DoesJokeExist(JokeCreateDto jokeCreateDto) =>
-            _context.Jokes.AnyAsync(joke => joke.NormalizedPremise == jokeCreateDto.NormalizedPremise &&
-                                            joke.NormalizedPunchLine == jokeCreateDto.NormalizedPunchline);
+        public Task<bool> DoesJokeExist(string normalizedPremise, string normalizedPunchline) =>
+            _context.Jokes.AnyAsync(joke => joke.NormalizedPremise == normalizedPremise &&
+                                            joke.NormalizedPunchLine == normalizedPunchline);
 
         public Task CreateJokeAsync(Joke joke) => _context.Jokes.AddAsync(joke).AsTask();
         public async Task<IEnumerable<Joke>> GetAllJokesAsync() => await _context.Jokes.ToListAsync();
