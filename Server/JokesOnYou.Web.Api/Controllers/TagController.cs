@@ -19,7 +19,7 @@ namespace JokesOnYou.Web.Api.Controllers
         private readonly ILogger _logger;
         private readonly UserManager<ApplicationIdentity> _userManager;
 
-        public TagController(ITagService tagService, ILogger logger, UserManager<ApplicationIdentity> userManager)
+        public TagController(ITagService tagService, ILogger<TagController> logger, UserManager<ApplicationIdentity> userManager)
         {
             _tagService = tagService;
             _logger = logger;
@@ -27,7 +27,7 @@ namespace JokesOnYou.Web.Api.Controllers
         }
 
         [HttpDelete]
-        public async Task<ActionResult<bool>> DeleteTag(int? tagId)
+        public async Task<IActionResult> DeleteTag(int? tagId)
         {
             if (tagId == null) return Problem("There is no declared tagId");
             try
@@ -53,7 +53,7 @@ namespace JokesOnYou.Web.Api.Controllers
         }
 
         [HttpDelete]
-        public async Task<ActionResult<bool>> DeleteTags(int[] tagIds)
+        public async Task<IActionResult> DeleteTags(int[] tagIds)
         {
             if (tagIds == null) return Problem("There is no declared tagIds");
             try
