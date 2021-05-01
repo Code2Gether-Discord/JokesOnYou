@@ -26,6 +26,12 @@ namespace JokesOnYou.Web.Api.Services
             _tokenService = tokenService;
         }
 
+        public async Task<IEnumerable<AllUsersDTO>> GetAll()
+        {
+            var allUsers = await _userRepository.GetAllUsersAsync();
+            return allUsers;
+        }
+
         public async Task DeleteUser(string id)
         {
             var user = await _userRepository.GetUserAsync(id) ?? null;
@@ -36,16 +42,6 @@ namespace JokesOnYou.Web.Api.Services
             var userToDelete = new User { Id = user.Id };
 
             await _userRepository.DeleteUserAsync(userToDelete);
-        }
-
-        public async Task<IEnumerable<User>> GetAll()
-        {
-           return await _userRepository.GetUsersAsync();
-        }
-       
-        public async Task<User> GetUserById(string id)
-        {
-            return await _userRepository.GetUserAsync(id);
         }
 
         public async Task UpdateUser(UserUpdateDTO updateDTO)
@@ -90,6 +86,11 @@ namespace JokesOnYou.Web.Api.Services
             {
                 throw new AppException("Failed to find user in the Database.");
             }
+        }
+
+        public Task<User> GetUserById(string id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

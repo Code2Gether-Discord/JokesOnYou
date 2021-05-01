@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using JokesOnYou.Web.Api.DTOs;
 using JokesOnYou.Web.Api.Exceptions;
 using JokesOnYou.Web.Api.Models;
@@ -13,10 +15,16 @@ namespace JokesOnYou.Web.Api.Repositories
     public class UserRepository : IUserRepository
     {
         private readonly UserManager<User> _userManager;
+        private readonly IMapper _mapper;
 
         public UserRepository(UserManager<User> userManager)
         {
             _userManager = userManager;
+        }
+        public async Task<IEnumerable<AllUsersDTO>> GetAllUsersAsync()
+        {
+            var users = await _userManager.Users.ProjectTo<AllUsersDTO>(_mapper.ConfigurationProvider).ToListAsync();
+            return users;
         }
 
         public async Task<User> CreateUserAsync(UserRegisterDTO userRegisterDTO)

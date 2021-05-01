@@ -21,6 +21,13 @@ namespace JokesOnYou.Web.Api.Controllers
             _userService = userService;
         }
 
+        [HttpGet("GetAll")]
+        public async Task<ActionResult<IEnumerable<AllUsersDTO>>> GetAllUsers()
+        {
+            var allUsers = _userService.GetAll();
+            return Ok(allUsers);
+        }
+
         [HttpGet]
         public async Task<ActionResult> GetUsers()
         {
