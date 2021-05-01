@@ -30,10 +30,10 @@ namespace JokesOnYou.Web.Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<IEnumerable<JokeReplyDto>>> DeleteJoke(int id)
+        public async Task<ActionResult> DeleteJoke(int id)
         {
             await _jokesService.RemoveJokeAsync(id);
-            return Ok();
+            return NoContent();
         }
 
     }
