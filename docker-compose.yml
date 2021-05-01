@@ -15,7 +15,7 @@ services:
     ports:
         - 8000:80
     environment:
-        DB_CONNECTION_STRING: "host =postgres_image;port=5342;database=jokedb;username=jokeuser;password=password"
+        DB_CONNECTION_STRING: "host=host.docker.internal;port=5342;database=jokedb;username=jokeuser;password=password"
     networks:
         - jokes-on-you-dev
 
