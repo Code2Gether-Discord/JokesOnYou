@@ -4,5 +4,40 @@
         <name>JokesOnYou.Web.Api</name>
     </assembly>
     <members>
+        <member name="M:JokesOnYou.Web.Api.Repositories.TagRepository.Find(System.Int32)">
+            <summary>
+            Find Tag by given id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JokesOnYou.Web.Api.Repositories.TagRepository.Delete(System.Int32)">
+            <summary>
+            Deletes given <paramref name="tagId"/>
+            </summary>
+            <param name="tagId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JokesOnYou.Web.Api.Repositories.TagRepository.DeleteRange(System.Int32[])">
+            <summary>
+            Deletes all given <paramref name="tags"/>
+            </summary>
+            <param name="tags"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JokesOnYou.Web.Api.Services.TagService.DeleteTag(System.Int32)">
+            <summary>
+            Deletes given <paramref name="tagId"/>
+            </summary>
+            <param name="tagId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JokesOnYou.Web.Api.Services.TagService.DeleteMultipleTag(System.Int32[])">
+            <summary>
+            Deletes all given <paramref name="tagIds"/>
+            </summary>
+            <param name="tagIds"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

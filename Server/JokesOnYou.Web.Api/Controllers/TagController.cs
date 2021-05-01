@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     [Authorize]
     public class TagController : ControllerBase
@@ -27,27 +27,18 @@ namespace JokesOnYou.Web.Api.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteTag(int? tagId)
+        public async Task<IActionResult> DeleteTag(int tagId)
         {
-            if (tagId == null) return Problem("There is no declared tagId");
-            try
+            var tag = await _tagService.GetTag(tagId);
+            string userId = _userManager.GetUserId(User);
+            if (tag.UserReplyDTO.Id == userId || User.IsInRole("Admin"))
             {
-                var tag = await _tagService.GetTag(tagId.Value);
-                string userId = _userManager.GetUserId(User);
-                if (tag.UserReplyDTO.Id == userId || User.IsInRole("Admin"))
-                {
-                    await _tagService.DeleteTag(tagId.Value);
-                    return Ok($"{tagId}");
-                }
-                else
-                {
-                    return Unauthorized();
-                }
+                await _tagService.DeleteTag(tagId);
+                return Ok($"{tagId}");
             }
-            catch (Exception ex)
+            else
             {
-                _logger.LogError(ex.Message, ex.InnerException);
-                return Problem(ex.Message);
+                return Unauthorized();
             }
             
         }
@@ -55,31 +46,20 @@ namespace JokesOnYou.Web.Api.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteTags(int[] tagIds)
         {
-            if (tagIds == null) return Problem("There is no declared tagIds");
-            try
+            string userId = _userManager.GetUserId(User);
+            var tags = await _tagService.GetTags(tagIds);
+            //make sure the user id match with tags
+            if (tags.Exists(x => x.UserReplyDTO.Id != userId) == false || User.IsInRole("Admin"))
             {
-                string userId = _userManager.GetUserId(User);
-                var tags = await _tagService.GetTags(tagIds);
-                //make sure the user id match with tags
-                if (tags.Exists(x => x.UserReplyDTO.Id != userId) == false || User.IsInRole("Admin"))
-                {
-                    await _tagService.DeleteMultipleTag(tagIds);
-                    string deletedIds = string.Join(",", tagIds);
-                    return Ok($"{deletedIds}");
-
-                }
-                else
-                {
-                    return Unauthorized();
-                }
+                await _tagService.DeleteMultipleTag(tagIds);
+                string deletedIds = string.Join(",", tagIds);
+                return Ok($"{deletedIds}");
 
             }
-            catch (Exception ex)
+            else
             {
-                _logger.LogError(ex.Message, ex.InnerException);
-                return Problem(ex.Message);
+                return Unauthorized();
             }
-          
         }
     }
 }
