@@ -6,22 +6,6 @@ namespace JokesOnYou.Web.Api.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Jokes_AspNetUsers_AuthorId",
-                table: "Jokes");
-
-            migrationBuilder.DropIndex(
-                name: "IX_Jokes_AuthorId",
-                table: "Jokes");
-        }
-
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.CreateIndex(
-                name: "IX_Jokes_AuthorId",
-                table: "Jokes",
-                column: "AuthorId");
-
             migrationBuilder.AddForeignKey(
                 name: "FK_Jokes_AspNetUsers_AuthorId",
                 table: "Jokes",
@@ -29,6 +13,17 @@ namespace JokesOnYou.Web.Api.Migrations
                 principalTable: "AspNetUsers",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Jokes_AspNetUsers_AuthorId",
+                table: "Jokes");
+
+            migrationBuilder.DropIndex(
+                name: "IX_Jokes_AuthorId",
+                table: "Jokes");
         }
     }
 }
