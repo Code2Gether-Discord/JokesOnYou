@@ -30,8 +30,7 @@ namespace JokesOnYou.Web.Api.Services
         {
             TrimAndNormalizeJokeCreateDto(jokeCreateDto);
 
-            var isDuplicate = await _jokesRepo.DoesJokeExist(jokeCreateDto.NormalizedPremise, jokeCreateDto.NormalizedPunchline);
-            if (isDuplicate)
+            if (await _jokesRepo.DoesJokeExist(jokeCreateDto.NormalizedPremise, jokeCreateDto.NormalizedPunchline))
             {
                 throw new AppException("Joke Already exists.");
             }
