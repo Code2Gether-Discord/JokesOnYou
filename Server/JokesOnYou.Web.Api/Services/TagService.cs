@@ -19,9 +19,7 @@ namespace JokesOnYou.Web.Api.Services
 
         public async Task<IEnumerable<TagReplyDto>> GetAllTagDtosAsync()
         {
-            var tagDtos = await _tagRepo.GetAllTagDtosAsync();
-
-            return tagDtos;
+            return await _tagRepo.GetAllTagDtosAsync();
         }
     }
 }
