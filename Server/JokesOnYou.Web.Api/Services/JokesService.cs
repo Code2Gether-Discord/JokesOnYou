@@ -40,6 +40,7 @@ namespace JokesOnYou.Web.Api.Services
             {
                 throw new AppException("Failed to remove joke");
             }
+        }
 
         public Task<JokeReplyDto> GetJokeDtoAsync(int id)
         {
