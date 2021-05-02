@@ -38,7 +38,7 @@ namespace JokesOnYou.Web.Api.Repositories
 
         public async Task<IEnumerable<Joke>> GetAllJokesAsync()
         {
-            var jokes = await _context.Jokes.Include( joke => joke.Author).ToListAsync();
+            var jokes = await _context.Jokes.Include(joke => joke.Author).ToListAsync();
             return jokes;
         }
 
@@ -48,15 +48,15 @@ namespace JokesOnYou.Web.Api.Repositories
 
             return jokeDtos;
         }
-
         public void DeleteJoke(Joke joke)
         {
             _context.Jokes.Remove(joke);
         }
-
-        public async Task<Joke> GetJokeByIdAsync(int id)
+        public Task<JokeReplyDto> GetJokeDtoAsync(int id)
         {
-            return await _context.Jokes.FirstOrDefaultAsync(x => x.Id == id);
+            return _context.Jokes.ProjectTo<JokeReplyDto>(_mapper.ConfigurationProvider)
+                .FirstOrDefaultAsync(j => j.Id == id);
         }
+
     }
 }

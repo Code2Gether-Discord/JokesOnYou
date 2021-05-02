@@ -1,11 +1,9 @@
-﻿using JokesOnYou.Web.Api.DTOs;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using JokesOnYou.Web.Api.DTOs;
 using JokesOnYou.Web.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Controllers
 {
@@ -34,6 +32,14 @@ namespace JokesOnYou.Web.Api.Controllers
         {
             await _jokesService.RemoveJokeAsync(id);
             return NoContent();
+        }
+        
+        [AllowAnonymous]
+        [HttpGet("{id}")]
+        public async Task<ActionResult<JokeReplyDto>> GetJoke(int id)
+        {
+            var joke = await _jokesService.GetJokeDtoAsync(id);
+            return joke;
         }
 
     }
