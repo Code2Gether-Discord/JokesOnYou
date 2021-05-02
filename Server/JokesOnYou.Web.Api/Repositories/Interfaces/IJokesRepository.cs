@@ -7,8 +7,8 @@ namespace JokesOnYou.Web.Api.Repositories.Interfaces
 {
     public interface IJokesRepository
     {
-        public Task<IEnumerable<Joke>> GetAllJokesAsync();
-        public Task<IEnumerable<JokeReplyDto>> GetAllJokeDtosAsync();
+        Task<IEnumerable<Joke>> GetAllJokesAsync();
+        Task<IEnumerable<JokeReplyDto>> GetAllJokeDtosAsync();
         void DeleteJoke(Joke joke);
         Task<JokeReplyDto> GetJokeByIdAsync(int id);
     }
