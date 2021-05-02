@@ -13,20 +13,26 @@ services:
     depends_on:
         - "db"
     ports:
-      - "8000:80"
+      - 8000:80
     environment:
-        DB_CONNECTION_STRING: "host=host.docker.internal;port=5342;database=jokedb;username=jokeuser;password=password"
+        ASPNETCORE_ENVIRONMENT: Development
+        DB_CONNECTION_STRING: host=host.docker.internal;port=5342;database=jokedb;username=jokeuser;password=password
     networks:
         - jokes-on-you-dev
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
 
   db:
     image: postgres:latest
     restart: always
     ports:
-        - "8001:5432"
+        - 8001:5432
     environment:
-      POSTGRES_USER: "jokeuser"
+      POSTGRES_USER: jokeuser
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: "jokesdb"
+      POSTGRES_DB: jokesdb
     networks:
         - jokes-on-you-dev
+    volumes:
+      - ./jokesdb_pgdata:/var/lib/postgresql/data
