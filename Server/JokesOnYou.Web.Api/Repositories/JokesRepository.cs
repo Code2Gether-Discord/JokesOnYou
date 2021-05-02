@@ -27,7 +27,7 @@ namespace JokesOnYou.Web.Api.Repositories
             _context.Jokes.AnyAsync(joke => joke.NormalizedPremise == normalizedPremise &&
                                             joke.NormalizedPunchLine == normalizedPunchline);
 
-        public Task CreateJokeAsync(Joke joke) => _context.Jokes.AddAsync(joke).AsTask();
+        public async Task CreateJokeAsync(Joke joke) => await _context.Jokes.AddAsync(joke).AsTask();
         public async Task<IEnumerable<Joke>> GetAllJokesAsync() => await _context.Jokes.ToListAsync();
         public async Task<IEnumerable<JokeReplyDto>> GetAllJokeDtosAsync() => await _context.Jokes.ProjectTo<JokeReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
 
