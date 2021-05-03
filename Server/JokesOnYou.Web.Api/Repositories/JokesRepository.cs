@@ -57,6 +57,10 @@ namespace JokesOnYou.Web.Api.Repositories
             return _context.Jokes.ProjectTo<JokeReplyDto>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync(j => j.Id == id);
         }
+        public Task<Joke> GetJokeByIdAsync(int id)
+        {
+            return await _context.Jokes.FirstOrDefaultAsync(x => x.Id == id);
+        }
 
     }
 }
