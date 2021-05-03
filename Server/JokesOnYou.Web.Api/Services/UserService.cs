@@ -12,6 +12,10 @@ using System.Threading.Tasks;
 using JokesOnYou.Web.Api.Exceptions;
 using AutoMapper;
 
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using JokesOnYou.Web.Api.Exceptions;
+
 namespace JokesOnYou.Web.Api.Services
 {
     
