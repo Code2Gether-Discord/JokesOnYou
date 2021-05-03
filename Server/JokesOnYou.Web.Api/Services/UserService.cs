@@ -29,8 +29,7 @@ namespace JokesOnYou.Web.Api.Services
         }
         public async Task<IEnumerable<UserReplyDTO>> GetAll()
         {
-             var users = await _userRepo.GetUsersAsync();
-            return _mapper.Map<List<UserReplyDTO>>(users);
+            return await _userRepo.GetUsersAsync();
         }
 
         public async Task DeleteUser(string id)
@@ -56,7 +55,7 @@ namespace JokesOnYou.Web.Api.Services
 
         public async Task UpdateUser(UserUpdateDTO userDTO)
         {
-            var user = _mapper.Map<User>(userDTO);
+            var user = _mapper.Map<UserUpdateDTO, User>(userDTO);
             await _userRepo.UpdateUser(user); 
         }
 

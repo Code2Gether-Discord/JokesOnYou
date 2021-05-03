@@ -11,6 +11,7 @@ using System;
 using System.Linq;
 using AutoMapper;
 using JokesOnYou.Web.Api.Exceptions;
+using AutoMapper.QueryableExtensions;
 
 namespace JokesOnYou.Web.Api.Repositories
 {
@@ -28,8 +29,11 @@ namespace JokesOnYou.Web.Api.Repositories
         public async Task<User> CreateUserAsync(UserRegisterDTO userRegisterDTO)
         {
 
-            var userCreationResult = await _userManager.CreateAsync(new User() { Email = userRegisterDTO.Email,
-                UserName = userRegisterDTO.UserName }, userRegisterDTO.Password);
+            var userCreationResult = await _userManager.CreateAsync(new User()
+            {
+                Email = userRegisterDTO.Email,
+                UserName = userRegisterDTO.UserName
+            }, userRegisterDTO.Password);
             if (userCreationResult.Succeeded)
             {
                 return await _userManager.FindByEmailAsync(userRegisterDTO.Email);
@@ -45,8 +49,7 @@ namespace JokesOnYou.Web.Api.Repositories
                 throw new UserRegisterException(message.ToString(), new ArgumentException());
             }
         }
-
-        public Task DeleteUserAsync(User user) => _userManager.DeleteAsync(user);
+        
 
         public async Task<UserReplyDTO> GetUserReplyAsync(string id)
         {
@@ -57,27 +60,21 @@ namespace JokesOnYou.Web.Api.Repositories
 
             return _mapper.Map<UserReplyDTO>(user);
         }
-        public async Task<User> GetUserAsync(string id)
-        {
-            //Possibilities 
-            //var user = await _userManager.FindByIdAsync(id);
-            //var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == id);
-            return await _userManager.FindByIdAsync(id);
-        }
-        public async Task<User> GetUserByEmailAsync(string email)
-        {
-            return await _userManager.FindByEmailAsync(email);
-        }
-
-        public async Task<IEnumerable<User>> GetUsersAsync()
-        {
-            return await _userManager.Users.ToListAsync();
-        }
-
-        public async Task UpdateUser(User user)
-        {
-            await _userManager.UpdateAsync(user);
-        }
         
+        public Task DeleteUserAsync(User user) => _userManager.DeleteAsync(user);
+
+
+        public async Task<User> GetUserAsync(string id) => await _userManager.FindByIdAsync(id);
+
+
+        public async Task<User> GetUserByEmailAsync(string email) => await _userManager.FindByEmailAsync(email);
+
+
+        public async Task<IEnumerable<UserReplyDTO>> GetUsersAsync() => await _userManager.Users.ProjectTo<UserReplyDTO>(_mapper.ConfigurationProvider).ToListAsync();
+
+
+        public async Task UpdateUser(User user) => await _userManager.UpdateAsync(user);
+
+
     }
 }
