@@ -1,9 +1,7 @@
-﻿using JokesOnYou.Web.Api.DTOs;
-using JokesOnYou.Web.Api.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using JokesOnYou.Web.Api.DTOs;
+using JokesOnYou.Web.Api.Models;
 
 namespace JokesOnYou.Web.Api.Repositories.Interfaces
 {

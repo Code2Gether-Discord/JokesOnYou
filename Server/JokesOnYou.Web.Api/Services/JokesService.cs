@@ -1,13 +1,11 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using AutoMapper;
 using JokesOnYou.Web.Api.DTOs;
 using JokesOnYou.Web.Api.Exceptions;
 using JokesOnYou.Web.Api.Models;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
 using JokesOnYou.Web.Api.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Services
 {
@@ -72,6 +70,11 @@ namespace JokesOnYou.Web.Api.Services
             var jokeDtos = await _jokesRepo.GetAllJokeDtosAsync();
 
             return jokeDtos;
+        }
+
+        public Task<JokeReplyDto> GetJokeDtoAsync(int id)
+        {
+            return _jokesRepo.GetJokeDtoAsync(id);
         }
     }
 }
