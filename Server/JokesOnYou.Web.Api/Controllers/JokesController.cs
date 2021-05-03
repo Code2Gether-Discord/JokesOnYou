@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using JokesOnYou.Web.Api.DTOs;
+using JokesOnYou.Web.Api.Extensions;
 using JokesOnYou.Web.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +20,16 @@ namespace JokesOnYou.Web.Api.Controllers
             _jokesService = jokesService;
         }
 
+        [Authorize(Roles = "Registered,Admin")]
+        [HttpPost]
+        public async Task<ActionResult<JokeReplyDto>> CreateJokeAsync(JokeCreateDto jokeCreateDto)
+        {
+
+            jokeCreateDto.UserId = ClaimsPrincipalExtension.GetUserId(User);
+            var jokeReplyDto = await _jokesService.CreateJokeAsync(jokeCreateDto);
+
+            return jokeReplyDto;
+        }
         [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<JokeReplyDto>>> GetAllJokesAsync()

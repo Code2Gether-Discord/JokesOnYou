@@ -21,18 +21,13 @@ namespace JokesOnYou.Web.Api.Repositories
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<Joke>> GetAllJokesAsync()
-        {
-            var jokes = await _context.Jokes.Include(joke => joke.Author).ToListAsync();
-            return jokes;
-        }
+        public Task<bool> DoesJokeExist(string normalizedPremise, string normalizedPunchline) =>
+            _context.Jokes.AnyAsync(joke => joke.NormalizedPremise == normalizedPremise &&
+                                            joke.NormalizedPunchLine == normalizedPunchline);
 
-        public async Task<IEnumerable<JokeReplyDto>> GetAllJokeDtosAsync()
-        {
-            var jokeDtos = await _context.Jokes.ProjectTo<JokeReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
-
-            return jokeDtos;
-        }
+        public async Task CreateJokeAsync(Joke joke) => await _context.Jokes.AddAsync(joke).AsTask();
+        public async Task<IEnumerable<Joke>> GetAllJokesAsync() => await _context.Jokes.ToListAsync();
+        public async Task<IEnumerable<JokeReplyDto>> GetAllJokeDtosAsync() => await _context.Jokes.ProjectTo<JokeReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
 
         public Task<JokeReplyDto> GetJokeDtoAsync(int id)
         {
