@@ -36,9 +36,9 @@ namespace JokesOnYou.Web.Api.Repositories
             return jokeDtos;
         }
 
-        public async Task<Joke> GetJokeToUpdate(JokeUpdateDTO jokeUpdateDTO)
+        public async Task<Joke> GetJokeToUpdate(JokeUpdateDto jokeUpdateDto)
         {
-            var jokeToUpdate = await GetJokeById(jokeUpdateDTO.Id);
+            var jokeToUpdate = await GetJokeById(jokeUpdateDto.Id);
             
             //var jokeUpdateDto = await _context.Jokes.ProjectTo<JokeUpdateDTO>(_mapper.ConfigurationProvider)
             //    .FirstOrDefaultAsync(x => x.Id == jokeUpdateDTO.Id);

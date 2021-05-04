@@ -10,7 +10,7 @@ namespace JokesOnYou.Web.Api.Services.Interfaces
     {
         public Task<IEnumerable<JokeReplyDto>> GetAllJokeDtosAsync();
 
-        public Task UpdateJoke(JokeUpdateDTO jokeUpdateDTO);
+        public Task UpdateJoke(JokeUpdateDto jokeUpdateDto);
 
         public Task<JokeReplyDto> GetJokeReplyById(int id);
     }

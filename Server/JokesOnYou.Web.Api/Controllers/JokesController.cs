@@ -38,9 +38,9 @@ namespace JokesOnYou.Web.Api.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<JokeUpdateDTO>> UpdateJoke(JokeUpdateDTO jokeUpdateDTO)
+        public async Task<ActionResult<JokeUpdateDto>> UpdateJoke(JokeUpdateDto jokeUpdateDto)
         {
-            await _jokesService.UpdateJoke(jokeUpdateDTO);
+            await _jokesService.UpdateJoke(jokeUpdateDto);
             return NoContent();
         }
     }

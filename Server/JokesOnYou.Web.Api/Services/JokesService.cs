@@ -27,19 +27,19 @@ namespace JokesOnYou.Web.Api.Services
             return jokeDtos;
         }
 
-        public async Task UpdateJoke(JokeUpdateDTO jokeUpdateDTO)
+        public async Task UpdateJoke(JokeUpdateDto jokeUpdateDto)
         {
             // get the joke we need to update
-            // set fields with jokeUpdateDTO
-            var jokeToUpdate = await _jokesRepo.GetJokeToUpdate(jokeUpdateDTO);
+            // set fields with jokeUpdateDto
+            var jokeToUpdate = await _jokesRepo.GetJokeToUpdate(jokeUpdateDto);
 
             if (jokeToUpdate == null)
             {
                 throw new NotImplementedException("can't find joke to update");
             }
 
-            jokeToUpdate.Premise = jokeUpdateDTO.Premise;
-            jokeToUpdate.Punchline = jokeUpdateDTO.Punchline;
+            jokeToUpdate.Premise = jokeUpdateDto.Premise;
+            jokeToUpdate.Punchline = jokeUpdateDto.Punchline;
 
             await _jokesRepo.Save(); 
         }
