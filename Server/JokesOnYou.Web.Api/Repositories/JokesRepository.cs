@@ -5,6 +5,7 @@ using JokesOnYou.Web.Api.DTOs;
 using JokesOnYou.Web.Api.Models;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -50,24 +51,10 @@ namespace JokesOnYou.Web.Api.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<JokeReplyDto> GetJokeReplyById(int id)
-        {
-            var joke = await GetJokeById(id); 
-
-            if (joke == null)
-            {
-                throw new NotImplementedException("can't find joke"); 
-            }
-
-            var jokeReplyDto = _mapper.Map<Joke, JokeReplyDto>(joke);
-            return jokeReplyDto;
-        }
-
         public async Task<Joke> GetJokeById(int id)
         {
             var joke = await _context.Jokes.FirstOrDefaultAsync(x => x.Id == id);
             return joke;
         }
     }
-
 }

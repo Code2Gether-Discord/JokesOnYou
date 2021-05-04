@@ -39,19 +39,13 @@ namespace JokesOnYou.Web.Api.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("{id}")]
-        public async Task<JokeReplyDto> GetJokeById(int id)
-        {
-            var jokeReplyDto = await _jokesService.GetJokeReplyById(id);
-            return jokeReplyDto;
-        }
-
         [HttpPut]
         public async Task<ActionResult<JokeUpdateDto>> UpdateJoke(JokeUpdateDto jokeUpdateDto)
         {
             await _jokesService.UpdateJoke(jokeUpdateDto);
             return NoContent();
         }
+
         [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<JokeReplyDto>> GetJoke(int id)

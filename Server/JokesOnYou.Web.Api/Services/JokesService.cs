@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using JokesOnYou.Web.Api.DTOs;
@@ -74,8 +75,6 @@ namespace JokesOnYou.Web.Api.Services
 
         public async Task UpdateJoke(JokeUpdateDto jokeUpdateDto)
         {
-            // get the joke we need to update
-            // set fields with jokeUpdateDto
             var jokeToUpdate = await _jokesRepo.GetJokeToUpdate(jokeUpdateDto);
 
             if (jokeToUpdate == null)
@@ -87,13 +86,6 @@ namespace JokesOnYou.Web.Api.Services
             jokeToUpdate.Punchline = jokeUpdateDto.Punchline;
 
             await _jokesRepo.Save(); 
-        }
-
-        public async Task<JokeReplyDto> GetJokeReplyById(int id)
-        {
-            var jokeDtos = await _jokesRepo.GetJokeReplyById(id);
-
-            return jokeDtos;
         }
 
         public Task<JokeReplyDto> GetJokeDtoAsync(int id)
