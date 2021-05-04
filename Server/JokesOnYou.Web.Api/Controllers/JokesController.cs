@@ -7,8 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-using JokesOnYou.Web.Api.Models;
-
 namespace JokesOnYou.Web.Api.Controllers
 {
     [Route("api/[controller]")]
@@ -38,12 +36,6 @@ namespace JokesOnYou.Web.Api.Controllers
             var jokeReplyDto = await _jokesService.GetJokeReplyById(id);
             return jokeReplyDto;
         }
-
-        // Create the whole line for Update Joke API call.
-        // UpdateJoke inside controller HTTP put
-        // UpdateJoke inside JokeService
-        // UpdateJoke inside JokeRepository
-        // Use AutoMapper if you can.
 
         [HttpPatch]
         [AllowAnonymous]
