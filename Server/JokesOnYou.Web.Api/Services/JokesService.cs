@@ -79,7 +79,7 @@ namespace JokesOnYou.Web.Api.Services
 
             if (jokeToUpdate == null)
             {
-                throw new NotImplementedException("can't find joke to update");
+                throw new KeyNotFoundException("can't find joke to update");
             }
 
             jokeToUpdate.Premise = jokeUpdateDto.Premise;
