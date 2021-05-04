@@ -1,0 +1,12 @@
+
+<h2>Jokes</h2>
+<div *ngFor="let joke of jokes">
+  <h3>
+    <a [title]="joke.Premise">
+      {{joke.Premise}}
+    </a>
+  </h3>
+  <p *ngIf="joke.punchline">
+    {{joke.punchline}}
+  </p>
+</div>
