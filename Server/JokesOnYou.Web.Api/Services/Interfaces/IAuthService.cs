@@ -9,7 +9,7 @@ namespace JokesOnYou.Web.Api.Services.Interfaces
 {
     public interface IAuthService
     {
-        public Task<UserReplyDTO> LoginAsync(UserLoginDTO userLoginDTO);
-        public Task<User> RegisterAsync(UserRegisterDTO userRegisterDTO);
+        Task<UserReplyDTO> LoginAsync(UserLoginDTO userLoginDTO);
+        Task<User> RegisterAsync(UserRegisterDTO userRegisterDTO);
     }
 }

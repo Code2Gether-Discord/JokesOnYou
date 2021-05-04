@@ -38,7 +38,7 @@ namespace JokesOnYou.Web.Api.Services
 
         public async Task<User> GetUserById(string id)
         {
-            throw new NotImplementedException();
+            return await _userRepository.GetUserAsync(id);
         }
 
         public async Task UpdateUser(UserUpdateDTO updateDTO)
