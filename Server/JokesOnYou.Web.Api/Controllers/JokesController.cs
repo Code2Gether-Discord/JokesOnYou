@@ -38,7 +38,6 @@ namespace JokesOnYou.Web.Api.Controllers
             return Ok(jokeDtos);
         }
 
-        [AllowAnonymous]
         [HttpPut]
         public async Task<ActionResult<JokeUpdateDto>> UpdateJoke(JokeUpdateDto jokeUpdateDto)
         {
