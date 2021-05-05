@@ -4,19 +4,24 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { JokesComponent } from '../jokes/jokes.component';
+import { AppComponent } from '../app/app.component'
+import { JokeComponent } from '../joke/joke.component';
 
 @NgModule({
-  declarations: [
-    JokesComponent
-  ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
       { path: '', component: JokesComponent },
+      { path: 'joke/:id', component: JokeComponent }
     ])
   ],
+  declarations: [
+    JokesComponent,
+    AppComponent,
+    JokeComponent
+  ],
   providers: [],
-  bootstrap: [JokesComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
