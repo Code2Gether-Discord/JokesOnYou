@@ -36,11 +36,6 @@ namespace JokesOnYou.Web.Api.Repositories
                 .FirstOrDefaultAsync(j => j.Id == id);
         }
 
-        public async Task Save()
-        {
-            await _context.SaveChangesAsync();
-        }
-
         public async Task<Joke> GetJokeById(int id)
         {
             var joke = await _context.Jokes.FirstOrDefaultAsync(x => x.Id == id);
