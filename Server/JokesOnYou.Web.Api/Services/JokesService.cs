@@ -82,8 +82,7 @@ namespace JokesOnYou.Web.Api.Services
                 throw new KeyNotFoundException("can't find joke to update");
             }
 
-            jokeToUpdate.Premise = jokeUpdateDto.Premise;
-            jokeToUpdate.Punchline = jokeUpdateDto.Punchline;
+            _mapper.Map(jokeUpdateDto,jokeToUpdate);
 
             await _unitOfWork.SaveAsync(); 
         }
