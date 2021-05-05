@@ -85,7 +85,7 @@ namespace JokesOnYou.Web.Api.Services
             jokeToUpdate.Premise = jokeUpdateDto.Premise;
             jokeToUpdate.Punchline = jokeUpdateDto.Punchline;
 
-            await _jokesRepo.Save(); 
+            await _unitOfWork.SaveAsync(); 
         }
 
         public Task<JokeReplyDto> GetJokeDtoAsync(int id)
