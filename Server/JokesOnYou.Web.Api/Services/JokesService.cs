@@ -75,7 +75,7 @@ namespace JokesOnYou.Web.Api.Services
 
         public async Task UpdateJoke(JokeUpdateDto jokeUpdateDto)
         {
-            var jokeToUpdate = await _jokesRepo.GetJokeToUpdate(jokeUpdateDto);
+            var jokeToUpdate = await _jokesRepo.GetJokeById(jokeUpdateDto.Id);
 
             if (jokeToUpdate == null)
             {

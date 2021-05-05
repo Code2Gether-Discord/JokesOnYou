@@ -12,7 +12,6 @@ namespace JokesOnYou.Web.Api.Repositories.Interfaces
         Task<bool> DoesJokeExist(string normalizedPremise, string normalizedPunchline);
         Task<IEnumerable<JokeReplyDto>> GetAllJokeDtosAsync();
         Task<JokeReplyDto> GetJokeDtoAsync(int id);
-        Task<Joke> GetJokeToUpdate(JokeUpdateDto jokeUpdateDto);
         Task<Joke> GetJokeById(int id); 
         Task Save(); 
     }
