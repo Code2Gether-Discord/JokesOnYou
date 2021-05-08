@@ -13,6 +13,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AutoMapper;
+using JokesOnYou.Web.Api.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace JokesOnYou.Web.Api
 {
@@ -41,6 +43,12 @@ namespace JokesOnYou.Web.Api
             services.AddScoped<IJokesService, JokesService>();
             services.AddScoped<ITagService, TagService>();
             services.AddScoped<ITagRepository, TagRepository>();
+
+            var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
+
+            services.AddDbContext<DataContext>(options =>
+                options.UseNpgsql(connectionString)
+            );
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
