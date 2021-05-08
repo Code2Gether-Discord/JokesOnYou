@@ -13,8 +13,7 @@ namespace JokesOnYou.Web.Api.Profiles
         public TagProfile()
         {
             CreateMap<Tag, TagReplyDto>();
-            CreateMap<Joke, JokeReplyDto>();
-            CreateMap<User, UserReplyDTO>();
+            CreateMap<User, TagOwnerDto>();
         }
     }
 }

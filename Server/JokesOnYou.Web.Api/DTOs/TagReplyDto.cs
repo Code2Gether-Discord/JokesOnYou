@@ -10,7 +10,7 @@ namespace JokesOnYou.Web.Api.DTOs
         public int Id { get; set; }
         public string Name { get; set; }
         public DateTime Created { get; set; }
-        public UserReplyDTO Owner { get; set; }
+        public TagOwnerDto Owner { get; set; }
         public int Likes { get; set; }
     }
 }
