@@ -51,11 +51,6 @@ namespace JokesOnYou.Web.Api.Repositories
         {
             _context.Jokes.Remove(joke);
         }
-        public Task<JokeReplyDto> GetJokeDtoAsync(int id)
-        {
-            return _context.Jokes.ProjectTo<JokeReplyDto>(_mapper.ConfigurationProvider)
-                .FirstOrDefaultAsync(j => j.Id == id);
-        }
         public async Task<Joke> GetJokeByIdAsync(int id)
         {
             return await _context.Jokes.FirstOrDefaultAsync(x => x.Id == id);

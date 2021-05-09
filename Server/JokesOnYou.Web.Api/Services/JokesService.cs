@@ -15,7 +15,6 @@ namespace JokesOnYou.Web.Api.Services
         private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly IUnitOfWork _unitOfWork;
 
         public JokesService(IJokesRepository jokesRepo, IUserRepository userRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
