@@ -28,7 +28,6 @@ namespace JokesOnYou.Web.Api.Repositories
 
         public async Task<User> CreateUserAsync(UserRegisterDTO userRegisterDTO)
         {
-
             var userCreationResult = await _userManager.CreateAsync(new User()
             {
                 Email = userRegisterDTO.Email,
@@ -53,12 +52,9 @@ namespace JokesOnYou.Web.Api.Repositories
 
         public async Task<UserReplyDTO> GetUserReplyAsync(string id)
         {
-            //Possibilities 
-            //var user = await _userManager.FindByIdAsync(id);
-            //var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == id);
             var user = await _userManager.FindByIdAsync(id);
 
-            return _mapper.Map<UserReplyDTO>(user);
+            return _mapper.Map<User, UserReplyDTO>(user);
         }
         
         public Task DeleteUserAsync(User user) => _userManager.DeleteAsync(user);

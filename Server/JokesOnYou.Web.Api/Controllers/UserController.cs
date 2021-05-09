@@ -33,8 +33,6 @@ namespace JokesOnYou.Web.Api.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<UserReplyDTO>> GetUserById(string id)
         {
-
-
             var user = await _userService.GetUserReplyById(id);
 
             if (user != null) return user;
