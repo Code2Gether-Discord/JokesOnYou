@@ -8,6 +8,8 @@ using JokesOnYou.Web.Api.DTOs;
 
 namespace JokesOnYou.Web.Api.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class TagController : ControllerBase
     {
         private readonly ITagService _tagService;
@@ -17,7 +19,7 @@ namespace JokesOnYou.Web.Api.Controllers
             _tagService = tagService;
         }
 
-        // uncomment this when testing [Authorize(Roles = "Registered,Admin")]
+        // uncomment this when final [Authorize(Roles = "Registered,Admin")]
         [HttpPost]
         public async Task<ActionResult<TagReplyDto>> CreateTagAsync(TagCreateDto tagCreateDto)
         {
