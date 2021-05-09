@@ -9,24 +9,24 @@ namespace JokesOnYou.Web.Api.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly IAuthService _authService;
 
-        public AccountController(IUserService userService)
+        public AccountController(IAuthService authService)
         {
-            _userService = userService;
+            _authService = authService;
         }
 
         [HttpPost("login")]
         public async Task<ActionResult<UserReplyDTO>> Login (UserLoginDTO userLogin)
         {
-            var userReplyDTO = await _userService.LoginUser(userLogin);
+            var userReplyDTO = await _authService.LoginAsync(userLogin);
             return userReplyDTO;
         }
 
         [HttpPost("register")]
         public async Task<ActionResult> Register(UserRegisterDTO userRegister)
         {
-            await _userService.RegisterUser(userRegister);
+            await _authService.RegisterAsync(userRegister);
             return Ok();
         }
     }
