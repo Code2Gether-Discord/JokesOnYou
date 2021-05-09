@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using JokesOnYou.Web.Api.DTOs;
@@ -85,6 +85,11 @@ namespace JokesOnYou.Web.Api.Services
             {
                 throw new AppException("Failed to remove joke");
             }
+        }
+
+        public Task<JokeReplyDto> GetJokeDtoAsync(int id)
+        {
+            return _jokesRepo.GetJokeDtoAsync(id);
         }
     }
 }
