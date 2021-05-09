@@ -16,5 +16,7 @@ namespace JokesOnYou.Web.Api.Data
         }
 
         public DbSet<Joke> Jokes { get; set; }
+
+        public DbSet<Tag> Tags { get; set; }
     }
 }
