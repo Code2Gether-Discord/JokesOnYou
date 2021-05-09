@@ -10,5 +10,6 @@ namespace JokesOnYou.Web.Api.Services.Interfaces
     {
         string GetToken(User user);
         bool ValidateToken(string token);
+        string GetToken(User user);
     }
 }
