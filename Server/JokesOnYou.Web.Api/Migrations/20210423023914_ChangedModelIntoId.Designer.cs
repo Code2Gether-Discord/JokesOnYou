@@ -3,14 +3,16 @@ using System;
 using JokesOnYou.Web.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace JokesOnYou.Web.Api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210423023914_ChangedModelIntoId")]
+    partial class ChangedModelIntoId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -23,7 +25,6 @@ namespace JokesOnYou.Web.Api.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("AuthorId")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Dislikes")
@@ -33,19 +34,15 @@ namespace JokesOnYou.Web.Api.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("NormalizedPremise")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("NormalizedPunchLine")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Premise")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Punchline")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("TimesFlagged")

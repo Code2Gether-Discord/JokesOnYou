@@ -8,9 +8,9 @@ namespace JokesOnYou.Web.Api.Models
     public class LikedTags
     {
         public int Id { get; set; }
-        public Joke Joke { get; set; }
-        public DateTime SavedDate { get; set; }
-        public List<Tag> Tags { get; set; }
-        public User User { get; set; }
+        public int JokeId { get; set; }
+        public DateTime SavedDate { get; set; } = DateTime.Now;
+        public ICollection<int> Tags { get; set; } = new List<int>();
+        public string UserId { get; set; }
     }
 }
