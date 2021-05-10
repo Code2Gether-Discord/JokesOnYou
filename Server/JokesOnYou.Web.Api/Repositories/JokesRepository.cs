@@ -38,8 +38,7 @@ namespace JokesOnYou.Web.Api.Repositories
 
         public async Task<Joke> GetJokeById(int id)
         {
-            var joke = await _context.Jokes.FirstOrDefaultAsync(x => x.Id == id);
-            return joke;
+            return await _context.Jokes.FirstOrDefaultAsync(x => x.Id == id);
         }
     }
 }
