@@ -73,7 +73,7 @@ namespace JokesOnYou.Web.Api.Services
             return jokeDtos;
         }
 
-        public async Task UpdateJoke(JokeUpdateDto jokeUpdateDto)
+        public async Task<JokeReplyDto> UpdateJoke(JokeUpdateDto jokeUpdateDto)
         {
             var jokeToUpdate = await _jokesRepo.GetJokeById(jokeUpdateDto.Id);
 
@@ -84,7 +84,9 @@ namespace JokesOnYou.Web.Api.Services
 
             _mapper.Map(jokeUpdateDto,jokeToUpdate);
 
-            await _unitOfWork.SaveAsync(); 
+            await _unitOfWork.SaveAsync();
+
+            return _mapper.Map<JokeReplyDto>(jokeToUpdate);
         }
 
         public Task<JokeReplyDto> GetJokeDtoAsync(int id)
