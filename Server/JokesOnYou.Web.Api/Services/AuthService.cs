@@ -23,21 +23,10 @@ namespace JokesOnYou.Web.Api.Services
             _userRepo = userRepo;
             _tokenService = tokenService;
         }
-
-        public async Task<UserReplyDTO> LoginAsync(UserLoginDTO userLoginDTO)
+        
+        public async Task<UserReplyDTO> LoginAsync(UserLoginDTO userLogin)
         {
-            throw new NotImplementedException();
-        }
-
-        public async Task<User> RegisterAsync(UserRegisterDTO userRegisterDTO)
-        {
-            throw new NotImplementedException();
-        }
-        //Maybe this was original code maybe not idk so am leaving it here just in case :)
-        /*
-        public async Task<UserReplyDTO> LoginUser(UserLoginDTO userLogin)
-        {
-            var user = await _userRepository.GetUserByEmail(userLogin.Email);
+            var user = await _userRepo.GetUserByEmailAsync(userLogin.LoginName);
             if (user != null)
             {
                 var signInResult = await _signInManager.CheckPasswordSignInAsync(user, userLogin.Password, false);
@@ -64,15 +53,14 @@ namespace JokesOnYou.Web.Api.Services
             }
         }
 
-        public async Task RegisterUser(UserRegisterDTO userRegisterDTO)
+        public async Task RegisterAsync(UserRegisterDTO userRegisterDTO)
         {
-            var user = await _userRepository.CreateUserAsync(userRegisterDTO);
+            var user = await _userRepo.CreateUserAsync(userRegisterDTO);
 
             if (user == null)
             {
-                throw new AppException("Failed to find user in the Database.");
+                throw new AppException("Failed to find / create user in the Database.");
             }
         }
-        */
     }
 }
