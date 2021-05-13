@@ -3,7 +3,7 @@
 <div *ngFor="let joke of jokes">
   <h3>
     <a [title]="joke.Premise" [routerLink]="['/joke' , joke.id]">
-      {{joke.Premise}}
+      {{joke.premise}}
     </a>
   </h3>
   <p *ngIf="joke.punchline">
