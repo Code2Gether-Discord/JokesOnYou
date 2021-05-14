@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using JokesOnYou.Web.Api.DTOs;
@@ -70,6 +70,20 @@ namespace JokesOnYou.Web.Api.Services
             var jokeDtos = await _jokesRepo.GetAllJokeDtosAsync();
 
             return jokeDtos;
+        }
+
+        public async Task RemoveJokeAsync(int id)
+        {
+            var joke = await _jokesRepo.GetJokeByIdAsync(id);
+            if (joke == null)
+            {
+                throw new KeyNotFoundException("Cant find joke");
+            }
+            _jokesRepo.DeleteJoke(joke);
+            if (!await _unitOfWork.SaveAsync())
+            {
+                throw new AppException("Failed to remove joke");
+            }
         }
 
         public Task<JokeReplyDto> GetJokeDtoAsync(int id)
