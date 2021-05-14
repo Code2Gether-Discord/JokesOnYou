@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { Joke } from '../../app/joke';
 
 @Component({
   selector: '',
@@ -8,15 +9,23 @@ import { HttpClient } from '@angular/common/http';
 })
 
 export class JokeComponent implements OnInit {
-  joke = {id: 0, premise: "insidePremise", punchline:'insidePunchline'};
+  joke?: Joke;
+  jokeId?: number;
+  private jokesUrl = 'http://localhost:5000/api/jokes/';
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private route: ActivatedRoute
   ) { }
 
   getJoke() {
-    return this.http.get<{ type: string, price: number }[]>('/api/jokes/0');
+    return this.http.get<Joke>(this.jokesUrl+this.jokeId).subscribe(joke => this.joke = joke);
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    const routeParams = this.route.snapshot.paramMap;
+    this.jokeId = Number(routeParams.get('id'));
+
+    this.getJoke();
+  }
 }
