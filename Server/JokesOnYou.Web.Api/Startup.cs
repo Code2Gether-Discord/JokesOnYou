@@ -1,6 +1,4 @@
-using System;
-using System.IO;
-using System.Text.Json.Serialization;
+using JokesOnYou.Web.Api.Data;
 using JokesOnYou.Web.Api.Extensions;
 using JokesOnYou.Web.Api.Middlewares;
 using JokesOnYou.Web.Api.Repositories;
@@ -9,12 +7,12 @@ using JokesOnYou.Web.Api.Services;
 using JokesOnYou.Web.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using AutoMapper;
-using JokesOnYou.Web.Api.Data;
-using Microsoft.EntityFrameworkCore;
+using System;
+using System.IO;
 
 namespace JokesOnYou.Web.Api
 {
@@ -31,7 +29,7 @@ namespace JokesOnYou.Web.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureAppServices(_config);
-            
+
             services.AddControllers();
 
             services.AddScoped<IUserService, UserService>();
@@ -47,8 +45,6 @@ namespace JokesOnYou.Web.Api
             services.AddDbContext<DataContext>(options =>
                 options.UseNpgsql(connectionString)
             );
-
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

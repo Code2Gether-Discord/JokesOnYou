@@ -1,36 +1,26 @@
-﻿using JokesOnYou.Web.Api.DTOs;
-using JokesOnYou.Web.Api.Models;
-using JokesOnYou.Web.Api.Repositories;
+﻿using AutoMapper;
+using JokesOnYou.Web.Api.DTOs;
+using JokesOnYou.Web.Api.Exceptions;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
 using JokesOnYou.Web.Api.Services.Interfaces;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using JokesOnYou.Web.Api.Exceptions;
-using AutoMapper;
-
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using JokesOnYou.Web.Api.Exceptions;
 
 namespace JokesOnYou.Web.Api.Services
 {
-    
     public class UserService : IUserService
     {
-        readonly IUserRepository _userRepo;
-        readonly IMapper _mapper;
-        private IUnitOfWork _unitOfWork;
+        private readonly IUserRepository _userRepo;
+        private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public  UserService(IUserRepository userRepo, IMapper mapper, IUnitOfWork unitOfWork)
+        public UserService(IUserRepository userRepo, IMapper mapper, IUnitOfWork unitOfWork)
         {
             _userRepo = userRepo;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
+
         public async Task<IEnumerable<UserReplyDTO>> GetAll()
         {
             return await _userRepo.GetUsersAsync();
@@ -42,14 +32,8 @@ namespace JokesOnYou.Web.Api.Services
             if (user == null)
             {
                 throw new AppException($"Cant find user of id:{id}");
-            }                                                                                              
-                                                                             
-            await _userRepo.DeleteUserAsync(user);
-
-            if (!await _unitOfWork.SaveAsync())
-            {
-                throw new AppException("Failed to remove joke");
             }
+            await _userRepo.DeleteUserAsync(user);
         }
 
         public async Task<UserReplyDTO> GetUserReplyById(string id)
@@ -59,9 +43,9 @@ namespace JokesOnYou.Web.Api.Services
 
         public async Task UpdateUser(UserUpdateDTO userDTO)
         {
-            var user = _mapper.Map<UserUpdateDTO, User>(userDTO);
-            await _userRepo.UpdateUser(user); 
+            var user = await _userRepo.GetUserAsync(userDTO.Id);
+            _mapper.Map(userDTO, user);
+            await _unitOfWork.SaveAsync();
         }
-
     }
 }

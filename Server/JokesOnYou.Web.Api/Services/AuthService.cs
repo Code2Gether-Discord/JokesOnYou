@@ -4,9 +4,6 @@ using JokesOnYou.Web.Api.Models;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
 using JokesOnYou.Web.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Services
@@ -23,10 +20,24 @@ namespace JokesOnYou.Web.Api.Services
             _userRepo = userRepo;
             _tokenService = tokenService;
         }
-        
+
         public async Task<UserReplyDTO> LoginAsync(UserLoginDTO userLogin)
         {
-            var user = await _userRepo.GetUserByEmailAsync(userLogin.LoginName);
+
+            User user;
+            if (string.IsNullOrWhiteSpace(userLogin.UserName))
+            {
+                user = await _userRepo.GetUserByEmailAsync(userLogin.Email);
+            }
+            else if(string.IsNullOrWhiteSpace(userLogin.Email))
+            {
+                user = await _userRepo.GetUserByUsernameAsync(userLogin.UserName);
+            }
+            else
+            {
+                throw new AppException("Both email and username are empty, can't find user");
+            }
+
             if (user != null)
             {
                 var signInResult = await _signInManager.CheckPasswordSignInAsync(user, userLogin.Password, false);
@@ -40,8 +51,8 @@ namespace JokesOnYou.Web.Api.Services
                     var userReplyDTO = new UserReplyDTO()
                     {
                         Id = user.Id,
+                        UserName = user.UserName,
                         Email = user.Email,
-                        UserName = user.Email,
                         Token = _tokenService.GetToken(user)
                     };
                     return userReplyDTO;

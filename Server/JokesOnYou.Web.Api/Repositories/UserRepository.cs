@@ -1,6 +1,5 @@
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using JokesOnYou.Web.Api.DTOs;
 using JokesOnYou.Web.Api.Exceptions;
 using JokesOnYou.Web.Api.Models;
@@ -8,10 +7,9 @@ using JokesOnYou.Web.Api.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Linq;
-using AutoMapper;
-using JokesOnYou.Web.Api.Exceptions;
-using AutoMapper.QueryableExtensions;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Repositories
 {
@@ -48,7 +46,8 @@ namespace JokesOnYou.Web.Api.Repositories
                 throw new UserRegisterException(message.ToString(), new ArgumentException());
             }
         }
-        
+
+        public async Task<User> GetUserByUsernameAsync(string username) => await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == username);
 
         public async Task<UserReplyDTO> GetUserReplyAsync(string id)
         {
@@ -56,7 +55,7 @@ namespace JokesOnYou.Web.Api.Repositories
 
             return _mapper.Map<User, UserReplyDTO>(user);
         }
-        
+
         public Task DeleteUserAsync(User user) => _userManager.DeleteAsync(user);
 
 
@@ -67,10 +66,5 @@ namespace JokesOnYou.Web.Api.Repositories
 
 
         public async Task<IEnumerable<UserReplyDTO>> GetUsersAsync() => await _userManager.Users.ProjectTo<UserReplyDTO>(_mapper.ConfigurationProvider).ToListAsync();
-
-
-        public async Task UpdateUser(User user) => await _userManager.UpdateAsync(user);
-
-
     }
 }

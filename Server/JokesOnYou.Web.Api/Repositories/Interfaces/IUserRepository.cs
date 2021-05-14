@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using JokesOnYou.Web.Api.DTOs;
+﻿using JokesOnYou.Web.Api.DTOs;
 using JokesOnYou.Web.Api.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Repositories.Interfaces
 {
@@ -13,6 +13,6 @@ namespace JokesOnYou.Web.Api.Repositories.Interfaces
         Task DeleteUserAsync(User user);
         Task<UserReplyDTO> GetUserReplyAsync(string id);
         Task<IEnumerable<UserReplyDTO>> GetUsersAsync();
-        Task UpdateUser(User user);
+        Task<User> GetUserByUsernameAsync(string username);
     }
 }

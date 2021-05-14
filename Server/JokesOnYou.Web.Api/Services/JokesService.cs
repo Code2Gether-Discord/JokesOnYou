@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using JokesOnYou.Web.Api.DTOs;
 using JokesOnYou.Web.Api.Exceptions;
 using JokesOnYou.Web.Api.Models;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
 using JokesOnYou.Web.Api.Services.Interfaces;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Services
 {
@@ -46,7 +46,7 @@ namespace JokesOnYou.Web.Api.Services
             var saved = await _unitOfWork.SaveAsync();
             if (!saved)
             {
-                if(await _jokesRepo.GetJokeDtoAsync(joke.Id) == null)
+                if (await _jokesRepo.GetJokeDtoAsync(joke.Id) == null)
                 {
                     throw new AppException("Error with saving the Joke.");
                 }

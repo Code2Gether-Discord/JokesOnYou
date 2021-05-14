@@ -1,10 +1,8 @@
-﻿using System;
+﻿using JokesOnYou.Web.Api.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
-using JokesOnYou.Web.Api.Migrations;
-using JokesOnYou.Web.Api.Models;
 using System.Text.Json;
 
 namespace JokesOnYou.Web.Api.Data
@@ -23,12 +21,12 @@ namespace JokesOnYou.Web.Api.Data
             }
 
             //If you go here than it means that the db is empty
-            var temporaryUsers = JsonSerializer.Deserialize<List<User>>(File.ReadAllText(@"Data\UserSeedData.json"),
-                new JsonSerializerOptions 
-                { 
-                    PropertyNameCaseInsensitive = true 
+            var temporaryUsers = JsonSerializer.Deserialize<List<User>>(File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "UserSeedData.json")),
+                new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
                 });
-            
+
             //adds users to db
             context.Users.AddRange(temporaryUsers);
 

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using JokesOnYou.Web.Api.Data;
+﻿using JokesOnYou.Web.Api.Data;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
+using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Repositories
 {

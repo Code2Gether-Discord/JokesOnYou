@@ -37,9 +37,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="JokesOnYou.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <Content Update="Data\UserSeedData.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 

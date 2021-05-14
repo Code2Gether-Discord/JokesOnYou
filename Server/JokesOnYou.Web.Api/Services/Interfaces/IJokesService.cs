@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using JokesOnYou.Web.Api.DTOs;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using JokesOnYou.Web.Api.DTOs;
 
 namespace JokesOnYou.Web.Api.Services.Interfaces
 {

@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using JokesOnYou.Web.Api.Data;
+﻿using JokesOnYou.Web.Api.Data;
 using JokesOnYou.Web.Api.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Identity;
-using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace JokesOnYou.Web.Api.Extensions
 {
@@ -47,7 +43,7 @@ namespace JokesOnYou.Web.Api.Extensions
 
             return services;
         }
-        
+
 
     }
 }

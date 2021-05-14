@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using JokesOnYou.Web.Api.DTOs;
 using JokesOnYou.Web.Api.Models;
 
@@ -19,4 +15,3 @@ namespace JokesOnYou.Web.Api.Profiles
         }
     }
 }
-    

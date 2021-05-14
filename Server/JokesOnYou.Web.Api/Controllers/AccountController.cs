@@ -17,7 +17,7 @@ namespace JokesOnYou.Web.Api.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<UserReplyDTO>> Login (UserLoginDTO userLogin)
+        public async Task<ActionResult<UserReplyDTO>> Login(UserLoginDTO userLogin)
         {
             var userReplyDTO = await _authService.LoginAsync(userLogin);
             return userReplyDTO;
