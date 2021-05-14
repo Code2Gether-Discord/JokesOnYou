@@ -1,11 +1,11 @@
-﻿using AutoMapper;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using AutoMapper;
 using JokesOnYou.Web.Api.DTOs;
 using JokesOnYou.Web.Api.Exceptions;
 using JokesOnYou.Web.Api.Models;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
 using JokesOnYou.Web.Api.Services.Interfaces;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Services
 {
@@ -46,7 +46,7 @@ namespace JokesOnYou.Web.Api.Services
             var saved = await _unitOfWork.SaveAsync();
             if (!saved)
             {
-                if (await _jokesRepo.GetJokeDtoAsync(joke.Id) == null)
+                if(await _jokesRepo.GetJokeDtoAsync(joke.Id) == null)
                 {
                     throw new AppException("Error with saving the Joke.");
                 }
@@ -70,6 +70,20 @@ namespace JokesOnYou.Web.Api.Services
             var jokeDtos = await _jokesRepo.GetAllJokeDtosAsync();
 
             return jokeDtos;
+        }
+
+        public async Task RemoveJokeAsync(int id)
+        {
+            var joke = await _jokesRepo.GetJokeByIdAsync(id);
+            if (joke == null)
+            {
+                throw new KeyNotFoundException("Cant find joke");
+            }
+            _jokesRepo.DeleteJoke(joke);
+            if (!await _unitOfWork.SaveAsync())
+            {
+                throw new AppException("Failed to remove joke");
+            }
         }
 
         public Task<JokeReplyDto> GetJokeDtoAsync(int id)

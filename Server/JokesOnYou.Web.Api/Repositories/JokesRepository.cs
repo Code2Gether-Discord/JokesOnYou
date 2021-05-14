@@ -7,6 +7,19 @@ using JokesOnYou.Web.Api.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using JokesOnYou.Web.Api.DTOs;
+using JokesOnYou.Web.Api.Exceptions;
+using JokesOnYou.Web.Api.Models;
+using JokesOnYou.Web.Api.Repositories.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using AutoMapper;
+using JokesOnYou.Web.Api.Exceptions;
 
 namespace JokesOnYou.Web.Api.Repositories
 {
@@ -34,5 +47,14 @@ namespace JokesOnYou.Web.Api.Repositories
             return _context.Jokes.ProjectTo<JokeReplyDto>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync(j => j.Id == id);
         }
+        public void DeleteJoke(Joke joke)
+        {
+            _context.Jokes.Remove(joke);
+        }
+        public async Task<Joke> GetJokeByIdAsync(int id)
+        {
+            return await _context.Jokes.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
     }
 }

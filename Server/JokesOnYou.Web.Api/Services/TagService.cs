@@ -1,4 +1,5 @@
-﻿using JokesOnYou.Web.Api.Repositories.Interfaces;
+﻿using JokesOnYou.Web.Api.DTOs;
+using JokesOnYou.Web.Api.Repositories.Interfaces;
 using JokesOnYou.Web.Api.Services.Interfaces;
 
 namespace JokesOnYou.Web.Api.Services
@@ -10,6 +11,11 @@ namespace JokesOnYou.Web.Api.Services
         public TagService(ITagRepository tagRepo)
         {
             _tagRepo = tagRepo;
+        }
+
+        public async Task<IEnumerable<TagReplyDto>> GetAllTagDtosAsync()
+        {
+            return await _tagRepo.GetAllTagDtosAsync();
         }
     }
 }
