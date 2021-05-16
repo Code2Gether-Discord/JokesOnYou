@@ -1,0 +1,6 @@
+<h2>Jokes</h2>
+<div class="row">
+  <div *ngFor="let joke of jokes" class="col-3">
+    <app-joke-card [joke]="joke"></app-joke-card>
+  </div>
+</div>

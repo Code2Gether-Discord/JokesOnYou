@@ -50,6 +50,7 @@ namespace JokesOnYou.Web.Api
                 options.UseNpgsql(connectionString)
             );
 
+            services.AddCors();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddSwaggerGen(config =>
@@ -62,6 +63,10 @@ namespace JokesOnYou.Web.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors(
+                options => options.WithOrigins("*").AllowAnyMethod()
+            );
+
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
