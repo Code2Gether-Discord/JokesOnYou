@@ -1,0 +1,14 @@
+<h2>Joke!</h2>
+
+<div *ngIf="joke">
+  <h3>{{joke.premise}}</h3>
+  <p>{{joke.punchline}}</p>
+  <div>
+    <h4>{{joke.authorId}}</h4>
+    <span>
+      <p>{{joke.likes - joke.dislikes}} Likes</p> <button>+</button><button>-</button>
+      <p>{{joke.uploadDate | date }}</p>
+    </span>
+
+  </div>
+</div>

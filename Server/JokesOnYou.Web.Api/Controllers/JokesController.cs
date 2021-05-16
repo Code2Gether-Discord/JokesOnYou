@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using JokesOnYou.Web.Api.DTOs;
 using JokesOnYou.Web.Api.Extensions;
@@ -38,6 +38,13 @@ namespace JokesOnYou.Web.Api.Controllers
             return Ok(jokeDtos);
         }
 
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteJoke(int id)
+        {
+            await _jokesService.RemoveJokeAsync(id);
+            return NoContent();
+        }
+        
         [HttpPut]
         public async Task<ActionResult<JokeReplyDto>> UpdateJoke(JokeUpdateDto jokeUpdateDto)
         {
