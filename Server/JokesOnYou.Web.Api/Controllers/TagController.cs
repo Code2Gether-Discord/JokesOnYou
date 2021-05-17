@@ -34,7 +34,7 @@ namespace JokesOnYou.Web.Api.Controllers
             }
             else
             {
-                return Unauthorized();
+                return Unauthorized("Not the Owner or an admin.");
             }
         }
 
