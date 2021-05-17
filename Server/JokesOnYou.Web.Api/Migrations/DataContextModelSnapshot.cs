@@ -14,7 +14,7 @@ namespace JokesOnYou.Web.Api.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "5.0.4");
+                .HasAnnotation("ProductVersion", "5.0.5");
 
             modelBuilder.Entity("JokesOnYou.Web.Api.Models.Joke", b =>
                 {
@@ -57,6 +57,29 @@ namespace JokesOnYou.Web.Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Jokes");
+                });
+
+            modelBuilder.Entity("JokesOnYou.Web.Api.Models.Tag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Likes")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("OwnerId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("JokesOnYou.Web.Api.Models.User", b =>

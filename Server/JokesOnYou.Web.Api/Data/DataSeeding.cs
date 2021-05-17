@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using JokesOnYou.Web.Api.Migrations;
 using JokesOnYou.Web.Api.Models;
 using System.Text.Json;
 
