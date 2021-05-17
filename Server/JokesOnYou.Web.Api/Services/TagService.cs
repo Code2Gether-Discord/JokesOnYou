@@ -1,4 +1,7 @@
-﻿using JokesOnYou.Web.Api.DTOs;
+﻿using AutoMapper;
+using JokesOnYou.Web.Api.DTOs;
+using JokesOnYou.Web.Api.Exceptions;
+using JokesOnYou.Web.Api.Models;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
 using JokesOnYou.Web.Api.Services.Interfaces;
 using System;
@@ -9,56 +12,45 @@ using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Services
 {
-    public class TagService : UnitOfWork,ITagService
+    public class TagService : ITagService
     {
         private readonly ITagRepository _tagRepo;
         private readonly IMapper _mapper;
-        public TagService(DataContext context, ITagRepository tagRepo,IMapper mapper):base(context)
+        private readonly IUnitOfWork _unitOfWork;
+
+        public TagService(ITagRepository tagRepo, IMapper mapper, IUnitOfWork unitOfWork)
         {
             _tagRepo = tagRepo;
             _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
-        public async Task<TagReplyDto> GetTag(int id)
-        {
-            var entity = await _tagRepo.Find(id);
-            //TODO: DTO should be implemented
-            return _mapper.Map<TagReplyDto>(entity);
-        }
+        public async Task<IEnumerable<TagReplyDto>> GetAllTagDtosAsync() => await _tagRepo.GetAllTagDtosAsync();
 
-        public async Task<List<TagReplyDto>> GetTags(int[] ids)
+        public async Task<Tag> GetTagAsync(int id)
         {
-            var entity = await _tagRepo.GetTags(ids);
-            //TODO: DTO should be implemented
-            return _mapper.Map<List<TagReplyDto>>(entity);
+            var tag = await _tagRepo.GetTagAsync(id);
+
+            if (tag == null)
+            {
+                throw new AppException($"No Tag with Id:\"{id}\" has been found.");
+            }
+            return tag;
         }
 
         /// <summary>
-        /// Deletes given <paramref name="tagId"/>
+        /// Deletes given <paramref name="tag"/>
         /// </summary>
-        /// <param name="tagId"></param>
+        /// <param name="tag"></param>
         /// <returns></returns>
-        public async Task DeleteTag(int tagId)
+        public async Task DeleteTagAsync(Tag tag)
         {
-            await _tagRepo.Delete(tagId);
-            await SaveAsync();
+            _tagRepo.Delete(tag);
+            if(!await _unitOfWork.SaveAsync())
+            {
+                throw new AppException($"Something wend wrong when trying to save the database after Deleting the Tag: {tag}");
+            }
         }
 
-
-        /// <summary>
-        /// Deletes all given <paramref name="tagIds"/>
-        /// </summary>
-        /// <param name="tagIds"></param>
-        /// <returns></returns>
-        public async Task DeleteMultipleTag(int[] tagIds)
-        {
-            await _tagRepo.DeleteRange(tagIds);
-            await SaveAsync();
-        }
-
-        public async Task<IEnumerable<TagReplyDto>> GetAllTagDtosAsync()
-        {
-            return await _tagRepo.GetAllTagDtosAsync();
-        }
     }
 }

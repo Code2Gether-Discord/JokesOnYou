@@ -1,4 +1,5 @@
 ﻿using JokesOnYou.Web.Api.DTOs;
+using JokesOnYou.Web.Api.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,8 @@ namespace JokesOnYou.Web.Api.Services.Interfaces
 {
     public interface ITagService
     {
-        Task DeleteTag(int tagId);
-        Task DeleteMultipleTag(int[] tagIds);
-        Task<TagReplyDto> GetTag(int id);
-        Task<List<TagReplyDto>> GetTags(int[] ids);
+        Task DeleteTagAsync(Tag tag);
+        Task<Tag> GetTagAsync(int id);
         Task<IEnumerable<TagReplyDto>> GetAllTagDtosAsync();
     }
 }

@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using JokesOnYou.Web.Api.Data;
+using JokesOnYou.Web.Api.DTOs;
 using JokesOnYou.Web.Api.Models;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -20,46 +22,21 @@ namespace JokesOnYou.Web.Api.Repositories
             _context = context;
             _mapper = mapper;
         }
-        public async Task<IEnumerable<TagReplyDto>> GetAllTagDtosAsync()
-        {
-            return await _context.Tags.ProjectTo<TagReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
-        }
+        public async Task<IEnumerable<TagReplyDto>> GetAllTagDtosAsync() => await _context.Tags.ProjectTo<TagReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
+        public async Task<List<Tag>> GetTags(int[] ids) => await _context.Tags.Where(x => ids.Contains(x.Id)).ToListAsync();
+
         /// <summary>
         /// Find Tag by given id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<Tag> Find(int id)
-        {
-            return await _context.Tags.FindAsync(id);
-        }
-
-        public async Task<List<Tag>> GetTags(int[] ids)
-        {
-            return await _context.Tags.Where(x => ids.Contains(x.Id)).ToListAsync();
-        }
+        public async Task<Tag> GetTagAsync(int id) => await _context.Tags.FindAsync(id);
 
         /// <summary>
-        /// Deletes given <paramref name="tagId"/>
+        /// Deletes given <paramref name="tag"/>
         /// </summary>
-        /// <param name="tagId"></param>
+        /// <param name="tag"></param>
         /// <returns></returns>
-        public async Task Delete(int tagId)
-        {
-            var entity = await this.Find(tagId);
-            _context.Remove(entity);
-        }
-
-
-        /// <summary>
-        /// Deletes all given <paramref name="tags"/>
-        /// </summary>
-        /// <param name="tags"></param>
-        /// <returns></returns>
-        public async Task DeleteRange(int[] tags)
-        {
-            var entities = await _context.Tags.Where(x => tags.Contains(x.Id)).ToListAsync();
-            _context.RemoveRange(entities);
-        }
+        public void Delete(Tag tag) => _context.Tags.Remove(tag);
     }
 }
