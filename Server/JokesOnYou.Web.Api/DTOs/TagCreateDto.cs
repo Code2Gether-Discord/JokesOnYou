@@ -8,6 +8,5 @@ namespace JokesOnYou.Web.Api.DTOs
     public class TagCreateDto
     {
         public string Name { get; set; }
-        public int Likes { get; set; }
     }
 }
