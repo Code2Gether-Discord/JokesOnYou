@@ -13,9 +13,16 @@ namespace JokesOnYou.Web.Api.Repositories
     public class TagRepository : ITagRepository
     {
         private readonly DataContext _context;
-        public TagRepository(DataContext context)
+        private readonly IMapper _mapper;
+
+        public TagRepository(DataContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
+        }
+        public async Task<IEnumerable<TagReplyDto>> GetAllTagDtosAsync()
+        {
+            return await _context.Tags.ProjectTo<TagReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
         }
         /// <summary>
         /// Find Tag by given id
@@ -31,7 +38,7 @@ namespace JokesOnYou.Web.Api.Repositories
         {
             return await _context.Tags.Where(x => ids.Contains(x.Id)).ToListAsync();
         }
-       
+
         /// <summary>
         /// Deletes given <paramref name="tagId"/>
         /// </summary>
@@ -51,7 +58,7 @@ namespace JokesOnYou.Web.Api.Repositories
         /// <returns></returns>
         public async Task DeleteRange(int[] tags)
         {
-            var entities = await _context.Tags.Where(x=>tags.Contains(x.Id)).ToListAsync();
+            var entities = await _context.Tags.Where(x => tags.Contains(x.Id)).ToListAsync();
             _context.RemoveRange(entities);
         }
     }

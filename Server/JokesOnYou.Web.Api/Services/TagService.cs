@@ -1,7 +1,4 @@
-﻿using AutoMapper;
-using JokesOnYou.Web.Api.Data;
-using JokesOnYou.Web.Api.DTOs;
-using JokesOnYou.Web.Api.Repositories;
+﻿using JokesOnYou.Web.Api.DTOs;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
 using JokesOnYou.Web.Api.Services.Interfaces;
 using System;
@@ -59,5 +56,9 @@ namespace JokesOnYou.Web.Api.Services
             await SaveAsync();
         }
 
+        public async Task<IEnumerable<TagReplyDto>> GetAllTagDtosAsync()
+        {
+            return await _tagRepo.GetAllTagDtosAsync();
+        }
     }
 }

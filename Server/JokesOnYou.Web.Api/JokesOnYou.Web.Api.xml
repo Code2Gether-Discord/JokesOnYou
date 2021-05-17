@@ -39,5 +39,10 @@
             <param name="tagIds"></param>
             <returns></returns>
         </member>
+        <member name="T:JokesOnYou.Web.Api.DTOs.JokeUpdateDto">
+            <summary>
+            Does not update joke's id, likes, author, uploaddate, or dislikes. Just Premise and Punchline
+            </summary>
+        </member>
     </members>
 </doc>

@@ -8,6 +8,6 @@ namespace JokesOnYou.Web.Api.Services.Interfaces
 {
     public interface ITokenService
     {
-        public string GetToken(User user);
+        string GetToken(User user);
     }
 }

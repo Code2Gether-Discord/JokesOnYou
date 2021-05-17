@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     [ApiController]
     [Authorize]
     public class TagController : ControllerBase
@@ -60,6 +60,14 @@ namespace JokesOnYou.Web.Api.Controllers
             {
                 return Unauthorized();
             }
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<TagReplyDto>>> GetAllTagsAsync()
+        {
+            var tagDtos = await _tagService.GetAllTagDtosAsync();
+            return Ok(tagDtos);
         }
     }
 }

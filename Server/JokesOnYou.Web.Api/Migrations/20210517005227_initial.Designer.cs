@@ -9,14 +9,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JokesOnYou.Web.Api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210323203158_addIdentity")]
-    partial class addIdentity
+    [Migration("20210517005227_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "5.0.4");
+                .HasAnnotation("ProductVersion", "5.0.5");
 
             modelBuilder.Entity("JokesOnYou.Web.Api.Models.Joke", b =>
                 {
@@ -25,6 +25,7 @@ namespace JokesOnYou.Web.Api.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("AuthorId")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Dislikes")
@@ -33,10 +34,20 @@ namespace JokesOnYou.Web.Api.Migrations
                     b.Property<int>("Likes")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("NormalizedPremise")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("NormalizedPunchLine")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Premise")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Punchline")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("TimesFlagged")
@@ -47,9 +58,30 @@ namespace JokesOnYou.Web.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AuthorId");
-
                     b.ToTable("Jokes");
+                });
+
+            modelBuilder.Entity("JokesOnYou.Web.Api.Models.Tag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Likes")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("OwnerId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("JokesOnYou.Web.Api.Models.User", b =>
@@ -257,15 +289,6 @@ namespace JokesOnYou.Web.Api.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("JokesOnYou.Web.Api.Models.Joke", b =>
-                {
-                    b.HasOne("JokesOnYou.Web.Api.Models.User", "Author")
-                        .WithMany()
-                        .HasForeignKey("AuthorId");
-
-                    b.Navigation("Author");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

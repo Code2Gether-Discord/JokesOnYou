@@ -1,10 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Models
 {
-    public class LikedJoke : BaseOwnedEntity
+    public class LikedJoke
     {
-        public Joke Joke { get; set; }
+        public int Id { get; set; }
+        public int JokeId { get; set; }
         public bool Liked { get; set; }
+        public DateTime LikeDate { get; set; } = DateTime.Now;
+        public string UserId { get; set; }
     }
 }
