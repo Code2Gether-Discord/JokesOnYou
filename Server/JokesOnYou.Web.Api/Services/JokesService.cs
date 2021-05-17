@@ -89,7 +89,7 @@ namespace JokesOnYou.Web.Api.Services
 
         public async Task<JokeReplyDto> UpdateJoke(JokeUpdateDto jokeUpdateDto)
         {
-            var jokeToUpdate = await _jokesRepo.GetJokeById(jokeUpdateDto.Id);
+            var jokeToUpdate = await _jokesRepo.GetJokeByIdAsync(jokeUpdateDto.Id);
 
             if (jokeToUpdate == null)
             {
