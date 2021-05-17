@@ -45,6 +45,13 @@ namespace JokesOnYou.Web.Api.Controllers
             return NoContent();
         }
         
+        [HttpPut]
+        public async Task<ActionResult<JokeReplyDto>> UpdateJoke(JokeUpdateDto jokeUpdateDto)
+        {
+            var jokeReplyDto = await _jokesService.UpdateJoke(jokeUpdateDto);
+            return jokeReplyDto;
+        }
+
         [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<JokeReplyDto>> GetJoke(int id)
