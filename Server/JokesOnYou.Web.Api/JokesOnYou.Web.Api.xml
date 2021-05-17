@@ -18,10 +18,16 @@
         </member>
         <member name="M:JokesOnYou.Web.Api.Repositories.TagRepository.Delete(JokesOnYou.Web.Api.Models.Tag)">
             <summary>
-            Deletes given <paramref name="tagId"/>
+            Deletes given <paramref name="tag"/>
             </summary>
             <param name="tag"></param>
             <returns></returns>
+        </member>
+        <member name="M:JokesOnYou.Web.Api.Repositories.UnitOfWork.SaveAsync">
+            <summary>
+            Save changes to the Database.
+            </summary>
+            <returns>returns true if at least one change has been tracked</returns>
         </member>
         <member name="M:JokesOnYou.Web.Api.Services.TagService.DeleteTagAsync(JokesOnYou.Web.Api.Models.Tag)">
             <summary>
