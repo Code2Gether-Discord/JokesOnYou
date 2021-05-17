@@ -9,5 +9,6 @@ namespace JokesOnYou.Web.Api.Services.Interfaces
     public interface ITagService
     {
         Task<TagReplyDto> CreateTagAsync(TagCreateDto tagCreateDto);
+        Task<IEnumerable<TagReplyDto>> GetAllTagDtosAsync();
     }
 }

@@ -8,16 +8,11 @@ using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Profiles
 {
-    public class JokesProfile : Profile
+    public class TagProfile : Profile
     {
-        public JokesProfile()
+        public TagProfile()
         {
-            CreateMap<Joke, JokeReplyDto>();
-            CreateMap<User, JokeAuthorDto>();
-            CreateMap<JokeCreateDto, Joke>();
-            CreateMap<JokeUpdateDto, Joke>();
             CreateMap<Tag, TagReplyDto>();
-            CreateMap<TagCreateDto, Tag>();
         }
     }
 }

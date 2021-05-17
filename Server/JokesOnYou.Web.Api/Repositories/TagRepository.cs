@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using JokesOnYou.Web.Api.Data;
+using JokesOnYou.Web.Api.DTOs;
 using JokesOnYou.Web.Api.Models;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +35,11 @@ namespace JokesOnYou.Web.Api.Repositories
             {
                 Console.WriteLine("inner exception is: {0}", e.InnerException.Message);
             }
+        }
+
+        public async Task<IEnumerable<TagReplyDto>> GetAllTagDtosAsync()
+        {
+            return await _context.Tags.ProjectTo<TagReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
         }
     }
 }

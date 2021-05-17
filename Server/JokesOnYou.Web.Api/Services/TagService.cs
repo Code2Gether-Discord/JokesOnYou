@@ -1,4 +1,5 @@
-﻿using JokesOnYou.Web.Api.Repositories.Interfaces;
+﻿using JokesOnYou.Web.Api.DTOs;
+using JokesOnYou.Web.Api.Repositories.Interfaces;
 using JokesOnYou.Web.Api.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -38,6 +39,11 @@ namespace JokesOnYou.Web.Api.Services
             var tagReplyDto = _mapper.Map<TagReplyDto>(tag);
 
             return tagReplyDto;
+        }
+
+        public async Task<IEnumerable<TagReplyDto>> GetAllTagDtosAsync()
+        {
+            return await _tagRepo.GetAllTagDtosAsync();
         }
     }
 }
