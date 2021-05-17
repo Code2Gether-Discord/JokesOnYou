@@ -33,7 +33,7 @@ namespace JokesOnYou.Web.Api.Services
             var saved = await _unitOfWork.SaveAsync();
             if (!saved)
             {
-                throw new AppException("error saving tag"); 
+                throw new AppException($"error saving {tagCreateDto.Name}"); 
             }
 
             var tagReplyDto = _mapper.Map<TagReplyDto>(tag);
