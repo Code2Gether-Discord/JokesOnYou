@@ -26,14 +26,7 @@ namespace JokesOnYou.Web.Api.Repositories
 
         public async Task CreateTagAsync(Tag tag)
         {
-            try
-            {
-                await _context.Tags.AddAsync(tag).AsTask();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("inner exception is: {0}", e.InnerException.Message);
-            }
+            await _context.Tags.AddAsync(tag).AsTask();
         }
 
         public async Task<IEnumerable<TagReplyDto>> GetAllTagDtosAsync()
