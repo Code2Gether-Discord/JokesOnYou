@@ -1,13 +1,9 @@
-﻿using AutoMapper;
-using JokesOnYou.Web.Api.DTOs;
+﻿using JokesOnYou.Web.Api.DTOs;
 using JokesOnYou.Web.Api.Exceptions;
 using JokesOnYou.Web.Api.Models;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
 using JokesOnYou.Web.Api.Services.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Services
@@ -15,13 +11,11 @@ namespace JokesOnYou.Web.Api.Services
     public class TagService : ITagService
     {
         private readonly ITagRepository _tagRepo;
-        private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
 
-        public TagService(ITagRepository tagRepo, IMapper mapper, IUnitOfWork unitOfWork)
+        public TagService(ITagRepository tagRepo, IUnitOfWork unitOfWork)
         {
             _tagRepo = tagRepo;
-            _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
 
@@ -46,7 +40,7 @@ namespace JokesOnYou.Web.Api.Services
         public async Task DeleteTagAsync(Tag tag)
         {
             _tagRepo.Delete(tag);
-            if(!await _unitOfWork.SaveAsync())
+            if (!await _unitOfWork.SaveAsync())
             {
                 throw new AppException($"Something wend wrong when trying to save the database after Deleting the Tag: {tag}");
             }

@@ -1,6 +1,5 @@
-﻿using JokesOnYou.Web.Api.Models;
-using JokesOnYou.Web.Api.DTOs;
-using System;
+﻿using JokesOnYou.Web.Api.DTOs;
+using JokesOnYou.Web.Api.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

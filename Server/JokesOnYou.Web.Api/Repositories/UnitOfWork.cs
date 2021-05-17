@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using JokesOnYou.Web.Api.Data;
+﻿using JokesOnYou.Web.Api.Data;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
+using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Repositories
 {
@@ -15,9 +12,13 @@ namespace JokesOnYou.Web.Api.Repositories
         {
             _context = context;
         }
+        /// <summary>
+        /// Save changes to the Database.
+        /// </summary>
+        /// <returns>returns true if at least one change has been tracked</returns>
         public async Task<bool> SaveAsync()
         {
-            //returns true if atleast one change has been tracked
+            //
             return await _context.SaveChangesAsync() > 0;
         }
     }
