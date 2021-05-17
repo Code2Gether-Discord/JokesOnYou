@@ -16,8 +16,6 @@ namespace JokesOnYou.Web.Api.Profiles
             CreateMap<User, JokeAuthorDto>();
             CreateMap<JokeCreateDto, Joke>();
             CreateMap<JokeUpdateDto, Joke>();
-            CreateMap<Tag, TagReplyDto>();
-            CreateMap<TagCreateDto, Tag>();
         }
     }
 }
