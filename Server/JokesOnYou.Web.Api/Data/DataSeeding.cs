@@ -17,7 +17,6 @@ namespace JokesOnYou.Web.Api.Data
             // Look for any users in db
             if (context.Users.Any())
             {
-                var myUsers = context.Users.Select(x => x).ToList();
                 //If there are users then leave method
                 return;
             }
