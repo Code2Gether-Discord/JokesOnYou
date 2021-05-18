@@ -2,9 +2,8 @@
 using JokesOnYou.Web.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Controllers
@@ -15,10 +14,28 @@ namespace JokesOnYou.Web.Api.Controllers
     public class TagController : ControllerBase
     {
         private readonly ITagService _tagService;
+        private readonly ILogger _logger;
 
-        public TagController(ITagService tagService)
+        public TagController(ITagService tagService, ILogger<TagController> logger)
         {
             _tagService = tagService;
+            _logger = logger;
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteTag(int id)
+        {
+            var tag = await _tagService.GetTagAsync(id);
+            string userId = User.Identity.Name; // _userManager.GetUserId(User);
+            if (tag.OwnerId == userId || User.IsInRole("Admin"))
+            {
+                await _tagService.DeleteTagAsync(tag);
+                return NoContent();
+            }
+            else
+            {
+                return Unauthorized("Not the Owner or an admin.");
+            }
         }
 
         [AllowAnonymous]
