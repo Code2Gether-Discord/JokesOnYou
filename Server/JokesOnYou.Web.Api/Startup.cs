@@ -44,12 +44,6 @@ namespace JokesOnYou.Web.Api
             services.AddScoped<ITagService, TagService>();
             services.AddScoped<ITagRepository, TagRepository>();
 
-            var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
-
-            services.AddDbContext<DataContext>(options =>
-                options.UseNpgsql(connectionString)
-            );
-
             services.AddCors();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
