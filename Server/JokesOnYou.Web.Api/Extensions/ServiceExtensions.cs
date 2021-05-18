@@ -18,8 +18,11 @@ namespace JokesOnYou.Web.Api.Extensions
     {
         public static IServiceCollection ConfigureAppServices(this IServiceCollection services, IConfiguration config)
         {
+            var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
+
             services.AddDbContext<DataContext>(options =>
-                options.UseSqlite(config.GetConnectionString("DefaultConnection")));
+                options.UseNpgsql(connectionString)
+            );
 
             services.AddIdentity<User, IdentityRole>(
                 options => { options.User.RequireUniqueEmail = true; }
