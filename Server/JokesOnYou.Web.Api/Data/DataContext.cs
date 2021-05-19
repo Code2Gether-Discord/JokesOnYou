@@ -10,13 +10,25 @@ namespace JokesOnYou.Web.Api.Data
         {
         }
 
+        
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
         }
-
+    
         public DbSet<Joke> Jokes { get; set; }
         public DbSet<Tag> Tags { get; set; }
-        //For each class in models folder, add it here, only if its also in db
+
+        /*
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.Entity<Tag>()
+                .HasOne<User>()
+                .WithMany()
+                .HasForeignKey(x => x.OwnerId);
+        }
+        */
     }
 }

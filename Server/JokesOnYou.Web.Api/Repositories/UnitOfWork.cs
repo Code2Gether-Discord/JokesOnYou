@@ -12,9 +12,13 @@ namespace JokesOnYou.Web.Api.Repositories
         {
             _context = context;
         }
+        /// <summary>
+        /// Save changes to the Database.
+        /// </summary>
+        /// <returns>returns true if at least one change has been tracked</returns>
         public async Task<bool> SaveAsync()
         {
-            //returns true if atleast one change has been tracked
+            //
             return await _context.SaveChangesAsync() > 0;
         }
     }

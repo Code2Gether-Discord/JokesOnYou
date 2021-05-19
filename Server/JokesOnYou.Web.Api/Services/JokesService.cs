@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -84,6 +85,22 @@ namespace JokesOnYou.Web.Api.Services
             {
                 throw new AppException("Failed to remove joke");
             }
+        }
+
+        public async Task<JokeReplyDto> UpdateJoke(JokeUpdateDto jokeUpdateDto)
+        {
+            var jokeToUpdate = await _jokesRepo.GetJokeByIdAsync(jokeUpdateDto.Id);
+
+            if (jokeToUpdate == null)
+            {
+                throw new KeyNotFoundException("can't find joke to update");
+            }
+
+            _mapper.Map(jokeUpdateDto,jokeToUpdate);
+
+            await _unitOfWork.SaveAsync();
+
+            return _mapper.Map<JokeReplyDto>(jokeToUpdate);
         }
 
         public Task<JokeReplyDto> GetJokeDtoAsync(int id)

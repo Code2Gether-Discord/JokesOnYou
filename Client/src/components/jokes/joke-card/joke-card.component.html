@@ -1,0 +1,19 @@
+<div *ngIf="joke" class="card">
+    <div class="h4 card-header">
+
+        <a [title]="joke.premise" [routerLink]="['joke', joke.id]">
+            {{joke.premise}}
+        </a>
+    </div>
+    <div class="card-body">
+        <p>
+            {{joke.punchline}}
+        </p>
+    </div>
+
+    <div class="card-footer">
+        {{joke.likes - joke.dislikes}} Likes
+        <button class="ml-1">+</button>
+        <button class="ml-1">-</button>
+    </div>
+</div>
