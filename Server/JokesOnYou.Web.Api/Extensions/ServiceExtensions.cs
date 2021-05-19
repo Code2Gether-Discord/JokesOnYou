@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Text;
 
 namespace JokesOnYou.Web.Api.Extensions
@@ -15,7 +16,7 @@ namespace JokesOnYou.Web.Api.Extensions
         public static IServiceCollection ConfigureAppServices(this IServiceCollection services, IConfiguration config)
         {
             var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
-
+                
             services.AddDbContext<DataContext>(options =>
                 options.UseNpgsql(connectionString)
             );
