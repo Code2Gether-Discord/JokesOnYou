@@ -14,5 +14,7 @@ namespace JokesOnYou.Web.Api.Repositories.Interfaces
         Task<UserReplyDTO> GetUserReplyAsync(string id);
         Task<IEnumerable<UserReplyDTO>> GetUsersAsync();
         Task<User> GetUserByUsernameAsync(string username);
+
+
     }
 }

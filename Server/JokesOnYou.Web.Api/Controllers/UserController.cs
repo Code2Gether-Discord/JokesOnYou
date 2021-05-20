@@ -1,5 +1,7 @@
 ﻿using JokesOnYou.Web.Api.DTOs;
+using JokesOnYou.Web.Api.Extensions;
 using JokesOnYou.Web.Api.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -7,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -38,12 +40,12 @@ namespace JokesOnYou.Web.Api.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateUser(string id, UserUpdateDTO userUpdateDTO)
         {
-            /*
+            
             if (id != ClaimsPrincipalExtension.GetUserId(User))
             {
                 return Unauthorized();
             }
-            */
+            
             userUpdateDTO.Id = id;
             await _userService.UpdateUser(userUpdateDTO);
             return NoContent();
@@ -52,12 +54,12 @@ namespace JokesOnYou.Web.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteUser(string id)
         {
-            /*
+            
             if (id != ClaimsPrincipalExtension.GetUserId(User))
             {
                 return Unauthorized();
             }
-            */
+            
             await _userService.DeleteUser(id);
             return NoContent();
         }
