@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using AutoMapper;
 using JokesOnYou.Web.Api.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 namespace JokesOnYou.Web.Api
 {
@@ -51,6 +52,32 @@ namespace JokesOnYou.Web.Api
             {
                 //appcontext base directory is where the app entry point assembly is (bin folder)
                 config.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "JokesOnYou.Web.Api.xml"));
+
+                //add authorization option to Swagger UI
+                config.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "JWT Authorization header **_WITHOUT_** 'Bearer'. Example: '12345abcdef')",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type  = SecuritySchemeType.Http,
+                    Scheme = "Bearer"
+                });
+
+                //make sure swagger uses authorization token in requests
+                config.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        Array.Empty<string>()
+                    }
+                });
             });
         }
 
