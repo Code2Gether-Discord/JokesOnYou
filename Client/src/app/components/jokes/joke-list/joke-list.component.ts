@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, observable } from 'rxjs';
 import { Joke } from '../../../_models/joke';
 import { environment } from 'src/environments/environment';
-import { JokesService } from 'src/_services/jokes.service';
+import { JokesService } from 'src/app/_services/jokes.service';
+
 
 @Component({
   selector: 'app-joke-list-component',
@@ -11,7 +11,6 @@ import { JokesService } from 'src/_services/jokes.service';
 })
 export class JokeListComponent implements OnInit {
   jokes: Joke[] = [];
-  private jokesUrl = `${environment.apiUrl}jokes`;
 
   constructor(private http: HttpClient, private jokesService: JokesService) { }
 
