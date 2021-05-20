@@ -1,14 +1,11 @@
-﻿using JokesOnYou.Web.Api.DTOs;
-using JokesOnYou.Web.Api.Repositories.Interfaces;
-using JokesOnYou.Web.Api.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using JokesOnYou.Web.Api.DTOs;
 using JokesOnYou.Web.Api.Exceptions;
-using AutoMapper;
 using JokesOnYou.Web.Api.Models;
+using JokesOnYou.Web.Api.Repositories.Interfaces;
+using JokesOnYou.Web.Api.Services.Interfaces;
+using AutoMapper;
 
 namespace JokesOnYou.Web.Api.Services
 {
@@ -41,9 +38,32 @@ namespace JokesOnYou.Web.Api.Services
             return tagReplyDto;
         }
 
-        public async Task<IEnumerable<TagReplyDto>> GetAllTagDtosAsync()
+        public async Task<IEnumerable<TagReplyDto>> GetAllTagDtosAsync() => await _tagRepo.GetAllTagDtosAsync();
+
+        public async Task<Tag> GetTagAsync(int id)
         {
-            return await _tagRepo.GetAllTagDtosAsync();
+            var tag = await _tagRepo.GetTagAsync(id);
+
+            if (tag == null)
+            {
+                throw new AppException($"No Tag with Id:\"{id}\" has been found.");
+            }
+            return tag;
         }
+
+        /// <summary>
+        /// Deletes given <paramref name="tag"/>
+        /// </summary>
+        /// <param name="tag"></param>
+        /// <returns></returns>
+        public async Task DeleteTagAsync(Tag tag)
+        {
+            _tagRepo.Delete(tag);
+            if (!await _unitOfWork.SaveAsync())
+            {
+                throw new AppException($"Something wend wrong when trying to save the database after Deleting the Tag: {tag}");
+            }
+        }
+
     }
 }

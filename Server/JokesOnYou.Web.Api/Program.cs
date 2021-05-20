@@ -28,7 +28,6 @@ namespace JokesOnYou.Web.Api
                 {
 
                     var context = services.GetRequiredService<DataContext>();
-                    context.Database.EnsureCreated();
                     DataSeeding.Initialize(context);
                 }
                 catch (Exception ex)

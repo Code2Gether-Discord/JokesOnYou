@@ -34,11 +34,5 @@
     <PackageReference Include="System.Text.Json" Version="5.0.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="JokesOnYou.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 
 </Project>
