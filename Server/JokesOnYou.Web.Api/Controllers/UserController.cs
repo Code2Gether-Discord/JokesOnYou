@@ -22,6 +22,9 @@ namespace JokesOnYou.Web.Api.Controllers
             _userService = userService;
         }
 
+        // Disable "this async method lacks an await operator" Remove this when we actually implement methods
+        #pragma warning disable 1998
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserReplyDTO>>> GetUsers()
         {

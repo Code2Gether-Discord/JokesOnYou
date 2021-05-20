@@ -1,10 +1,11 @@
 ﻿using JokesOnYou.Web.Api.DTOs;
+using JokesOnYou.Web.Api.Exceptions;
 using JokesOnYou.Web.Api.Models;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
 using JokesOnYou.Web.Api.Services.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Identity;
@@ -30,6 +31,10 @@ namespace JokesOnYou.Web.Api.Services
             _signInManager = signInManager;
             _tokenService = tokenService;
         }
+
+        // Disable "this async method lacks an await operator" Remove this when we actually implement methods
+        #pragma warning disable 1998
+
        
 
         public async Task<IEnumerable<UserReplyDTO>> GetAll()
@@ -65,6 +70,8 @@ namespace JokesOnYou.Web.Api.Services
             return await _userRepository.GetUserAsync(id);
         }
 
+
+        #pragma warning restore 1998
 
         public async Task<UserReplyDTO> LoginUser(UserLoginDTO userLogin)
         {

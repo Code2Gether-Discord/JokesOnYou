@@ -17,7 +17,6 @@ services:
     environment:
         ASPNETCORE_ENVIRONMENT: Development
         DB_CONNECTION_STRING: User ID=jokeuser;Password=password;Server=db;Port=5432;Database=jokedb;Integrated Security=true;Pooling=true
-        #host=localhost;port=5432;database=jokedb;username=jokeuser;password=password
     networks:
         - jokes-on-you-dev
     volumes:
