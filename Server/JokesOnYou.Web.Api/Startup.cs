@@ -1,6 +1,3 @@
-using System;
-using System.IO;
-using System.Text.Json.Serialization;
 using JokesOnYou.Web.Api.Extensions;
 using JokesOnYou.Web.Api.Middlewares;
 using JokesOnYou.Web.Api.Repositories;
@@ -12,10 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using AutoMapper;
-using JokesOnYou.Web.Api.Data;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
+using System;
 
 namespace JokesOnYou.Web.Api
 {
@@ -48,37 +42,7 @@ namespace JokesOnYou.Web.Api
             services.AddCors();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            services.AddSwaggerGen(config =>
-            {
-                //appcontext base directory is where the app entry point assembly is (bin folder)
-                config.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "JokesOnYou.Web.Api.xml"));
-
-                //add authorization option to Swagger UI
-                config.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                {
-                    Description = "JWT Authorization header **_WITHOUT_** 'Bearer'. Example: '12345abcdef')",
-                    Name = "Authorization",
-                    In = ParameterLocation.Header,
-                    Type  = SecuritySchemeType.Http,
-                    Scheme = "Bearer"
-                });
-
-                //make sure swagger uses authorization token in requests
-                config.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer"
-                            }
-                        },
-                        Array.Empty<string>()
-                    }
-                });
-            });
+            services.ConfigureSwagger();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
