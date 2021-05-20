@@ -21,6 +21,7 @@ namespace JokesOnYou.Web.Api.Repositories
             _context = context;
             _mapper = mapper;
         }
+
         public async Task<IEnumerable<TagReplyDto>> GetAllTagDtosAsync() => await _context.Tags.ProjectTo<TagReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
         public async Task<List<Tag>> GetTags(int[] ids) => await _context.Tags.Where(x => ids.Contains(x.Id)).ToListAsync();
 
@@ -41,11 +42,6 @@ namespace JokesOnYou.Web.Api.Repositories
         public async Task CreateTagAsync(Tag tag)
         {
             await _context.Tags.AddAsync(tag).AsTask();
-        }
-
-        public async Task<IEnumerable<TagReplyDto>> GetAllTagDtosAsync()
-        {
-            return await _context.Tags.ProjectTo<TagReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
         }
     }
 }
