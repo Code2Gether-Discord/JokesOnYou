@@ -103,7 +103,7 @@ namespace JokesOnYou.Web.Api.Services
             return _mapper.Map<JokeReplyDto>(jokeToUpdate);
         }
 
-        public Task<JokeReplyDto> GetJokeDtoAsync(int id)
+        public Task<JokeWithAuthorReplyDto> GetJokeDtoAsync(int id)
         {
             return _jokesRepo.GetJokeDtoAsync(id);
         }

@@ -54,7 +54,7 @@ namespace JokesOnYou.Web.Api.Controllers
 
         [AllowAnonymous]
         [HttpGet("{id}")]
-        public async Task<ActionResult<JokeReplyDto>> GetJoke(int id)
+        public async Task<ActionResult<JokeWithAuthorReplyDto>> GetJoke(int id)
         {
             var joke = await _jokesService.GetJokeDtoAsync(id);
             return joke;

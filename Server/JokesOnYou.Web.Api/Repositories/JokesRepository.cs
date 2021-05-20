@@ -30,7 +30,12 @@ namespace JokesOnYou.Web.Api.Repositories
         public async Task<IEnumerable<JokeReplyDto>> GetAllJokeDtosAsync() => await _context.Jokes.ProjectTo<JokeReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
         public async Task<Joke> GetJokeByIdAsync(int id) => await _context.Jokes.FirstOrDefaultAsync(x => x.Id == id);
 
-        public async Task<JokeReplyDto> GetJokeDtoAsync(int id) => await _context.Jokes.ProjectTo<JokeReplyDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync(j => j.Id == id);
+        public async Task<JokeWithAuthorReplyDto> GetJokeDtoAsync(int id) => 
+            await _context
+            .Jokes
+            .ProjectTo<JokeWithAuthorReplyDto>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(j => j.Id == id);
+
         public void DeleteJoke(Joke joke) => _context.Jokes.Remove(joke);
     }
 }

@@ -13,6 +13,6 @@ namespace JokesOnYou.Web.Api.Repositories.Interfaces
         Task<Joke> GetJokeByIdAsync(int id);
         Task CreateJokeAsync(Joke joke);
         Task<bool> DoesJokeExist(string normalizedPremise, string normalizedPunchline);
-        Task<JokeReplyDto> GetJokeDtoAsync(int id);
+        Task<JokeWithAuthorReplyDto> GetJokeDtoAsync(int id);
     }
 }

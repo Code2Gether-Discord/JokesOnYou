@@ -13,6 +13,8 @@ namespace JokesOnYou.Web.Api.Profiles
         public JokesProfile()
         {
             CreateMap<Joke, JokeReplyDto>();
+            CreateMap<Joke, JokeWithAuthorReplyDto>()
+                .ForMember(jwa => jwa.AuthorName, opt => opt.MapFrom(j => j.Author.Name));
             CreateMap<User, JokeAuthorDto>();
             CreateMap<JokeCreateDto, Joke>();
             CreateMap<JokeUpdateDto, Joke>();
