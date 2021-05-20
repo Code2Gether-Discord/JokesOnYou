@@ -22,21 +22,11 @@ namespace JokesOnYou.Web.Api
         private static void CreateDbIfNotExists(IHost host)
         {
 
-            var path1 = AppDomain.CurrentDomain.BaseDirectory;
-            var path2 = AppContext.BaseDirectory;
-
-            var dirInfo = new DirectoryInfo(path1);
-            var dirInfo2 = new DirectoryInfo(path2);
-            var dir1 = dirInfo.GetDirectories();
-            var dir2 = dirInfo2.GetDirectories();
-
-
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
                 try
                 {
-
                     var context = services.GetRequiredService<DataContext>();
                     DataSeeding.Initialize(context);
                 }
