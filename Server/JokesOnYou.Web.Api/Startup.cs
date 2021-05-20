@@ -1,4 +1,3 @@
-using JokesOnYou.Web.Api.Data;
 using JokesOnYou.Web.Api.Extensions;
 using JokesOnYou.Web.Api.Middlewares;
 using JokesOnYou.Web.Api.Repositories;
@@ -7,12 +6,10 @@ using JokesOnYou.Web.Api.Services;
 using JokesOnYou.Web.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.IO;
 
 namespace JokesOnYou.Web.Api
 {
@@ -29,11 +26,10 @@ namespace JokesOnYou.Web.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureAppServices(_config);
-
+            
             services.AddControllers();
 
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ITokenService, JwtTokenService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -45,11 +41,7 @@ namespace JokesOnYou.Web.Api
             services.AddCors();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            services.AddSwaggerGen(config =>
-            {
-                //appcontext base directory is where the app entry point assembly is (bin folder)
-                config.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "JokesOnYou.Web.Api.xml"));
-            });
+            services.ConfigureSwagger();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
