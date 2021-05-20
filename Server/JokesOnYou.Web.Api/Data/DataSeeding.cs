@@ -1,9 +1,7 @@
-﻿using System;
+﻿using JokesOnYou.Web.Api.Models;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
-using JokesOnYou.Web.Api.Models;
 using System.Text.Json;
 
 namespace JokesOnYou.Web.Api.Data
