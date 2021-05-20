@@ -1,10 +1,10 @@
 using JokesOnYou.Web.Api.Data;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
+using System.IO;
 
 namespace JokesOnYou.Web.Api
 {
@@ -13,7 +13,7 @@ namespace JokesOnYou.Web.Api
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-            
+
             CreateDbIfNotExists(host);
 
             host.Run();
@@ -21,12 +21,12 @@ namespace JokesOnYou.Web.Api
         }
         private static void CreateDbIfNotExists(IHost host)
         {
+
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
                 try
                 {
-
                     var context = services.GetRequiredService<DataContext>();
                     DataSeeding.Initialize(context);
                 }

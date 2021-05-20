@@ -10,45 +10,65 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using JokesOnYou.Web.Api.Exceptions;
+using AutoMapper;
 
 namespace JokesOnYou.Web.Api.Services
 {
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly SignInManager<User> _signInManager;
         private readonly ITokenService _tokenService;
 
-        public UserService(IUserRepository userRepository, SignInManager<User> signInManager, ITokenService tokenService)
+        public UserService(IUserRepository userRepo, IMapper mapper, IUnitOfWork unitOfWork, SignInManager<User> signInManager, ITokenService tokenService)
         {
-            _userRepository = userRepository;
+            _userRepository = userRepo;
+            _mapper = mapper;
+            _unitOfWork = unitOfWork;
             _signInManager = signInManager;
             _tokenService = tokenService;
+        }
+       
+
+        public async Task<IEnumerable<UserReplyDTO>> GetAll()
+        {
+            return await _userRepository.GetUsersAsync();
         }
 
         public async Task DeleteUser(string id)
         {
-            throw new NotImplementedException();
+            var user = await _userRepository.GetUserAsync(id);
+            if (user == null)
+            {
+                throw new AppException($"Cant find user of id:{id}");
+            }
+            await _userRepository.DeleteUserAsync(user);
         }
 
-        public async Task<IEnumerable<User>> GetAll()
+        public async Task<UserReplyDTO> GetUserReplyById(string id)
         {
-            throw new NotImplementedException();
+            return await _userRepository.GetUserReplyAsync(id);
         }
+
+        public async Task UpdateUser(UserUpdateDTO userDTO)
+        {
+            var user = await _userRepository.GetUserAsync(userDTO.Id);
+            _mapper.Map(userDTO, user);
+            await _unitOfWork.SaveAsync();
+        }
+        
 
         public async Task<User> GetUserById(string id)
         {
             return await _userRepository.GetUserAsync(id);
         }
 
-        public async Task UpdateUser(UserUpdateDTO updateDTO)
-        {
-            throw new NotImplementedException();
-        }
 
         public async Task<UserReplyDTO> LoginUser(UserLoginDTO userLogin)
         {
-            var user = await _userRepository.GetUserByEmail(userLogin.Email);
+            var user = await _userRepository.GetUserByEmailAsync(userLogin.Email);
             if (user != null)
             {
                 var signInResult = await _signInManager.CheckPasswordSignInAsync(user, userLogin.Password, false);
