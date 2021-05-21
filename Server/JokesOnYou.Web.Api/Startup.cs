@@ -15,7 +15,6 @@ using Microsoft.Extensions.Hosting;
 using AutoMapper;
 using JokesOnYou.Web.Api.Data;
 using Microsoft.EntityFrameworkCore;
-//using Microsoft.AspNetCore.Identity;
 
 namespace JokesOnYou.Web.Api
 {
@@ -44,9 +43,6 @@ namespace JokesOnYou.Web.Api
             services.AddScoped<IJokesService, JokesService>();
             services.AddScoped<ITagService, TagService>();
             services.AddScoped<ITagRepository, TagRepository>();
-
-            //services.AddIdentityCore<IdentityUser>()
-            //    .AddEntityFrameworkStores<DataContext>();
 
             services.AddCors();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
