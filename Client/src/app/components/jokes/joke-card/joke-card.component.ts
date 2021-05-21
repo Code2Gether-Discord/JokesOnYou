@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Joke } from 'src/_models/joke';
+import { Joke } from 'src/app/_models/joke';
 
 @Component({
   selector: 'app-joke-card',
