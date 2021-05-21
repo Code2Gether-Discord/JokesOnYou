@@ -1,12 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using AutoMapper;
 using JokesOnYou.Web.Api.DTOs;
 using JokesOnYou.Web.Api.Exceptions;
 using JokesOnYou.Web.Api.Models;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
 using JokesOnYou.Web.Api.Services.Interfaces;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Services
 {
@@ -47,7 +46,7 @@ namespace JokesOnYou.Web.Api.Services
             var saved = await _unitOfWork.SaveAsync();
             if (!saved)
             {
-                if(await _jokesRepo.GetJokeDtoAsync(joke.Id) == null)
+                if (await _jokesRepo.GetJokeDtoAsync(joke.Id) == null)
                 {
                     throw new AppException("Error with saving the Joke.");
                 }
@@ -103,9 +102,23 @@ namespace JokesOnYou.Web.Api.Services
             return _mapper.Map<JokeReplyDto>(jokeToUpdate);
         }
 
-        public Task<JokeWithAuthorReplyDto> GetJokeDtoAsync(int id)
+        public async Task<JokeWithAuthorReplyDto> GetJokeDtoAsync(int id)
         {
-            return _jokesRepo.GetJokeDtoAsync(id);
+            var jokeDto = await _jokesRepo.GetJokeDtoAsync(id);
+            if (jokeDto == null)
+            {
+                throw new KeyNotFoundException("Cant find joke");
+            }
+
+            var user = await _userRepository.GetUserAsync(jokeDto.AuthorId);
+            if (user == null)
+            {
+                throw new AppException($"No user with this id:\"{id}\" found in the Database.");
+            }
+
+            jokeDto.AuthorName = user.Name;
+
+            return jokeDto;
         }
     }
 }
