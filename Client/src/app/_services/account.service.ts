@@ -4,6 +4,7 @@ import { ReplaySubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../_models/user';
 import { map } from 'rxjs/operators';
+import { LoginRequest } from '../_models/_requests/loginRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +16,8 @@ export class AccountService {
 
   constructor(private http: HttpClient) { }
 
-  login(model: any) {
-    return this.http.post(`${this.accountUrl}login`, model).pipe(
+  login(request: LoginRequest) {
+    return this.http.post(`${this.accountUrl}login`, request).pipe(
       map((user: User) => {
         if (user) {
           localStorage.setItem('user', JSON.stringify(user));
