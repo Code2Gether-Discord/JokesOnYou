@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using JokesOnYou.Web.Api.Extensions;
 
 namespace JokesOnYou.Web.Api.Controllers
 {
@@ -50,7 +51,8 @@ namespace JokesOnYou.Web.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<TagReplyDto>> CreateTagAsync(TagCreateDto tagCreateDto)
         {
-            var tagReplyDto = await _tagService.CreateTagAsync(tagCreateDto); 
+            var userId = ClaimsPrincipalExtension.GetUserId(User);
+            var tagReplyDto = await _tagService.CreateTagAsync(tagCreateDto, userId); 
             return tagReplyDto;
         }
     }
