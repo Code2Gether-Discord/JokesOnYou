@@ -31,8 +31,7 @@ namespace JokesOnYou.Web.Api.Repositories
         public async Task<Joke> GetJokeByIdAsync(int id) => await _context.Jokes.FirstOrDefaultAsync(x => x.Id == id);
 
         public async Task<JokeWithAuthorReplyDto> GetJokeDtoAsync(int id) => 
-            await _context
-            .Jokes
+            await _context.Jokes
             .ProjectTo<JokeWithAuthorReplyDto>(_mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(j => j.Id == id);
 
