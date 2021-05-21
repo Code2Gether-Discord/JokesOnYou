@@ -46,10 +46,7 @@ namespace JokesOnYou.Web.Api.Services
             var saved = await _unitOfWork.SaveAsync();
             if (!saved)
             {
-                if (await _jokesRepo.GetJokeDtoAsync(joke.Id) == null)
-                {
-                    throw new AppException("Error with saving the Joke.");
-                }
+                throw new AppException("Error with saving the Joke.");
             }
 
             var jokeReplyDto = _mapper.Map<JokeReplyDto>(joke);
