@@ -22,17 +22,17 @@ namespace JokesOnYou.Web.Api.Controllers
 
         [Authorize(Roles = "Registered,Admin")]
         [HttpPost]
-        public async Task<ActionResult<JokeReplyDto>> CreateJokeAsync(JokeCreateDto jokeCreateDto)
+        public async Task<ActionResult<JokeDto>> CreateJokeAsync(JokeCreateDto jokeCreateDto)
         {
 
             jokeCreateDto.UserId = ClaimsPrincipalExtension.GetUserId(User);
-            var jokeReplyDto = await _jokesService.CreateJokeAsync(jokeCreateDto);
+            var jokeDto = await _jokesService.CreateJokeAsync(jokeCreateDto);
 
-            return jokeReplyDto;
+            return jokeDto;
         }
         [AllowAnonymous]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<JokeReplyDto>>> GetAllJokesAsync()
+        public async Task<ActionResult<IEnumerable<JokeDto>>> GetAllJokesAsync()
         {
             var jokeDtos = await _jokesService.GetAllJokeDtosAsync();
             return Ok(jokeDtos);
@@ -46,15 +46,15 @@ namespace JokesOnYou.Web.Api.Controllers
         }
         
         [HttpPut]
-        public async Task<ActionResult<JokeReplyDto>> UpdateJoke(JokeUpdateDto jokeUpdateDto)
+        public async Task<ActionResult<JokeDto>> UpdateJoke(JokeUpdateDto jokeUpdateDto)
         {
-            var jokeReplyDto = await _jokesService.UpdateJoke(jokeUpdateDto);
-            return jokeReplyDto;
+            var jokeDto = await _jokesService.UpdateJoke(jokeUpdateDto);
+            return jokeDto;
         }
 
         [AllowAnonymous]
         [HttpGet("{id}")]
-        public async Task<ActionResult<JokeWithAuthorReplyDto>> GetJoke(int id)
+        public async Task<ActionResult<JokeDto>> GetJoke(int id)
         {
             var joke = await _jokesService.GetJokeDtoAsync(id);
             return joke;

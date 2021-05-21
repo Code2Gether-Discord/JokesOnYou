@@ -8,9 +8,7 @@ namespace JokesOnYou.Web.Api.Profiles
     {
         public JokesProfile()
         {
-            CreateMap<Joke, JokeReplyDto>();
-            CreateMap<Joke, JokeWithAuthorReplyDto>();
-            CreateMap<User, JokeAuthorDto>();
+            CreateMap<Joke, JokeDto>();
             CreateMap<JokeCreateDto, Joke>();
             CreateMap<JokeUpdateDto, Joke>();
         }
