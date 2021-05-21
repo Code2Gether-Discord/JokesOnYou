@@ -22,9 +22,10 @@ namespace JokesOnYou.Web.Api.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<TagReplyDto> CreateTagAsync(TagCreateDto tagCreateDto)
+        public async Task<TagReplyDto> CreateTagAsync(TagCreateDto tagCreateDto, string userId)
         {
             var tag = _mapper.Map<Tag>(tagCreateDto);
+            tag.OwnerId = userId;  
             await _tagRepo.CreateTagAsync(tag);
 
             var saved = await _unitOfWork.SaveAsync();

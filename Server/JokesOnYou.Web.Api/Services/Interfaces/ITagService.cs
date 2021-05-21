@@ -9,7 +9,7 @@ namespace JokesOnYou.Web.Api.Services.Interfaces
     {
         Task DeleteTagAsync(Tag tag);
         Task<Tag> GetTagAsync(int id);
-        Task<TagReplyDto> CreateTagAsync(TagCreateDto tagCreateDto);
+        Task<TagReplyDto> CreateTagAsync(TagCreateDto tagCreateDto, string userId);
         Task<IEnumerable<TagReplyDto>> GetAllTagDtosAsync();
     }
 }
