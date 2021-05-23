@@ -10,5 +10,6 @@ namespace JokesOnYou.Web.Api.Services.Interfaces
         Task DeleteTagAsync(Tag tag);
         Task<Tag> GetTagAsync(int id);
         Task<IEnumerable<TagReplyDto>> GetAllTagDtosAsync();
+        Task<TagReplyDto> GetTagDtoAsync(int id);
     }
 }
