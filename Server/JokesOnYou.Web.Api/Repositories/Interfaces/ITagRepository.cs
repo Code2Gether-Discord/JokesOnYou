@@ -11,6 +11,7 @@ namespace JokesOnYou.Web.Api.Repositories.Interfaces
         Task<Tag> GetTagAsync(int id);
         Task<List<Tag>> GetTags(int[] ids);
         Task<IEnumerable<TagReplyDto>> GetAllTagDtosAsync();
+        Task<TagReplyDto> GetTagDtoAsync(int id);
         Task CreateTagAsync(Tag tag); 
     }
 }

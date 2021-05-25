@@ -40,6 +40,7 @@ namespace JokesOnYou.Web.Api.Services
         }
 
         public async Task<IEnumerable<TagReplyDto>> GetAllTagDtosAsync() => await _tagRepo.GetAllTagDtosAsync();
+        public async Task<TagReplyDto> GetTagDtoAsync(int id) => await _tagRepo.GetTagDtoAsync(id);
 
         public async Task<Tag> GetTagAsync(int id)
         {

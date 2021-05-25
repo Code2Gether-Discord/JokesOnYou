@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Joke } from '../../../_models/joke';
-import { JokesService } from 'src/_services/jokes.service';
+import { JokesService } from 'src/app/_services/jokes.service';
 
 @Component({
   selector: '',

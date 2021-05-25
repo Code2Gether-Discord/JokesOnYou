@@ -1,48 +1,70 @@
 ﻿using JokesOnYou.Web.Api.DTOs;
+using JokesOnYou.Web.Api.Extensions;
 using JokesOnYou.Web.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
-
-        public UserController(IUserService userService)
+        private readonly ILogger<UserController> _logger;
+        public UserController(IUserService userService, ILogger<UserController> logger)
         {
+            _logger = logger;
             _userService = userService;
         }
 
+        // Disable "this async method lacks an await operator" Remove this when we actually implement methods
+        #pragma warning disable 1998
+
         [HttpGet]
-        public async Task<ActionResult> GetUsers()
+        public async Task<ActionResult<IEnumerable<UserReplyDTO>>> GetUsers()
         {
-            throw new NotImplementedException();
+            return Ok(await _userService.GetAll());
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetUser(string id)
+        public async Task<ActionResult<UserReplyDTO>> GetUserById(string id)
         {
-            throw new NotImplementedException();
+            var user = await _userService.GetUserReplyById(id);
+            if (user != null) return user;
+            _logger.LogInformation($"User not found; id: {id}");
+            return NotFound();
         }
 
-        [HttpPatch]
-        public async Task<ActionResult> UpdateUser(UserUpdateDTO userUpdateDTO)
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateUser(string id, UserUpdateDTO userUpdateDTO)
         {
-            throw new NotImplementedException();
+            
+            if (id != ClaimsPrincipalExtension.GetUserId(User))
+            {
+                return Unauthorized();
+            }
+            
+            userUpdateDTO.Id = id;
+            await _userService.UpdateUser(userUpdateDTO);
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteUser(string id)
         {
-            throw new NotImplementedException();
+            
+            if (id != ClaimsPrincipalExtension.GetUserId(User))
+            {
+                return Unauthorized();
+            }
+            
+            await _userService.DeleteUser(id);
+            return NoContent();
         }
     }
 }
