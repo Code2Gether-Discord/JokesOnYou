@@ -58,8 +58,18 @@ The Building, Coding, Documenting and Teaching.
 
 
 ### Installing
+Server Environment
+    1. Download [Docker Desktop](https://www.docker.com/products/docker-desktop). 
+        - To run the JokesOnYou API, you will need to debug the solution in your IDE and target docker-compose
+    2. Download [Postman](https://www.postman.com/downloads/) or create an account to run it in your browser. 
+        - Set up [environment variables](https://tinyurl.com/mprmpdd8) in Postman. 
+            - The base URL will be http://localhost:8000/api.
+            - A bearer token is needed to make authorised http requests. You can generate a token at the /account/login endpoint. 
+            - [Pass](https://tinyurl.com/uwah44va) the bearer token to a request.
 
-*Step-by-step instructions on how to get dev environment running*
+Client Environment
+    - The client side uses Angular. See [Client README.md](https://github.com/Code2Gether-Discord/JokesOnYou/blob/dev/Client/README.md) for setup instructions.
+        - The server environment needs to be running before you can launch the client server. 
 
 ## How to Discord
 
