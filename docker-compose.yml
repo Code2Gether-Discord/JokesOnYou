@@ -15,9 +15,8 @@ services:
     ports:
       - 8000:80
     environment:
-        ASPNETCORE_ENVIRONMENT: Development
-        DB_CONNECTION_STRING: User ID=jokeuser;Password=password;Server=db;Port=5432;Database=jokesdb;Integrated Security=true;Pooling=true
-        #host=localhost;port=5432;database=jokedb;username=jokeuser;password=password
+        - "ASPNETCORE_ENVIRONMENT=Development"
+        - "ConnectionStrings:PostgresConnectionString=User ID=jokeuser;Password=password;Server=db;Port=5432;Database=jokesdb;Integrated Security=true;Pooling=true"
     networks:
         - jokes-on-you-dev
     volumes:
