@@ -10,5 +10,6 @@ namespace JokesOnYou.Web.Api.Models
         public string Role { get; set; }
         public int Strikes { get; set; }
         public bool Nsfw { get; set; }
+        public List<int> TagIds { get; set; }
     }
 }
