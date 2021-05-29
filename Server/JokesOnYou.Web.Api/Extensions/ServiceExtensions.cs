@@ -17,10 +17,10 @@ namespace JokesOnYou.Web.Api.Extensions
     {
         public static IServiceCollection ConfigureAppServices(this IServiceCollection services, IConfiguration config)
         {
-            var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
+            var connectionString = config.GetConnectionString("PostgresConnectionString");
 
             services.AddDbContext<DataContext>(options =>
-                options.UseNpgsql(connectionString)
+                    options.UseNpgsql(connectionString, o => o.EnableRetryOnFailure(5))
             );
 
             services.AddIdentity<User, IdentityRole>(
