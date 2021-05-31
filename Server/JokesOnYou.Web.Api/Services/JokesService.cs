@@ -50,7 +50,8 @@ namespace JokesOnYou.Web.Api.Services
             }
 
             var jokeDto = _mapper.Map<JokeDto>(joke);
-            jokeDto.AuthorName = user.Name;
+            jokeDto.Author.Id = user.Id;
+            jokeDto.Author.UserName = user.UserName;
 
             return jokeDto;
         }
@@ -123,13 +124,13 @@ namespace JokesOnYou.Web.Api.Services
 
         private async Task AddAuthorToJoke(JokeDto jokeDto)
         {
-            var user = await _userRepository.GetUserAsync(jokeDto.AuthorId);
+            var user = await _userRepository.GetUserAsync(jokeDto.Author.Id);
             if (user == null)
             {
-                throw new AppException($"No user with this id:\"{jokeDto.AuthorId}\" found in the Database.");
+                throw new AppException($"No user with this id:\"{jokeDto.Author.Id}\" found in the Database.");
             }
 
-            jokeDto.AuthorName = user.Name;
+            jokeDto.Author.UserName = user.UserName;
         }
     }
 }
