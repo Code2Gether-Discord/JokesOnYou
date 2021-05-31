@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace JokesOnYou.Web.Api.DTOs
 {
     public class UserLoginDTO
     {
-        public string Email { get; set; }
+        [Required]
+        public string LoginName { get; set; }
+        [Required]
         public string Password { get; set; }
     }
 }

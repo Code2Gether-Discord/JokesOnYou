@@ -17,7 +17,7 @@ namespace JokesOnYou.Web.Api.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<UserReplyDTO>> Login (UserLoginDTO userLogin)
+        public async Task<ActionResult<UserReplyDTO>> Login(UserLoginDTO userLogin)
         {
             var userReplyDTO = await _userService.LoginUser(userLogin);
             return userReplyDTO;
@@ -27,7 +27,7 @@ namespace JokesOnYou.Web.Api.Controllers
         public async Task<ActionResult> Register(UserRegisterDTO userRegister)
         {
             await _userService.RegisterUser(userRegister);
-            return Ok();
+            return NoContent();
         }
     }
 }

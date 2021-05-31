@@ -1,6 +1,6 @@
 [
   {
-    "name": "Janice Tyler",
+    "Username": "Janice Tyler",
     "email": "janicetyler@isonus.com",
     "role": "hi",
     "strikes": 0,
@@ -9,7 +9,7 @@
 
   },
   {
-    "name": "Trujillo Wilcox",
+    "Username": "Trujillo Wilcox",
     "email": "trujillowilcox@isonus.com",
     "role": "hi",
     "strikes": 3,
@@ -18,7 +18,7 @@
 
   },
   {
-    "name": "Odessa Atkins",
+    "Username": "Odessa Atkins",
     "email": "odessaatkins@isonus.com",
     "role": "hi",
     "strikes": 0,
@@ -27,7 +27,7 @@
 
   },
   {
-    "name": "Hale Hahn",
+    "Username": "Hale Hahn",
     "email": "halehahn@isonus.com",
     "role": "hi",
     "strikes": 1,
@@ -36,7 +36,7 @@
 
   },
   {
-    "name": "Stephanie Rosales",
+    "Username": "Stephanie Rosales",
     "email": "stephanierosales@isonus.com",
     "role": "hi",
     "strikes": 2,
@@ -45,7 +45,7 @@
 
   },
   {
-    "name": "Juarez Booth",
+    "Username": "Juarez Booth",
     "email": "juarezbooth@isonus.com",
     "role": "hi",
     "strikes": 0,
@@ -53,7 +53,7 @@
     "nsfw": true
   },
   {
-    "name": "Carla Pruitt",
+    "Username": "Carla Pruitt",
     "email": "carlapruitt@isonus.com",
     "signupdate": "2021-12-14",
     "role": "hi",

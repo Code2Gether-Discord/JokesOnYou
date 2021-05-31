@@ -1,25 +1,46 @@
-﻿using JokesOnYou.Web.Api.DTOs;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using JokesOnYou.Web.Api.DTOs;
 using JokesOnYou.Web.Api.Exceptions;
 using JokesOnYou.Web.Api.Models;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
 using JokesOnYou.Web.Api.Services.Interfaces;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using AutoMapper;
 
 namespace JokesOnYou.Web.Api.Services
 {
     public class TagService : ITagService
     {
         private readonly ITagRepository _tagRepo;
+        private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
 
-        public TagService(ITagRepository tagRepo, IUnitOfWork unitOfWork)
+        public TagService(ITagRepository tagRepo, IMapper mapper, IUnitOfWork unitOfWork)
         {
             _tagRepo = tagRepo;
+            _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
 
+        public async Task<TagReplyDto> CreateTagAsync(TagCreateDto tagCreateDto, string userId)
+        {
+            var tag = _mapper.Map<Tag>(tagCreateDto);
+            tag.OwnerId = userId;  
+            await _tagRepo.CreateTagAsync(tag);
+
+            var saved = await _unitOfWork.SaveAsync();
+            if (!saved)
+            {
+                throw new AppException($"error saving {tagCreateDto.Name}"); 
+            }
+
+            var tagReplyDto = _mapper.Map<TagReplyDto>(tag);
+
+            return tagReplyDto;
+        }
+
         public async Task<IEnumerable<TagReplyDto>> GetAllTagDtosAsync() => await _tagRepo.GetAllTagDtosAsync();
+        public async Task<TagReplyDto> GetTagDtoAsync(int id) => await _tagRepo.GetTagDtoAsync(id);
 
         public async Task<Tag> GetTagAsync(int id)
         {

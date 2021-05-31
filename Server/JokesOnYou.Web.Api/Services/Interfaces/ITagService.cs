@@ -1,7 +1,7 @@
-﻿using JokesOnYou.Web.Api.DTOs;
-using JokesOnYou.Web.Api.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using JokesOnYou.Web.Api.DTOs;
+using JokesOnYou.Web.Api.Models;
 
 namespace JokesOnYou.Web.Api.Services.Interfaces
 {
@@ -9,6 +9,8 @@ namespace JokesOnYou.Web.Api.Services.Interfaces
     {
         Task DeleteTagAsync(Tag tag);
         Task<Tag> GetTagAsync(int id);
+        Task<TagReplyDto> CreateTagAsync(TagCreateDto tagCreateDto, string userId);
         Task<IEnumerable<TagReplyDto>> GetAllTagDtosAsync();
+        Task<TagReplyDto> GetTagDtoAsync(int id);
     }
 }

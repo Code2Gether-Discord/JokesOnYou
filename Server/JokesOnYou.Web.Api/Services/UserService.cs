@@ -1,54 +1,83 @@
 ﻿using JokesOnYou.Web.Api.DTOs;
+using JokesOnYou.Web.Api.Exceptions;
 using JokesOnYou.Web.Api.Models;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
 using JokesOnYou.Web.Api.Services.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using JokesOnYou.Web.Api.Exceptions;
+using AutoMapper;
+using System.ComponentModel.DataAnnotations;
 
 namespace JokesOnYou.Web.Api.Services
 {
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly SignInManager<User> _signInManager;
         private readonly ITokenService _tokenService;
 
-        public UserService(IUserRepository userRepository, SignInManager<User> signInManager, ITokenService tokenService)
+        public UserService(IUserRepository userRepo, IMapper mapper, IUnitOfWork unitOfWork, SignInManager<User> signInManager, ITokenService tokenService)
         {
-            _userRepository = userRepository;
+            _userRepository = userRepo;
+            _mapper = mapper;
+            _unitOfWork = unitOfWork;
             _signInManager = signInManager;
             _tokenService = tokenService;
         }
 
-        public async Task DeleteUser(string id)
+        // Disable "this async method lacks an await operator" Remove this when we actually implement methods
+#pragma warning disable 1998
+
+
+
+        public async Task<IEnumerable<UserReplyDTO>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _userRepository.GetUsersAsync();
         }
 
-        public async Task<IEnumerable<User>> GetAll()
+        public async Task DeleteUser(string id)
         {
-            throw new NotImplementedException();
+            var user = await _userRepository.GetUserAsync(id);
+            if (user == null)
+            {
+                throw new AppException($"Cant find user of id:{id}");
+            }
+            await _userRepository.DeleteUserAsync(user);
         }
+
+        public async Task<UserReplyDTO> GetUserReplyById(string id)
+        {
+            return await _userRepository.GetUserReplyAsync(id);
+        }
+
+        public async Task UpdateUser(UserUpdateDTO userDTO)
+        {
+            var user = await _userRepository.GetUserAsync(userDTO.Id);
+            _mapper.Map(userDTO, user);
+            await _unitOfWork.SaveAsync();
+        }
+
 
         public async Task<User> GetUserById(string id)
         {
             return await _userRepository.GetUserAsync(id);
         }
 
-        public async Task UpdateUser(UserUpdateDTO updateDTO)
-        {
-            throw new NotImplementedException();
-        }
+
 
         public async Task<UserReplyDTO> LoginUser(UserLoginDTO userLogin)
         {
-            var user = await _userRepository.GetUserByEmail(userLogin.Email);
+            var user = new EmailAddressAttribute().IsValid(userLogin.LoginName) ? await _userRepository.GetUserByEmailAsync(userLogin.LoginName) :
+                await _userRepository.GetUserByUsernameAsync(userLogin.LoginName);
+
             if (user != null)
             {
                 var signInResult = await _signInManager.CheckPasswordSignInAsync(user, userLogin.Password, false);
@@ -77,6 +106,11 @@ namespace JokesOnYou.Web.Api.Services
 
         public async Task RegisterUser(UserRegisterDTO userRegisterDTO)
         {
+            if (new EmailAddressAttribute().IsValid(userRegisterDTO.UserName))
+            {
+                throw new UserRegisterException("Cannot use an email as username");
+            }
+            
             var user = await _userRepository.CreateUserAsync(userRegisterDTO);
 
             if (user == null)

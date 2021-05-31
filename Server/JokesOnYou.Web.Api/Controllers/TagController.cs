@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using JokesOnYou.Web.Api.Extensions;
 
 namespace JokesOnYou.Web.Api.Controllers
 {
@@ -26,7 +27,7 @@ namespace JokesOnYou.Web.Api.Controllers
         public async Task<IActionResult> DeleteTag(int id)
         {
             var tag = await _tagService.GetTagAsync(id);
-            string userId = User.Identity.Name; // _userManager.GetUserId(User);
+            string userId = User.Identity.Name;
             if (tag.OwnerId == userId || User.IsInRole("Admin"))
             {
                 await _tagService.DeleteTagAsync(tag);
@@ -44,6 +45,23 @@ namespace JokesOnYou.Web.Api.Controllers
         {
             var tagDtos = await _tagService.GetAllTagDtosAsync();
             return Ok(tagDtos);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("{id}")]
+        public async Task<ActionResult<TagReplyDto>> GetTag(int id)
+        {
+            var tagDto = await _tagService.GetTagDtoAsync(id);
+            return tagDto;
+        }
+        
+        [Authorize(Roles = "Registered,Admin")]
+        [HttpPost]
+        public async Task<ActionResult<TagReplyDto>> CreateTagAsync(TagCreateDto tagCreateDto)
+        {
+            var userId = ClaimsPrincipalExtension.GetUserId(User);
+            var tagReplyDto = await _tagService.CreateTagAsync(tagCreateDto, userId); 
+            return tagReplyDto;
         }
     }
 }

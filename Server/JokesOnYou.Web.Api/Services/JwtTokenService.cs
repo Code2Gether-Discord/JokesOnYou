@@ -1,10 +1,10 @@
 ﻿using JokesOnYou.Web.Api.Models;
 using JokesOnYou.Web.Api.Services.Interfaces;
+using Microsoft.IdentityModel.Tokens;
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System;
 using System.Text;
-using Microsoft.IdentityModel.Tokens;
 
 namespace JokesOnYou.Web.Api.Services
 {
@@ -24,26 +24,6 @@ namespace JokesOnYou.Web.Api.Services
         {
             return GenerateToken(user);
         }
-
-        public bool ValidateToken(string token)
-        {
-            try
-            {
-                _tokenHandler.ValidateToken(token, new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(_key),
-                    ValidateIssuer = false,
-                    ValidateAudience = false
-                }, out SecurityToken validatedToken);
-            }
-            catch
-            {
-                return false;
-            }
-            return true;
-        }
-
 
         private string GenerateToken(User user)
         {
