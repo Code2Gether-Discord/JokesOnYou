@@ -124,7 +124,7 @@ namespace JokesOnYou.Web.Api.Services
 
         private async Task AddAuthorToJoke(JokeDto jokeDto)
         {
-            var user = await _userRepository.GetUserAsync(jokeDto.Author.Id);
+            var user = await _userRepository.GetUserReplyAsync(jokeDto.Author.Id);
             if (user == null)
             {
                 throw new AppException($"No user with this id:\"{jokeDto.Author.Id}\" found in the Database.");

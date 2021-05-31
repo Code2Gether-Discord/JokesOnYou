@@ -40,7 +40,7 @@ namespace JokesOnYou.Web.Api.Services
 
         public async Task<IEnumerable<UserReplyDTO>> GetAll()
         {
-            return await _userRepository.GetUsersAsync();
+            return await _userRepository.GetUsersReplyDtoAsync();
         }
 
         public async Task DeleteUser(string id)
