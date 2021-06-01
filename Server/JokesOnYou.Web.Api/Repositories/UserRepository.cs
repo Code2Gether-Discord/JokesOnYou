@@ -1,6 +1,6 @@
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using JokesOnYou.Web.Api.DTOs;
+using JokesOnYou.Web.Api.Models.Request;
 using JokesOnYou.Web.Api.Exceptions;
 using JokesOnYou.Web.Api.Models;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using JokesOnYou.Web.Api.Models.Response;
 
 namespace JokesOnYou.Web.Api.Repositories
 {
@@ -37,7 +38,7 @@ namespace JokesOnYou.Web.Api.Repositories
             }
             else
             {
-                StringBuilder message = new StringBuilder();
+                StringBuilder message = new();
                 foreach (var error in userCreationResult.Errors)
                 {
                     message.AppendLine(error.Description);

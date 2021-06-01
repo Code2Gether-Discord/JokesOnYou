@@ -9,7 +9,7 @@ using Moq;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
 using JokesOnYou.Web.Api.Services;
 using JokesOnYou.Web.Api.Models;
-using JokesOnYou.Web.Api.DTOs;
+using JokesOnYou.Web.Api.Models.Request;
 using AutoMapper;
 using JokesOnYou.Web.Api.Profiles;
 

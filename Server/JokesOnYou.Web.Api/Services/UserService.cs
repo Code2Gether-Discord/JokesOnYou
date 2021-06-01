@@ -1,18 +1,14 @@
-﻿using JokesOnYou.Web.Api.DTOs;
+﻿using AutoMapper;
 using JokesOnYou.Web.Api.Exceptions;
 using JokesOnYou.Web.Api.Models;
+using JokesOnYou.Web.Api.Models.Request;
+using JokesOnYou.Web.Api.Models.Response;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
 using JokesOnYou.Web.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
-using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using JokesOnYou.Web.Api.Exceptions;
-using AutoMapper;
 using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Services
 {
@@ -110,7 +106,7 @@ namespace JokesOnYou.Web.Api.Services
             {
                 throw new UserRegisterException("Cannot use an email as username");
             }
-            
+
             var user = await _userRepository.CreateUserAsync(userRegisterDTO);
 
             if (user == null)

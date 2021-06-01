@@ -1,4 +1,4 @@
-﻿namespace JokesOnYou.Web.Api.DTOs
+﻿namespace JokesOnYou.Web.Api.Models.Request
 {
     public class JokeCreateDto
     {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace JokesOnYou.Web.Api.DTOs
+namespace JokesOnYou.Web.Api.Models.Request
 {
     public class UserRegisterDTO
     {
