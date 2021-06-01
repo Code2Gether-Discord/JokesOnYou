@@ -48,14 +48,13 @@ namespace JokesOnYou.Web.Api.Repositories
             }
         }
 
-        public async Task<User> GetUserByUsernameAsync(string username) => await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == username);
+        public async Task<User> GetUserByUsernameAsync(string username) => 
+            await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == username);
 
-        public async Task<UserReplyDTO> GetUserReplyAsync(string id)
-        {
-            var user = await _userManager.FindByIdAsync(id);
+        public async Task<UserReplyDTO> GetUserReplyAsync(string id) => 
+            await _userManager.Users.ProjectTo<UserReplyDTO>(_mapper.ConfigurationProvider)
+                                    .FirstOrDefaultAsync(user => user.Id == id);
 
-            return _mapper.Map<User, UserReplyDTO>(user);
-        }
 
         public Task DeleteUserAsync(User user) => _userManager.DeleteAsync(user);
 
@@ -66,6 +65,7 @@ namespace JokesOnYou.Web.Api.Repositories
         public async Task<User> GetUserByEmailAsync(string email) => await _userManager.FindByEmailAsync(email);
 
 
-        public async Task<IEnumerable<UserReplyDTO>> GetUsersAsync() => await _userManager.Users.ProjectTo<UserReplyDTO>(_mapper.ConfigurationProvider).ToListAsync();
+        public async Task<IEnumerable<UserReplyDTO>> GetUsersAsync() => 
+            await _userManager.Users.ProjectTo<UserReplyDTO>(_mapper.ConfigurationProvider).ToListAsync();
     }
 }

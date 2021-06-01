@@ -22,16 +22,20 @@ namespace JokesOnYou.Web.Api.Repositories
             _mapper = mapper;
         }
 
-        public Task<bool> DoesJokeExist(string normalizedPremise, string normalizedPunchline) =>
-            _context.Jokes.AnyAsync(joke => joke.NormalizedPremise == normalizedPremise &&
-                                            joke.NormalizedPunchLine == normalizedPunchline);
+        public async Task<bool> DoesJokeExist(string normalizedPremise, string normalizedPunchline) =>
+            await _context.Jokes.AnyAsync(joke => joke.NormalizedPremise == normalizedPremise &&
+                                                joke.NormalizedPunchLine == normalizedPunchline);
 
         public async Task CreateJokeAsync(Joke joke) => await _context.Jokes.AddAsync(joke).AsTask();
         public async Task<IEnumerable<Joke>> GetAllJokesAsync() => await _context.Jokes.ToListAsync();
-        public async Task<IEnumerable<JokeReplyDto>> GetAllJokeDtosAsync() => await _context.Jokes.ProjectTo<JokeReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
-        public async Task<Joke> GetJokeByIdAsync(int id) => await _context.Jokes.FirstOrDefaultAsync(x => x.Id == id);
+        public async Task<IEnumerable<JokeReplyDto>> GetAllJokeDtosAsync() => 
+            await _context.Jokes.ProjectTo<JokeReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
+        public async Task<Joke> GetJokeByIdAsync(int id) => 
+            await _context.Jokes.FirstOrDefaultAsync(x => x.Id == id);
 
-        public async Task<JokeReplyDto> GetJokeDtoAsync(int id) => await _context.Jokes.ProjectTo<JokeReplyDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync(j => j.Id == id);
+        public async Task<JokeReplyDto> GetJokeDtoAsync(int id) => 
+            await _context.Jokes.ProjectTo<JokeReplyDto>(_mapper.ConfigurationProvider)
+                                .FirstOrDefaultAsync(j => j.Id == id);
         public void DeleteJoke(Joke joke) => _context.Jokes.Remove(joke);
     }
 }

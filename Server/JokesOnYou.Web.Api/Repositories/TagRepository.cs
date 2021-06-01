@@ -24,10 +24,12 @@ namespace JokesOnYou.Web.Api.Repositories
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<TagReplyDto>> GetAllTagDtosAsync() => await _context.Tags.ProjectTo<TagReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
+        public async Task<IEnumerable<TagReplyDto>> GetAllTagDtosAsync() => 
+            await _context.Tags.ProjectTo<TagReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
         public async Task<TagReplyDto> GetTagDtoAsync(int id) => 
             await _context.Tags.ProjectTo<TagReplyDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync(t => t.Id == id);
-        public async Task<List<Tag>> GetTags(int[] ids) => await _context.Tags.Where(x => ids.Contains(x.Id)).ToListAsync();
+        public async Task<List<Tag>> GetTags(int[] ids) => 
+            await _context.Tags.Where(x => ids.Contains(x.Id)).ToListAsync();
         
 
         /// <summary>
@@ -44,9 +46,6 @@ namespace JokesOnYou.Web.Api.Repositories
         /// <returns></returns>
         public void Delete(Tag tag) => _context.Tags.Remove(tag);
 
-        public async Task CreateTagAsync(Tag tag)
-        {
-            await _context.Tags.AddAsync(tag).AsTask();
-        }
+        public async Task CreateTagAsync(Tag tag) => await _context.Tags.AddAsync(tag);
     }
 }
