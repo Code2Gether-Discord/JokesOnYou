@@ -25,16 +25,16 @@ namespace JokesOnYou.Web.Api.Repositories
             _userManager = userManager;
         }
 
-        public async Task<User> CreateUserAsync(UserRegisterDTO userRegisterDTO)
+        public async Task<User> CreateUserAsync(UserRegisterDto userRegisterDto)
         {
             var userCreationResult = await _userManager.CreateAsync(new User()
             {
-                Email = userRegisterDTO.Email,
-                UserName = userRegisterDTO.UserName
-            }, userRegisterDTO.Password);
+                Email = userRegisterDto.Email,
+                UserName = userRegisterDto.UserName
+            }, userRegisterDto.Password);
             if (userCreationResult.Succeeded)
             {
-                return await _userManager.FindByEmailAsync(userRegisterDTO.Email);
+                return await _userManager.FindByEmailAsync(userRegisterDto.Email);
             }
             else
             {
@@ -51,8 +51,8 @@ namespace JokesOnYou.Web.Api.Repositories
         public async Task<User> GetUserByUsernameAsync(string username) => 
             await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == username);
 
-        public async Task<UserReplyDTO> GetUserReplyAsync(string id) => 
-            await _userManager.Users.ProjectTo<UserReplyDTO>(_mapper.ConfigurationProvider)
+        public async Task<UserReplyDto> GetUserReplyAsync(string id) => 
+            await _userManager.Users.ProjectTo<UserReplyDto>(_mapper.ConfigurationProvider)
                                     .FirstOrDefaultAsync(user => user.Id == id);
 
 
@@ -65,7 +65,7 @@ namespace JokesOnYou.Web.Api.Repositories
         public async Task<User> GetUserByEmailAsync(string email) => await _userManager.FindByEmailAsync(email);
 
 
-        public async Task<IEnumerable<UserReplyDTO>> GetUsersAsync() => 
-            await _userManager.Users.ProjectTo<UserReplyDTO>(_mapper.ConfigurationProvider).ToListAsync();
+        public async Task<IEnumerable<UserReplyDto>> GetUsersAsync() => 
+            await _userManager.Users.ProjectTo<UserReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
     }
 }

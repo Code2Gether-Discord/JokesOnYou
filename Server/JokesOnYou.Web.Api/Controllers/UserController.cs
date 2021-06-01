@@ -27,13 +27,13 @@ namespace JokesOnYou.Web.Api.Controllers
         #pragma warning disable 1998
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserReplyDTO>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<UserReplyDto>>> GetUsers()
         {
             return Ok(await _userService.GetAll());
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserReplyDTO>> GetUserById(string id)
+        public async Task<ActionResult<UserReplyDto>> GetUserById(string id)
         {
             var user = await _userService.GetUserReplyById(id);
             if (user != null) return user;
@@ -42,7 +42,7 @@ namespace JokesOnYou.Web.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateUser(string id, UserUpdateDTO userUpdateDTO)
+        public async Task<ActionResult> UpdateUser(string id, UserUpdateDto userUpdateDTO)
         {
             
             if (id != ClaimsPrincipalExtension.GetUserId(User))

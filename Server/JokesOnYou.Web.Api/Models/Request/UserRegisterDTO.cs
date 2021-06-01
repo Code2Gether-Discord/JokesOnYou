@@ -2,7 +2,7 @@
 
 namespace JokesOnYou.Web.Api.Models.Request
 {
-    public class UserRegisterDTO
+    public class UserRegisterDto
     {
         [Required]
         [EmailAddress]

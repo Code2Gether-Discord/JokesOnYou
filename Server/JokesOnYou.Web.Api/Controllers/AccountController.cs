@@ -18,14 +18,14 @@ namespace JokesOnYou.Web.Api.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<UserReplyDTO>> Login(UserLoginDTO userLogin)
+        public async Task<ActionResult<UserReplyDto>> Login(UserLoginDTO userLogin)
         {
             var userReplyDTO = await _userService.LoginUser(userLogin);
             return userReplyDTO;
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult> Register(UserRegisterDTO userRegister)
+        public async Task<ActionResult> Register(UserRegisterDto userRegister)
         {
             await _userService.RegisterUser(userRegister);
             return NoContent();
