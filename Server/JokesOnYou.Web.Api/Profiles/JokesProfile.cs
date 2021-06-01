@@ -11,6 +11,7 @@ namespace JokesOnYou.Web.Api.Profiles
         {
             CreateMap<Joke, JokeReplyDto>();
             CreateMap<JokeCreateDto, Joke>().ForMember(dest => dest.AuthorId, x => x.MapFrom(source => source.UserId));
+            CreateMap<JokeUpdateDto, JokeCreateDto>();
             CreateMap<JokeDto, JokeCreateDto>();
             CreateMap<JokeUpdateDto, Joke>();
         }
