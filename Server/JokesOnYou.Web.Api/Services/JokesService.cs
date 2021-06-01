@@ -83,6 +83,7 @@ namespace JokesOnYou.Web.Api.Services
             {
                 throw new KeyNotFoundException("Cant find joke");
             }
+
             _jokesRepo.DeleteJoke(joke);
             if (!await _unitOfWork.SaveAsync())
             {
@@ -93,19 +94,16 @@ namespace JokesOnYou.Web.Api.Services
         public async Task<JokeDto> UpdateJoke(JokeUpdateDto jokeUpdateDto)
         {
             var jokeToUpdate = await _jokesRepo.GetJokeByIdAsync(jokeUpdateDto.Id);
-
             if (jokeToUpdate == null)
             {
                 throw new KeyNotFoundException("can't find joke to update");
             }
 
             _mapper.Map(jokeUpdateDto,jokeToUpdate);
-
             await _unitOfWork.SaveAsync();
 
             var jokeDto = _mapper.Map<JokeDto>(jokeToUpdate);
             await AddAuthorToJoke(jokeDto);
-
             return jokeDto;
         }
 
@@ -125,11 +123,6 @@ namespace JokesOnYou.Web.Api.Services
         private async Task AddAuthorToJoke(JokeDto jokeDto)
         {
             var user = await _userRepository.GetUserReplyAsync(jokeDto.Author.Id);
-            if (user == null)
-            {
-                throw new AppException($"No user with this id:\"{jokeDto.Author.Id}\" found in the Database.");
-            }
-
             jokeDto.Author.UserName = user.UserName;
         }
     }

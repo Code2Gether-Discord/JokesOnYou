@@ -8,7 +8,7 @@ namespace JokesOnYou.Web.Api.Profiles
     {
         public JokesProfile()
         {
-            CreateMap<Joke, JokeDto>().ForMember(dest => dest.Author, x => x.MapFrom(scr => new JokeAuthorDto() { Id = scr.AuthorId }));
+            CreateMap<Joke, JokeDto>().ForMember(dest => dest.Author, x => x.MapFrom(src => new JokeAuthorDto() { Id = src.AuthorId }));
                 //.ForPath(dest => dest.Author.Id, x => x.MapFrom(scr => scr.AuthorId));
             CreateMap<JokeCreateDto, Joke>();
             CreateMap<JokeUpdateDto, Joke>();
