@@ -23,11 +23,11 @@ namespace JokesOnYou.Web.Api.Controllers
 
         [Authorize(Roles = "Registered,Admin")]
         [HttpPost]
-        public async Task<ActionResult<JokeReplyDto>> CreateJokeAsync(JokeCreateDto jokeCreateDto)
+        public async Task<ActionResult<JokeReplyDto>> CreateJokeAsync(JokeDto jokeDto)
         {
 
-            jokeCreateDto.UserId = ClaimsPrincipalExtension.GetUserId(User);
-            var jokeReplyDto = await _jokesService.CreateJokeAsync(jokeCreateDto);
+            var userId = ClaimsPrincipalExtension.GetUserId(User);
+            var jokeReplyDto = await _jokesService.CreateJokeAsync(jokeDto, userId);
 
             return jokeReplyDto;
         }

@@ -26,23 +26,24 @@ namespace JokesOnYou.Web.Api.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<JokeReplyDto> CreateJokeAsync(JokeCreateDto jokeCreateDto)
+        public async Task<JokeReplyDto> CreateJokeAsync(JokeDto jokeDto, string userId)
         {
+            var user = await _userRepository.GetUserAsync(userId);
+            if (user == null)
+            {
+                throw new AppException($"No user with this id:\"{userId}\" found in the Database.");
+            }
+
+            var jokeCreateDto = _mapper.Map<JokeCreateDto>(jokeDto);
+            jokeCreateDto.UserId = userId;
             TrimAndNormalizeJokeCreateDto(jokeCreateDto);
 
             if (await _jokesRepo.DoesJokeExist(jokeCreateDto.NormalizedPremise, jokeCreateDto.NormalizedPunchline))
             {
                 throw new AppException("Joke Already exists.");
             }
-
-            var user = await _userRepository.GetUserAsync(jokeCreateDto.UserId);
-            if (user == null)
-            {
-                throw new AppException($"No user with this id:\"{jokeCreateDto.UserId}\" found in the Database.");
-            }
-
             var joke = _mapper.Map<Joke>(jokeCreateDto);
-            joke.AuthorId = user.Id;
+
             await _jokesRepo.CreateJokeAsync(joke);
 
             var saved = await _unitOfWork.SaveAsync();
