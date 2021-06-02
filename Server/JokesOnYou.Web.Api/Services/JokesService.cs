@@ -5,6 +5,8 @@ using JokesOnYou.Web.Api.Models;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
 using JokesOnYou.Web.Api.Services.Interfaces;
 using JokesOnYou.Web.Api.Models.Response;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace JokesOnYou.Web.Api.Services
 {
@@ -31,10 +33,7 @@ namespace JokesOnYou.Web.Api.Services
                 throw new AppException($"No user with this id:\"{userId}\" found in the Database.");
             }
 
-            var jokeCreateDto = _mapper.Map<JokeCreateDto>(jokeDto);
-            jokeCreateDto.UserId = userId;
-            await TrimJokeAndCheckForDuplicate(jokeCreateDto);
-            var joke = _mapper.Map<Joke>(jokeCreateDto);
+            Joke joke = await BuildJokeFromJokeDtoAndUserId(jokeDto, userId);
 
             await _jokesRepo.CreateJokeAsync(joke);
 
@@ -112,6 +111,17 @@ namespace JokesOnYou.Web.Api.Services
         {
             var user = await _userRepository.GetUserReplyAsync(jokeDto.Author.Id);
             jokeDto.Author.UserName = user.UserName;
+        }
+
+        private async Task<Joke> BuildJokeFromJokeDtoAndUserId(JokeDto jokeDto, string userId)
+        {
+            var jokeCreateDto = _mapper.Map<JokeCreateDto>(jokeDto);
+            jokeCreateDto.UserId = userId;
+            await TrimJokeAndCheckForDuplicate(jokeCreateDto);
+
+            var joke = _mapper.Map<Joke>(jokeCreateDto);
+
+            return joke;
         }
 
         private async Task TrimJokeAndCheckForDuplicate(JokeCreateDto jokeCreateDto)

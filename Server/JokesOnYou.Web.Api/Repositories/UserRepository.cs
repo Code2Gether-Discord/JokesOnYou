@@ -65,7 +65,7 @@ namespace JokesOnYou.Web.Api.Repositories
         public async Task<User> GetUserByEmailAsync(string email) => await _userManager.FindByEmailAsync(email);
 
 
-        public async Task<IEnumerable<UserReplyDto>> GetUsersAsync() => 
+        public async Task<IEnumerable<UserReplyDto>> GetUsersReplyDtoAsync() => 
             await _userManager.Users.ProjectTo<UserReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
     }
 }
