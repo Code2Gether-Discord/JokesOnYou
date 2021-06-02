@@ -9,7 +9,7 @@ namespace JokesOnYou.Web.Api.Profiles
     {
         public JokesProfile()
         {
-            CreateMap<Joke, JokeReplyDto>();
+            CreateMap<Joke, JokeReplyDto>().ForMember(dest => dest.Author, x => x.MapFrom(src => new JokeAuthorDto() { Id = src.AuthorId }));
             CreateMap<JokeCreateDto, Joke>().ForMember(dest => dest.AuthorId, x => x.MapFrom(source => source.UserId));
             CreateMap<JokeUpdateDto, JokeCreateDto>();
             CreateMap<JokeDto, JokeCreateDto>();

@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using AutoMapper;
 using JokesOnYou.Web.Api.Models.Request;
 using JokesOnYou.Web.Api.Exceptions;
@@ -44,10 +41,7 @@ namespace JokesOnYou.Web.Api.Services
             var saved = await _unitOfWork.SaveAsync();
             if (!saved)
             {
-                if (await _jokesRepo.GetJokeDtoAsync(joke.Id) == null)
-                {
-                    throw new AppException("Error with saving the Joke.");
-                }
+                throw new AppException("Error with saving the Joke.");
             }
 
             var jokeReplyDto = _mapper.Map<JokeReplyDto>(joke);
@@ -59,6 +53,11 @@ namespace JokesOnYou.Web.Api.Services
         {
             var jokeDtos = await _jokesRepo.GetAllJokeDtosAsync();
 
+            foreach (var jokeDto in jokeDtos)
+            {
+                await AddAuthorToJoke(jokeDto);
+            }
+
             return jokeDtos;
         }
 
@@ -69,6 +68,7 @@ namespace JokesOnYou.Web.Api.Services
             {
                 throw new KeyNotFoundException("Cant find joke");
             }
+
             _jokesRepo.DeleteJoke(joke);
             if (!await _unitOfWork.SaveAsync())
             {
@@ -87,17 +87,31 @@ namespace JokesOnYou.Web.Api.Services
                 throw new KeyNotFoundException("can't find joke to update");
             }
 
-            jokeDto.UserId = jokeToUpdate.AuthorId;
-            _mapper.Map(jokeDto, jokeToUpdate);
-
+            _mapper.Map(jokeUpdateDto,jokeToUpdate);
             await _unitOfWork.SaveAsync();
 
-            return _mapper.Map<JokeReplyDto>(jokeToUpdate);
+            var jokeReplyDto = _mapper.Map<JokeReplyDto>(jokeToUpdate);
+            await AddAuthorToJoke(jokeReplyDto);
+            return jokeReplyDto;
         }
 
-        public Task<JokeReplyDto> GetJokeDtoAsync(int id)
+        public async Task<JokeReplyDto> GetJokeDtoAsync(int id)
         {
-            return _jokesRepo.GetJokeDtoAsync(id);
+            var jokeDto = await _jokesRepo.GetJokeDtoAsync(id);
+            if (jokeDto == null)
+            {
+                throw new KeyNotFoundException("Cant find joke");
+            }
+
+            await AddAuthorToJoke(jokeDto);
+
+            return jokeDto;
+        }
+
+        private async Task AddAuthorToJoke(JokeReplyDto jokeDto)
+        {
+            var user = await _userRepository.GetUserReplyAsync(jokeDto.Author.Id);
+            jokeDto.Author.UserName = user.UserName;
         }
 
         private async Task TrimJokeAndCheckForDuplicate(JokeCreateDto jokeCreateDto)

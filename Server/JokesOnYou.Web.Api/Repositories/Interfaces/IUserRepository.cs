@@ -12,8 +12,8 @@ namespace JokesOnYou.Web.Api.Repositories.Interfaces
         Task<User> GetUserByEmailAsync(string email);
         Task<User> CreateUserAsync(UserRegisterDto userRegisterDTO);
         Task DeleteUserAsync(User user);
-        Task<UserReplyDto> GetUserReplyAsync(string id);
-        Task<IEnumerable<UserReplyDto>> GetUsersAsync();
+        Task<UserReplyDTO> GetUserReplyAsync(string id);
+        Task<IEnumerable<UserReplyDTO>> GetUsersReplyDtoAsync();
         Task<User> GetUserByUsernameAsync(string username);
 
 
