@@ -14,12 +14,12 @@ namespace JokesOnYou.Web.Api
         {
             var host = CreateHostBuilder(args).Build();
 
-            CreateDbIfNotExists(host);
+            PrepareDatabase(host);
 
             host.Run();
 
         }
-        private static void CreateDbIfNotExists(IHost host)
+        private static void PrepareDatabase(IHost host)
         {
             using var scope = host.Services.CreateScope();
             var services = scope.ServiceProvider;

@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using JokesOnYou.Web.Api.Exceptions;
 using AutoMapper;
+using System.ComponentModel.DataAnnotations;
 
 namespace JokesOnYou.Web.Api.Services
 {
@@ -33,13 +34,13 @@ namespace JokesOnYou.Web.Api.Services
         }
 
         // Disable "this async method lacks an await operator" Remove this when we actually implement methods
-        #pragma warning disable 1998
+#pragma warning disable 1998
 
-       
+
 
         public async Task<IEnumerable<UserReplyDTO>> GetAll()
         {
-            return await _userRepository.GetUsersAsync();
+            return await _userRepository.GetUsersReplyDtoAsync();
         }
 
         public async Task DeleteUser(string id)
@@ -63,7 +64,7 @@ namespace JokesOnYou.Web.Api.Services
             _mapper.Map(userDTO, user);
             await _unitOfWork.SaveAsync();
         }
-        
+
 
         public async Task<User> GetUserById(string id)
         {
@@ -71,11 +72,12 @@ namespace JokesOnYou.Web.Api.Services
         }
 
 
-        #pragma warning restore 1998
 
         public async Task<UserReplyDTO> LoginUser(UserLoginDTO userLogin)
         {
-            var user = await _userRepository.GetUserByEmailAsync(userLogin.Email);
+            var user = new EmailAddressAttribute().IsValid(userLogin.LoginName) ? await _userRepository.GetUserByEmailAsync(userLogin.LoginName) :
+                await _userRepository.GetUserByUsernameAsync(userLogin.LoginName);
+
             if (user != null)
             {
                 var signInResult = await _signInManager.CheckPasswordSignInAsync(user, userLogin.Password, false);
@@ -104,6 +106,11 @@ namespace JokesOnYou.Web.Api.Services
 
         public async Task RegisterUser(UserRegisterDTO userRegisterDTO)
         {
+            if (new EmailAddressAttribute().IsValid(userRegisterDTO.UserName))
+            {
+                throw new UserRegisterException("Cannot use an email as username");
+            }
+            
             var user = await _userRepository.CreateUserAsync(userRegisterDTO);
 
             if (user == null)
