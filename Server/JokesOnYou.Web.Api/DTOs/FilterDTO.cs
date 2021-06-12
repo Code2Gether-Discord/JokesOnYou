@@ -4,6 +4,7 @@ namespace JokesOnYou.Web.Api.DTOs
 {
     public enum ComparisonMode
     {
+        None,
         Equals,
         Greather,
         Lower,
@@ -15,9 +16,9 @@ namespace JokesOnYou.Web.Api.DTOs
     public class FilterDTO
     {
         public JokeAuthorDto Author { get; set; }
-        public int Likes { get; set; } = -1;
+        public int Likes { get; set; }
         public ComparisonMode ComparisonModeLikes { get; set; }
-        public int Dislikes { get; set; } = -1;
+        public int Dislikes { get; set; } 
         public ComparisonMode ComparisonModeDislikes { get; set; }
         public DateTime UploadDate { get; set; }
         public ComparisonMode ComparisonModeUploadDate { get; set; }

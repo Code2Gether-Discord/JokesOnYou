@@ -62,7 +62,7 @@ namespace JokesOnYou.Web.Api.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet]
+        [HttpPost("Filter")]
         public async Task<ActionResult<IEnumerable<JokeDto>>> GetJokesByFilter(FilterDTO filterDTO)
         {
             var filteredJokes = await _jokesService.GetJokesByFilter(filterDTO);
