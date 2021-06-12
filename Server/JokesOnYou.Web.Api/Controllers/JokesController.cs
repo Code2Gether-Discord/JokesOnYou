@@ -4,6 +4,7 @@ using JokesOnYou.Web.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Controllers
@@ -60,5 +61,12 @@ namespace JokesOnYou.Web.Api.Controllers
             return joke;
         }
 
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<JokeDto>>> GetJokesByFilter(FilterDTO filterDTO)
+        {
+            var filteredJokes = await _jokesService.GetJokesByFilter(filterDTO);
+            return Ok(filteredJokes);
+        }
     }
 }
