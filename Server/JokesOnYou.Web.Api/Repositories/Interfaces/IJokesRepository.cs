@@ -1,4 +1,5 @@
 using JokesOnYou.Web.Api.DTOs;
+using JokesOnYou.Web.Api.Filters;
 using JokesOnYou.Web.Api.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,5 +15,6 @@ namespace JokesOnYou.Web.Api.Repositories.Interfaces
         Task CreateJokeAsync(Joke joke);
         Task<bool> DoesJokeExist(string normalizedPremise, string normalizedPunchline);
         Task<JokeDto> GetJokeDtoAsync(int id);
+        Task<IEnumerable<JokeDto>> GetFilteredJokeDtos(JokesFilter jokeFilter);
     }
 }

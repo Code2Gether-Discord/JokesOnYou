@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using JokesOnYou.Web.Api.DTOs;
+using JokesOnYou.Web.Api.Filters;
 
 namespace JokesOnYou.Web.Api.Services.Interfaces
 {
@@ -8,9 +9,8 @@ namespace JokesOnYou.Web.Api.Services.Interfaces
     {      
         Task RemoveJokeAsync(int id);
         Task<JokeDto> UpdateJoke(JokeUpdateDto jokeUpdateDto);
-        Task<IEnumerable<JokeDto>> GetAllJokeDtosAsync();
+        Task<IEnumerable<JokeDto>> GetAllJokeDtosAsync(JokesFilter jokesFilter);
         Task<JokeDto> GetJokeDtoAsync(int id);
         Task<JokeDto> CreateJokeAsync(JokeCreateDto jokeCreateDto);
-        Task<IEnumerable<JokeDto>> GetJokesByFilter(FilterDTO filterDTO);
     }
 }

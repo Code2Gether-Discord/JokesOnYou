@@ -1,5 +1,6 @@
 using JokesOnYou.Web.Api.DTOs;
 using JokesOnYou.Web.Api.Extensions;
+using JokesOnYou.Web.Api.Filters;
 using JokesOnYou.Web.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -31,11 +32,12 @@ namespace JokesOnYou.Web.Api.Controllers
 
             return jokeDto;
         }
+
         [AllowAnonymous]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<JokeDto>>> GetAllJokesAsync()
+        public async Task<ActionResult<IEnumerable<JokeDto>>> GetAllJokesAsync(JokesFilter jokesFilter)
         {
-            var jokeDtos = await _jokesService.GetAllJokeDtosAsync();
+            var jokeDtos = await _jokesService.GetAllJokeDtosAsync(jokesFilter);
             return Ok(jokeDtos);
         }
 
@@ -59,14 +61,6 @@ namespace JokesOnYou.Web.Api.Controllers
         {
             var joke = await _jokesService.GetJokeDtoAsync(id);
             return joke;
-        }
-
-        [AllowAnonymous]
-        [HttpPost("Filter")]
-        public async Task<ActionResult<IEnumerable<JokeDto>>> GetJokesByFilter(FilterDTO filterDTO)
-        {
-            var filteredJokes = await _jokesService.GetJokesByFilter(filterDTO);
-            return Ok(filteredJokes);
         }
     }
 }

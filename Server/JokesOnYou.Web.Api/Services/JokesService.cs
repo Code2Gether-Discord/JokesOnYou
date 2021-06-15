@@ -2,6 +2,7 @@ using AutoMapper;
 using JokesOnYou.Web.Api.DTOs;
 using JokesOnYou.Web.Api.Exceptions;
 using JokesOnYou.Web.Api.Extensions;
+using JokesOnYou.Web.Api.Filters;
 using JokesOnYou.Web.Api.Models;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
 using JokesOnYou.Web.Api.Services.Interfaces;
@@ -66,9 +67,9 @@ namespace JokesOnYou.Web.Api.Services
             jokeCreateDto.NormalizedPunchline = jokeCreateDto.Punchline.ToUpper();
         }
 
-        public async Task<IEnumerable<JokeDto>> GetAllJokeDtosAsync()
+        public async Task<IEnumerable<JokeDto>> GetAllJokeDtosAsync(JokesFilter jokesFilter)
         {
-            var jokeDtos = await _jokesRepo.GetAllJokeDtosAsync();
+            var jokeDtos = await _jokesRepo.GetFilteredJokeDtos(jokesFilter);
 
             foreach (var jokeDto in jokeDtos)
             {
@@ -120,47 +121,6 @@ namespace JokesOnYou.Web.Api.Services
             await AddAuthorToJoke(jokeDto);
 
             return jokeDto;
-        }
-
-        public async Task<IEnumerable<JokeDto>> GetJokesByFilter(FilterDTO filterDTO)
-        {
-            var allJokes = await _jokesRepo.GetAllJokeDtosAsync();
-
-            var filteredJokes = allJokes;
-
-            if (filterDTO.ComparisonModeLikes != ComparisonMode.None)
-            {
-                filteredJokes = filteredJokes.WhereIf(x => x.Likes == filterDTO.Likes, filterDTO.ComparisonModeLikes == ComparisonMode.Equals);
-                filteredJokes = filteredJokes.WhereIf(x => x.Likes > filterDTO.Likes, filterDTO.ComparisonModeLikes == ComparisonMode.Greather);
-                filteredJokes = filteredJokes.WhereIf(x => x.Likes >= filterDTO.Likes, filterDTO.ComparisonModeLikes == ComparisonMode.GreatherEquals);
-                filteredJokes = filteredJokes.WhereIf(x => x.Likes < filterDTO.Likes, filterDTO.ComparisonModeLikes == ComparisonMode.Lower);
-                filteredJokes = filteredJokes.WhereIf(x => x.Likes <= filterDTO.Likes, filterDTO.ComparisonModeLikes == ComparisonMode.LowerEquals);
-                filteredJokes = filteredJokes.WhereIf(x => x.Likes != filterDTO.Likes, filterDTO.ComparisonModeLikes == ComparisonMode.NotEquals);
-            }
-
-            if (filterDTO.ComparisonModeDislikes != ComparisonMode.None)
-            {
-                filteredJokes = filteredJokes.WhereIf(x => x.Dislikes == filterDTO.Dislikes, filterDTO.ComparisonModeDislikes == ComparisonMode.Equals);
-                filteredJokes = filteredJokes.WhereIf(x => x.Dislikes > filterDTO.Dislikes, filterDTO.ComparisonModeDislikes == ComparisonMode.Greather);
-                filteredJokes = filteredJokes.WhereIf(x => x.Dislikes >= filterDTO.Dislikes, filterDTO.ComparisonModeDislikes == ComparisonMode.GreatherEquals);
-                filteredJokes = filteredJokes.WhereIf(x => x.Dislikes < filterDTO.Dislikes, filterDTO.ComparisonModeDislikes == ComparisonMode.Lower);
-                filteredJokes = filteredJokes.WhereIf(x => x.Dislikes <= filterDTO.Dislikes, filterDTO.ComparisonModeDislikes == ComparisonMode.LowerEquals);
-                filteredJokes = filteredJokes.WhereIf(x => x.Dislikes != filterDTO.Dislikes, filterDTO.ComparisonModeDislikes == ComparisonMode.NotEquals);
-            }
-
-            if (filterDTO.ComparisonModeUploadDate != ComparisonMode.None)
-            {
-                filteredJokes = filteredJokes.WhereIf(x => x.UploadDate == filterDTO.UploadDate, filterDTO.ComparisonModeUploadDate == ComparisonMode.Equals);
-                filteredJokes = filteredJokes.WhereIf(x => x.UploadDate > filterDTO.UploadDate, filterDTO.ComparisonModeUploadDate == ComparisonMode.Greather);
-                filteredJokes = filteredJokes.WhereIf(x => x.UploadDate >= filterDTO.UploadDate, filterDTO.ComparisonModeUploadDate == ComparisonMode.GreatherEquals);
-                filteredJokes = filteredJokes.WhereIf(x => x.UploadDate < filterDTO.UploadDate, filterDTO.ComparisonModeUploadDate == ComparisonMode.Lower);
-                filteredJokes = filteredJokes.WhereIf(x => x.UploadDate <= filterDTO.UploadDate, filterDTO.ComparisonModeUploadDate == ComparisonMode.LowerEquals);
-                filteredJokes = filteredJokes.WhereIf(x => x.UploadDate != filterDTO.UploadDate, filterDTO.ComparisonModeUploadDate == ComparisonMode.NotEquals);
-            }
-
-            filteredJokes = filteredJokes.WhereIf(x => x.Author == filterDTO.Author, filterDTO.Author != null);
-
-            return filteredJokes;
         }
 
         private async Task AddAuthorToJoke(JokeDto jokeDto)
