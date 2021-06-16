@@ -1,0 +1,49 @@
+<div class="background">
+  <div class="registrationArea">
+    <h2>Register</h2>
+    <form class="registerForm">
+      <table>
+        <tr>
+          <th>
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" class="inputField spacing" required/>
+          </th>
+          <th>
+            <label for="dateOfBirth">Date of birth(DD/MM/YYYY)</label>
+            <input type="text" name="dateOfBirth" id="dateOfBirth" class="inputField spacing" required />
+          </th>
+        </tr>
+        <tr>
+          <td>
+            <label for="password">Password</label>
+            <input type="text" name="password" id="password" class="inputField spacing" required />
+          </td>
+          <td>
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email" class="inputField spacing" required />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="retypePassword">Retype Password</label>
+            <input type="text" name="retypePassword" id="retypePassword" class="inputField spacing" required />
+          </td>
+          <td>
+            <div class="NSFW">
+              <label class="switch NSFWLabel">NSFW?
+                <input type="checkbox">
+                <span class="slider round"></span>
+              </label>
+             </div>
+          </td>
+        </tr>
+      </table>
+      <br />
+      <button class="button" type="submit">Login</button>
+    </form>
+    <div class="options">
+      <p>Already have an account <a routerLink="" class="underlineLink">Go to login</a></p>
+    </div>
+  </div>
+</div>
+

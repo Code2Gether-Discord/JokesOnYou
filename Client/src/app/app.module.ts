@@ -9,6 +9,10 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { JokeCardComponent } from './components/jokes/joke-card/joke-card.component';
 import { JokeDetailComponent } from './components/jokes/joke-detail/joke-detail.component';
 import { JokeListComponent } from './components/jokes/joke-list/joke-list.component';
+import { LoginComponent } from './components/authentication/login/login.component';
+import { ButtonComponent } from './components/authentication/button/button.component';
+import { InputComponent } from './components/authentication/input/input.component';
+import { RegistrationComponent } from './components/authentication/registration/registration.component';
 
 @NgModule({
   imports: [
@@ -22,7 +26,11 @@ import { JokeListComponent } from './components/jokes/joke-list/joke-list.compon
     NavbarComponent,
     JokeListComponent,
     JokeCardComponent,
-    JokeDetailComponent
+    JokeDetailComponent,
+    LoginComponent,
+    ButtonComponent,
+    InputComponent,
+    RegistrationComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
