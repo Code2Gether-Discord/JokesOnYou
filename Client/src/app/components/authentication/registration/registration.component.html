@@ -1,6 +1,6 @@
-<div class="background">
-  <div class="registrationArea">
-    <h2>Register</h2>
+<div class="background" [style.background-color]="bgColor">
+  <div class="registrationArea" [style.color]="fgColor">
+    <h2 [style.color]="fgColor">Register</h2>
     <form class="registerForm">
       <table>
         <tr>
@@ -30,20 +30,17 @@
           </td>
           <td>
             <div class="NSFW">
-              <label class="switch NSFWLabel">NSFW?
-                <input type="checkbox">
-                <span class="slider round"></span>
+              <label class="switch NSFWLabel" >NSFW?
+                <input type="checkbox" >
+                <span [ngClass]="sliderClass"></span>
               </label>
              </div>
           </td>
         </tr>
       </table>
       <br />
-      <button class="button" type="submit">Login</button>
+      <button class="button center" type="submit" [style.color]="fgColor">Register</button>
     </form>
-    <div class="options">
-      <p>Already have an account? <a routerLink="" class="underlineLink">Go to login</a></p>
-    </div>
   </div>
 </div>
 

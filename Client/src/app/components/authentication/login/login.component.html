@@ -1,24 +1,24 @@
-<div class="background">
+<div class="background" [ngStyle]="{'background-color': bgColor}">
   <div class="otherServices">
     <button class="button">
-      <p class="content">{{goggleBtnText}}</p>
+      <p class="content" [style.color]="fgColor">{{goggleBtnText}}</p>
     </button>
     <button class="button">
-      <p class="content">{{facebookBtnText}}</p>
+      <p class="content" [style.color]="fgColor">{{facebookBtnText}}</p>
     </button>
   </div>
-  <hr class="verticalLine"/>
+  <hr class="verticalLine" [style.border-color]="fgColor"/>
 
-  <div class="loginArea">
+  <div class="loginArea" [style.color]="fgColor">
     <form>
       <label for="username">Username</label>
-      <input type="text" name="username" id="username" class="inputField" required />
+      <input type="text" name="username" id="username" class="inputField" [style.color]="fgColor" required />
       <label for="password">Password</label>
-      <input type="text" name="password" id="password" class="inputField" required />
-      <button class="button" type="submit">Login</button>
+      <input type="text" name="password" id="password" class="inputField" [style.color]="fgColor" required />
+      <button class="button" type="submit" [style.color]="fgColor">Login</button>
     </form>
 
-     <div class="options">
+     <div class="options" [style.color]="fgColor">
         <a href="">Reset Password</a>
         <p>Don´t you have account? <a routerLink="registration" class="underlineLink">Create one</a></p> 
      </div>

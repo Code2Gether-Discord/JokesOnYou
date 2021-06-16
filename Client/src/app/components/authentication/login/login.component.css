@@ -13,7 +13,6 @@
   left: 450px;
   width: 30%;
   transform: rotate(180deg);
-  border-color: #D0DCEC;
 }
 
 .loginArea {
@@ -21,7 +20,6 @@
   font-weight: 400;
   font-size: 12px;
   line-height: 15px;
-  color: #ffffff;
   position: absolute;
   left: 40%;
   top: 240px;
@@ -33,5 +31,4 @@
 .options {
   position: relative;
   top: 20px;
-  color: #ffffff;
 }
