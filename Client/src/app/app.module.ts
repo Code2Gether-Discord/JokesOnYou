@@ -10,8 +10,6 @@ import { JokeCardComponent } from './components/jokes/joke-card/joke-card.compon
 import { JokeDetailComponent } from './components/jokes/joke-detail/joke-detail.component';
 import { JokeListComponent } from './components/jokes/joke-list/joke-list.component';
 import { LoginComponent } from './components/authentication/login/login.component';
-import { ButtonComponent } from './components/authentication/button/button.component';
-import { InputComponent } from './components/authentication/input/input.component';
 import { RegistrationComponent } from './components/authentication/registration/registration.component';
 
 @NgModule({
@@ -28,8 +26,6 @@ import { RegistrationComponent } from './components/authentication/registration/
     JokeCardComponent,
     JokeDetailComponent,
     LoginComponent,
-    ButtonComponent,
-    InputComponent,
     RegistrationComponent
   ],
   providers: [],
