@@ -6,7 +6,7 @@
         <tr>
           <th>
             <label for="username">Username</label>
-            <input type="text" name="username" id="username" class="inputField spacing" required/>
+            <input type="text" name="username" id="username" class="inputField spacing" required />
           </th>
           <th>
             <label for="dateOfBirth">Date of birth(DD/MM/YYYY)</label>
@@ -29,12 +29,7 @@
             <input type="text" name="retypePassword" id="retypePassword" class="inputField spacing" required />
           </td>
           <td>
-            <div class="NSFW">
-              <label class="switch NSFWLabel" >NSFW?
-                <input type="checkbox" >
-                <span [ngClass]="sliderClass"></span>
-              </label>
-             </div>
+            <app-slider></app-slider>
           </td>
         </tr>
       </table>
@@ -42,5 +37,7 @@
       <button class="button center" type="submit" [style.color]="fgColor">Register</button>
     </form>
   </div>
+  <button class="button toggleDM" (click)="toggleDarkmode()" [style.color]="fgColor">Toggle dark mode</button>
 </div>
+
 

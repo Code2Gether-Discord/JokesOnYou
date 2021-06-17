@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { DarkModeService } from "../../.././_services/dark-mode.service";
 
 @Component({
   selector: 'app-registration',
@@ -6,19 +7,26 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
-  darkMode: boolean = false;
-  bgColor: string;
-  fgColor: string;
+  sliderDarkMode: boolean = false;
 
-  sliderClass: string;
+  bgColor: string = "#2C2F33";
+  fgColor: string = "white";
 
-  constructor() {
-    this.bgColor = (this.darkMode) ? "#2C2F33" : "white";
-    this.fgColor = (this.darkMode) ? "white" : "black";
-    this.sliderClass = (this.darkMode) ? "sliderDark round" : "slider round";
+  constructor(private darkModeService: DarkModeService) {
+    this.darkModeService.onToggle().subscribe((value) => this.onToggle(value));
   }
 
   ngOnInit(): void {
   }
 
+  onToggle(value: boolean) {
+    this.sliderDarkMode = value;
+
+    this.bgColor = (value) ? "#2C2F33" : "white";
+    this.fgColor = (value) ? "white" : "black";
+  }
+
+  toggleDarkmode() {
+    this.darkModeService.toggleDarkMode();
+  }
 }

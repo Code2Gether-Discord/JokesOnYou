@@ -7,7 +7,7 @@
       <p class="content" [style.color]="fgColor">{{facebookBtnText}}</p>
     </button>
   </div>
-  <hr class="verticalLine" [style.border-color]="fgColor"/>
+  <hr class="verticalLine" [style.border-color]="fgColor" />
 
   <div class="loginArea" [style.color]="fgColor">
     <form>
@@ -18,9 +18,10 @@
       <button class="button" type="submit" [style.color]="fgColor">Login</button>
     </form>
 
-     <div class="options" [style.color]="fgColor">
-        <a href="">Reset Password</a>
-        <p>Don´t you have account? <a routerLink="registration" class="underlineLink">Create one</a></p> 
-     </div>
-   </div>
+    <div class="options" [style.color]="fgColor">
+      <a href="">Reset Password</a>
+      <p>Don´t you have account? <a routerLink="registration" class="underlineLink">Create one</a></p>
+    </div>
+  </div>
+  <button class="button toggleDM" (click)="toggleDarkmode()" [style.color]="fgColor">Toggle dark mode</button>
 </div>

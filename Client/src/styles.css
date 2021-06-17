@@ -16,7 +16,6 @@
 .inputField {
   display: block;
   padding: 5px;
-  color: #ffffff;
   margin-top: -5px;
   width: 219px;
   height: 28px;
@@ -29,7 +28,6 @@
 .button {
   font-size: 12px;
   padding: 8px;
-  color: #ffffff;
   width: 219px;
   height: 37px;
   margin-top: 20px;
@@ -37,4 +35,10 @@
   border-radius: 5px;
   cursor: pointer;
   border-color: #00C853;
+}
+
+.toggleDM{
+    margin: 50px;
+    width: 100px;
+    height: 80px;
 }

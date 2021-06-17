@@ -11,6 +11,7 @@ import { JokeDetailComponent } from './components/jokes/joke-detail/joke-detail.
 import { JokeListComponent } from './components/jokes/joke-list/joke-list.component';
 import { LoginComponent } from './components/authentication/login/login.component';
 import { RegistrationComponent } from './components/authentication/registration/registration.component';
+import { SliderComponent } from './components/general/slider/slider.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { RegistrationComponent } from './components/authentication/registration/
     JokeCardComponent,
     JokeDetailComponent,
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    SliderComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
