@@ -12,9 +12,9 @@
   <div class="loginArea" [style.color]="fgColor">
     <form>
       <label for="username">Username</label>
-      <input type="text" name="username" id="username" class="inputField" [style.color]="fgColor" required />
+      <input type="text" [(ngModel)]="username" name="username" id="username" class="inputField" [style.color]="fgColor" required />
       <label for="password">Password</label>
-      <input type="text" name="password" id="password" class="inputField" [style.color]="fgColor" required />
+      <input type="text" [(ngModel)]="password" name="password" id="password" class="inputField" [style.color]="fgColor" required />
       <button class="button" type="submit" [style.color]="fgColor">Login</button>
     </form>
 

@@ -16,6 +16,9 @@ export class LoginComponent implements OnInit {
   bgColor: string = "#2C2F33";
   fgColor: string = "white";
 
+  username!: string;
+  password!: string;
+
   constructor(private darkModeService: DarkModeService) {
     this.darkModeService.onToggle().subscribe((value) => this.onToggle(value));
   }

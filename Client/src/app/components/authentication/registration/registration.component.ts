@@ -7,6 +7,13 @@ import { DarkModeService } from "../../.././_services/dark-mode.service";
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
+
+  username!: string;
+  dateOfBirth!: string;
+  password!: string;
+  email!: string;
+  retypePassword!: string;
+
   sliderDarkMode: boolean = false;
 
   bgColor: string = "#2C2F33";
@@ -27,6 +34,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   toggleDarkmode() {
+    console.log(this.username);
     this.darkModeService.toggleDarkMode();
   }
 }
