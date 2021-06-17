@@ -11,11 +11,11 @@
 
   <div class="loginArea" [style.color]="fgColor">
     <form>
-      <label for="username">Username</label>
-      <input type="text" [(ngModel)]="username" name="username" id="username" class="inputField" [style.color]="fgColor" required />
+      <label for="username">Username/Email</label>
+      <input type="text" [(ngModel)]="usernameEmail" name="username" id="username" class="inputField" [style.color]="fgColor" required />
       <label for="password">Password</label>
       <input type="text" [(ngModel)]="password" name="password" id="password" class="inputField" [style.color]="fgColor" required />
-      <button class="button" type="submit" [style.color]="fgColor">Login</button>
+      <button class="button" type="submit" [style.color]="fgColor" (click)="login()">Login</button>
     </form>
 
     <div class="options" [style.color]="fgColor">

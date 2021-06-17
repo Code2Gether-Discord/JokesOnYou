@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DarkModeService } from "../../.././_services/dark-mode.service";
+import { AccountService } from "../../.././_services/account.service";
+import { LoginRequest } from "../../.././_models/_requests/loginRequest";
 
 @Component({
   selector: 'app-login',
@@ -16,22 +18,29 @@ export class LoginComponent implements OnInit {
   bgColor: string = "#2C2F33";
   fgColor: string = "white";
 
-  username!: string;
+  usernameEmail!: string;
   password!: string;
 
-  constructor(private darkModeService: DarkModeService) {
+  result: any;
+
+  constructor(private darkModeService: DarkModeService, private accountService: AccountService) {
     this.darkModeService.onToggle().subscribe((value) => this.onToggle(value));
   }
 
   ngOnInit(): void {
   }
 
-  onToggle(value: boolean) {
+  onToggle(value: boolean): void {
     this.bgColor = (value) ? "#2C2F33" : "white";
     this.fgColor = (value) ? "white" : "black";
   }
 
-  toggleDarkmode() {
+  toggleDarkmode(): void {
     this.darkModeService.toggleDarkMode();
+  }
+
+  login(): void {
+    this.result = this.accountService.login({ email: this.usernameEmail, password: this.password }).subscribe(
+    );
   }
 }

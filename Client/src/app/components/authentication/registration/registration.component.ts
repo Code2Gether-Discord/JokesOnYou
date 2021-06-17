@@ -14,6 +14,7 @@ export class RegistrationComponent implements OnInit {
   email!: string;
   retypePassword!: string;
 
+  nsfw: boolean = false;
   sliderDarkMode: boolean = false;
 
   bgColor: string = "#2C2F33";
@@ -26,15 +27,19 @@ export class RegistrationComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onToggle(value: boolean) {
+  onToggle(value: boolean): void {
     this.sliderDarkMode = value;
 
     this.bgColor = (value) ? "#2C2F33" : "white";
     this.fgColor = (value) ? "white" : "black";
   }
 
-  toggleDarkmode() {
+  toggleDarkmode(): void {
     console.log(this.username);
     this.darkModeService.toggleDarkMode();
+  }
+
+  toggleNSFW(): void {
+    this.nsfw = !this.nsfw;
   }
 }

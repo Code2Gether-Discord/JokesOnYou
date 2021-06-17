@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { DarkModeService } from "../../.././_services/dark-mode.service";
 
 @Component({
@@ -9,6 +9,8 @@ import { DarkModeService } from "../../.././_services/dark-mode.service";
 export class SliderComponent implements OnInit {
   sliderClass: string = "sliderDark round";
 
+  @Output() onChange: EventEmitter<void> = new EventEmitter();
+
   constructor(private darkModeService: DarkModeService) {
     this.darkModeService.onToggle().subscribe((value) => this.onToggle(value));
   }
@@ -18,5 +20,9 @@ export class SliderComponent implements OnInit {
 
   onToggle(value: boolean) {
     this.sliderClass = (value) ? "sliderDark round" : "slider round";
+  }
+
+  onSliderChange(): void {
+    this.onChange.emit();
   }
 }

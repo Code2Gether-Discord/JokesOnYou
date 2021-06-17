@@ -29,7 +29,7 @@
             <input type="text" [style.color]="fgColor" [(ngModel)]="retypePassword" name="retypePassword" id="retypePassword" class="inputField spacing" required />
           </td>
           <td>
-            <app-slider></app-slider>
+            <app-slider (onChange)="toggleNSFW()"></app-slider>
           </td>
         </tr>
       </table>
