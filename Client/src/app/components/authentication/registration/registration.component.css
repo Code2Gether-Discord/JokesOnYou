@@ -21,3 +21,8 @@
 .center {
   margin: 0px 130px;
 }
+
+.options {
+  position: relative;
+  top: 20px;
+}
