@@ -63,4 +63,12 @@ export class JokeCardComponent implements OnInit {
     this.tags[this.currentIndex] = "..." 
     this.tags.splice(this.currentIndex + 1, this.joke.tags.length - this.currentIndex);
   }
+
+  like(): void {
+    this.joke.likes++;
+  }
+
+  dislike(): void {
+    this.joke.dislikes++;
+  }
 }
