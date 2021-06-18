@@ -6,4 +6,5 @@ export interface Joke {
   uploadDate: string;
   likes: number;
   dislikes: number;
+  tags: string[]
 }

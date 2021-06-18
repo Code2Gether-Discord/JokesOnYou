@@ -18,12 +18,9 @@
     <button class="button-round image-round"><img src="../../../resources/Thumb_down.png"/></button>
 
     <div class="content tags">
-      <button class="button-round tag">asd</button>
-      <button class="button-round tag">asd</button>
-      <button class="button-round tag">asd</button>
-      <button class="button-round tag">asd</button>
-      <button class="button-round tag">asd</button>
-      <button class="button-round tag">asd</button>
+      <ng-container *ngFor="let tag of tags, let i = index">
+        <button class="button-round tag">{{tag}}</button>
+      </ng-container>
     </div>
   </div>
 </div>
