@@ -42,3 +42,15 @@
     width: 100px;
     height: 80px;
 }
+
+.button-round {
+  color: white;
+  text-align: center;
+  align-items: center;
+  width: min-content;
+  height: min-content;
+  background: none;
+  border-radius: 80px;
+  cursor: pointer;
+  border-color: #00C853;
+}

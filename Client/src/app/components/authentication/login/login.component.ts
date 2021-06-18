@@ -15,8 +15,9 @@ export class LoginComponent implements OnInit {
   otherServicesWidth: number = 219;
   otherServicesHeight: number = 37;
 
-  bgColor: string = "#2C2F33";
-  fgColor: string = "white";
+  bgColor: string;
+  fgColor: string;
+  linkColor: string;
 
   usernameEmail!: string;
   password!: string;
@@ -24,15 +25,20 @@ export class LoginComponent implements OnInit {
   result: any;
 
   constructor(private darkModeService: DarkModeService, private accountService: AccountService) {
-    this.darkModeService.onToggle().subscribe((value) => this.onToggle(value));
+    this.darkModeService.onToggle().subscribe((value) => this.onToggle());
+
+    this.bgColor = this.darkModeService.bgColor;
+    this.fgColor = this.darkModeService.fgColor;
+    this.linkColor = this.darkModeService.linkColor;
   }
 
   ngOnInit(): void {
   }
 
-  onToggle(value: boolean): void {
-    this.bgColor = (value) ? "#2C2F33" : "white";
-    this.fgColor = (value) ? "white" : "black";
+  onToggle(): void {
+    this.bgColor = this.darkModeService.bgColor;
+    this.fgColor = this.darkModeService.fgColor;
+    this.linkColor = this.darkModeService.linkColor;
   }
 
   toggleDarkmode(): void {

@@ -1,0 +1,91 @@
+.container {
+  position: absolute;
+  color: white;
+  width: min-content;
+  width: 309px;
+  height: 200px;
+}
+
+.card-body {
+  background-color: #676E77;
+  border-radius: 10px 10px 0px 0px;
+  height: min-content;
+}
+
+.card-footer {
+  font-size: 10px;
+  background-color: #414447;
+  border-radius: 0px 0px 10px 10px;
+}
+
+.content {
+  margin: 0px 0px 0px -10px;
+}
+
+.premise{
+  font-size:18px;
+}
+
+.punchline {
+  font-size: 14px;
+  margin: -5px -10px;
+  color: white;
+}
+
+.spoilerShow {
+  background: #2C2F33;
+  filter: blur(2px);
+  text-align: left;
+  height: min-content;
+  width: auto;
+  white-space: pre-wrap;
+}
+
+.spoilerHidden {
+  border: none;
+  background: none;
+  text-align: left;
+  height: min-content;
+  width: auto;
+  white-space: pre-wrap;
+}
+
+.sideNote {
+  font-size: 8px;
+  margin-bottom: -3px;
+} 
+
+.grid-container {
+  position: relative;
+  top: 15px;
+  width: 108%;
+  height: min-content;
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+.left-colum {
+    text-align: left;
+}
+
+.right-colum{
+    text-align: right;
+}
+
+.display-likes {
+  display:inline-block;
+  margin: 0px 5px;
+}
+
+.tags {
+  margin-top: 5px;
+}
+
+.image-round{
+  width: 30px;
+  height: 30px;
+}
+
+.tag{
+    margin-right:8px;
+}

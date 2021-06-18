@@ -1,19 +1,29 @@
-<div *ngIf="joke" class="card">
-    <div class="h4 card-header">
+<div class="container">
+  <div class="card-body">
+    <p class="content">{{joke.premise}}</p>
+    <button [ngClass]="spoiler" (click)="revealSpoiler()">
+      <p class="punchline" [style.visibility]="punchlineVisibility">{{joke.punchline}}</p>
+    </button>
 
-        <a [title]="joke.premise" [routerLink]="['joke', joke.id]">
-            {{joke.premise}}
-        </a>
+    <div class="grid-container content">
+      <p class="sideNote left-colum">{{joke.uploadDate}}</p>
+      <p class="sideNote right-colum">127.0.0.1</p>
     </div>
-    <div class="card-body">
-        <p>
-            {{joke.punchline}}
-        </p>
-    </div>
+  </div>
 
-    <div class="card-footer">
-        {{joke.likes - joke.dislikes}} Likes
-        <button class="ml-1">+</button>
-        <button class="ml-1">-</button>
+
+  <div class="card-footer">
+    <button class="button-round content image-round"><img src="../../../resources/Thumb_up.png" /></button>
+    <div class="display-likes">{{joke.likes - joke.dislikes}}</div>
+    <button class="button-round image-round"><img src="../../../resources/Thumb_down.png"/></button>
+
+    <div class="content tags">
+      <button class="button-round tag">asd</button>
+      <button class="button-round tag">asd</button>
+      <button class="button-round tag">asd</button>
+      <button class="button-round tag">asd</button>
+      <button class="button-round tag">asd</button>
+      <button class="button-round tag">asd</button>
     </div>
+  </div>
 </div>

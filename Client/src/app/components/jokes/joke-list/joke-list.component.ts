@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Joke } from '../../../_models/joke';
-import { environment } from 'src/environments/environment';
 import { JokesService } from 'src/app/_services/jokes.service';
 
 
@@ -24,5 +23,4 @@ export class JokeListComponent implements OnInit {
   ngOnInit() {
     this.getJokes();
   }
-
 }

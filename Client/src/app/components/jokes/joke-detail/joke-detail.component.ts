@@ -5,7 +5,7 @@ import { Joke } from '../../../_models/joke';
 import { JokesService } from 'src/app/_services/jokes.service';
 
 @Component({
-  selector: '',
+  selector: 'add-joke-detail',
   templateUrl: './joke-detail.component.html'
 })
 
