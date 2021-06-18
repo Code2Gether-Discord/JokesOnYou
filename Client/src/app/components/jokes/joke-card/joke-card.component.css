@@ -64,16 +64,6 @@
   grid-template-columns: auto auto;
 }
 
-.left-colum {
-  text-align: left;
-  height: min-content;
-}
-
-.right-colum {
-  text-align: right;
-  height: min-content;
-}
-
 .grid-container-display {
   position: relative;
   width: 100%;
@@ -104,8 +94,4 @@
 
 .tag {
   margin-right:8px;
-}
-
-.debug {
-  border: 2px solid red;
 }

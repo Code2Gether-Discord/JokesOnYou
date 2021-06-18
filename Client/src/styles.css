@@ -53,6 +53,16 @@
   border-color: #00C853;
 }
 
-.test{
-    width:100%;
+.left-colum {
+  text-align: left;
+  height: min-content;
+}
+
+.right-colum {
+  text-align: right;
+  height: min-content;
+}
+
+.debug {
+  border: 2px solid red;
 }
