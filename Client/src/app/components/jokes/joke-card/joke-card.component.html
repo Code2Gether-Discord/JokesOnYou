@@ -6,17 +6,24 @@
     </button>
 
     <div class="grid-container content">
-      <p class="sideNote left-colum">{{joke.uploadDate}}</p>
-      <p class="sideNote right-colum">127.0.0.1</p>
+      <p class="sideNote left-colum">127.0.0.1</p>
+      <p class="sideNote right-colum">{{joke.uploadDate}}</p>
     </div>
   </div>
 
 
   <div class="card-footer">
-    <button class="button-round content image-round"><img src="../../../resources/Thumb_up.png" /></button>
-    <div class="display-likes">{{joke.likes - joke.dislikes}}</div>
-    <button class="button-round image-round"><img src="../../../resources/Thumb_down.png"/></button>
-
+    <div class="grid-container-display">
+      <div class="left-colum">
+        <button class="button-round content image-round"><img src="../../../resources/Thumb_up.png" /></button>
+        <div class="display-likes">{{joke.likes - joke.dislikes}}</div>
+        <button class="button-round image-round"><img src="../../../resources/Thumb_down.png" /></button>
+      </div>
+      <div class="right-colum">
+        <p class="display-seen">{{joke.seen}}</p>
+        <img src="../../../resources/Eye.png" width="20" height="20"/>
+      </div>
+    </div>
     <div class="content tags">
       <ng-container *ngFor="let tag of tags, let i = index">
         <button class="button-round tag">{{tag}}</button>

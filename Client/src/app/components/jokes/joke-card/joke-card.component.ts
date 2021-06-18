@@ -17,6 +17,7 @@ export class JokeCardComponent implements OnInit {
     premise: " I’ve created a writing software to rival Microsoft.",
     punchline: " It’s their Word against mine.",
     uploadDate: "12/02/2002",
+    seen: 10,
     tags: [
       "Programmer", "Top 100", "NSFW", "IDE", "Microsoft"
     ]
@@ -60,7 +61,6 @@ export class JokeCardComponent implements OnInit {
     }
 
     this.tags[this.currentIndex] = "..." 
-
-      this.tags.splice(this.currentIndex + 1, this.joke.tags.length - this.currentIndex);
+    this.tags.splice(this.currentIndex + 1, this.joke.tags.length - this.currentIndex);
   }
 }

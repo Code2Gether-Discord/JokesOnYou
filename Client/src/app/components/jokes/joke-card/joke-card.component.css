@@ -65,28 +65,47 @@
 }
 
 .left-colum {
-    text-align: left;
+  text-align: left;
+  height: min-content;
 }
 
-.right-colum{
-    text-align: right;
+.right-colum {
+  text-align: right;
+  height: min-content;
+}
+
+.grid-container-display {
+  position: relative;
+  width: 100%;
+  height: min-content;
+  display: grid;
+  grid-template-columns: auto auto;
 }
 
 .display-likes {
-  display:inline-block;
+  display: inline-block;
   margin: 0px 5px;
 }
 
-.tags {
-  margin-top: 5px;
+.display-seen {
+  height: min-content;
+  display: inline-block;
+  margin: 5px 6px 8px 0px;
 }
 
 .image-round{
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
+}
+
+.tags {
+  font-size: 7px;
 }
 
 .tag {
-  font-size: 7px;
   margin-right:8px;
+}
+
+.debug {
+  border: 2px solid red;
 }
