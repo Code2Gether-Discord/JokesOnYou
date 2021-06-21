@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DarkModeService } from "../../.././_services/dark-mode.service";
+import { UiApearanceService } from "../../.././_services/uiAppearence.service";
 import { AccountService } from "../../.././_services/account.service";
 import { LoginRequest } from "../../.././_models/_requests/loginRequest";
 
@@ -24,29 +24,28 @@ export class LoginComponent implements OnInit {
 
   result: any;
 
-  constructor(private darkModeService: DarkModeService, private accountService: AccountService) {
-    this.darkModeService.onToggle().subscribe((value) => this.onToggle());
+  constructor(private uiApearanceSerivce: UiApearanceService, private accountService: AccountService) {
+    this.uiApearanceSerivce.onToggle().subscribe(() => this.onToggle());
 
-    this.bgColor = this.darkModeService.bgColor;
-    this.fgColor = this.darkModeService.fgColor;
-    this.linkColor = this.darkModeService.linkColor;
+    this.bgColor = this.uiApearanceSerivce.bgColor;
+    this.fgColor = this.uiApearanceSerivce.fgColor;
+    this.linkColor = this.uiApearanceSerivce.linkColor;
   }
 
   ngOnInit(): void {
   }
 
   onToggle(): void {
-    this.bgColor = this.darkModeService.bgColor;
-    this.fgColor = this.darkModeService.fgColor;
-    this.linkColor = this.darkModeService.linkColor;
+    this.bgColor = this.uiApearanceSerivce.bgColor;
+    this.fgColor = this.uiApearanceSerivce.fgColor;
+    this.linkColor = this.uiApearanceSerivce.linkColor;
   }
 
   toggleDarkmode(): void {
-    this.darkModeService.toggleDarkMode();
+    this.uiApearanceSerivce.toggleDarkMode();
   }
 
   login(): void {
-    this.result = this.accountService.login({ email: this.usernameEmail, password: this.password }).subscribe(
-    );
+    this.accountService.login({ email: this.usernameEmail, password: this.password }).subscribe();
   }
 }

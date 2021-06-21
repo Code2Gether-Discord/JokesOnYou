@@ -4,9 +4,9 @@ import { Observable, Subject } from "rxjs"
 @Injectable({
   providedIn: 'root'
 })
-export class DarkModeService {
+export class UiApearanceService {
   private darkMode: boolean = true;
-  private subject = new Subject<any>();
+  private subject = new Subject<boolean>();
 
   public fgColor: string = "white";
   public bgColor: string = "#2C2F33";

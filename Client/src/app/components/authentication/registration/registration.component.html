@@ -1,46 +1,40 @@
 <div class="background" [style.background-color]="bgColor">
-  <div class="registrationArea" [style.color]="fgColor">
-    <h2>Register</h2>
-    <form class="registerForm">
-      <table>
-        <tr>
-          <th>
+  <div class="container">
+    <div class="registrationArea" [style.color]="fgColor">
+      <h2 class="subTitle">Register</h2>
+      <form class="registerForm">
+        <div class="grid-container">
+          <div>
             <label for="username">Username</label>
             <input type="text" [style.color]="fgColor" [(ngModel)]="username" name="username" id="username" class="inputField spacing" required />
-          </th>
-          <th>
+          </div>
+          <div>
             <label for="dateOfBirth">Date of birth(DD/MM/YYYY)</label>
             <input type="text" [style.color]="fgColor" [(ngModel)]="dateOfBirth" name="dateOfBirth" id="dateOfBirth" class="inputField spacing" required />
-          </th>
-        </tr>
-        <tr>
-          <td>
+          </div>
+          <div>
             <label for="password">Password</label>
-            <input type="text" [style.color]="fgColor" [(ngModel)]="password" name="password" id="password" class="inputField spacing" required />
-          </td>
-          <td>
+            <input type="password" [style.color]="fgColor" [(ngModel)]="password" name="password" id="password" class="inputField spacing" required />
+          </div>
+          <div>
             <label for="email">Email</label>
-            <input type="text" [style.color]="fgColor" [(ngModel)]="email" id="email" class="inputField spacing" required />
-          </td>
-        </tr>
-        <tr>
-          <td>
+            <input type="text" [style.color]="fgColor" [(ngModel)]="email" name="email" id="email" class="inputField spacing" required />
+          </div>
+          <div>
             <label for="retypePassword">Retype Password</label>
-            <input type="text" [style.color]="fgColor" [(ngModel)]="retypePassword" name="retypePassword" id="retypePassword" class="inputField spacing" required />
-          </td>
-          <td>
-            <app-slider (onChange)="toggleNSFW()"></app-slider>
-          </td>
-        </tr>
-      </table>
-      <br />
-      <button class="button center" type="submit" [style.color]="fgColor">Register</button>
-    </form>
-    <div class="options center" [style.color]="fgColor">
-      <p>Have already an account? <a routerLink="" class="underlineLink" [style.color]="linkColor">Go to login</a></p>
+            <input type="password" [style.color]="fgColor" [(ngModel)]="retypePassword" name="retypePassword" id="retypePassword" class="inputField spacing" required />
+          </div>
+          <app-slider class="slider" label="NSFW?" (onChange)="toggleNSFW()" [sliderHeight]="height" [sliderWidth]="width" [circleRadius]="radius"></app-slider>
+        </div>
+        <br />
+        <button class="button center" type="submit" [style.color]="fgColor">Register</button>
+      </form>
+      <div class="options center" [style.color]="fgColor">
+        <p>Have already an account? <a routerLink="" class="underlineLink" [style.color]="linkColor">Go to login</a></p>
+      </div>
     </div>
   </div>
-  <button class="button toggleDM" (click)="toggleDarkmode()" [style.color]="fgColor">Toggle dark mode</button>
-</div>
+    <button class="button toggleDM" (click)="toggleDarkmode()" [style.color]="fgColor">Toggle dark mode</button>
+  </div>
 
 
