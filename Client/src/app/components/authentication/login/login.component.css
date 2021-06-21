@@ -1,34 +1,60 @@
+.container {
+  position: relative;
+  margin-top: 4%;
+  height: 80%;
+  width: 50%;
+}
+
+p {
+  font-size: 1vw;
+}
+
+.inputField {
+  width: 100%;
+}
+
 .otherServices {
-  position: absolute;
-  left: 40%;
-  top: 50px;
+  position: relative;
+  left: 30%;
+  width: 40%;
   height: min-content;
-  width: min-content;
-  padding: 20px;
+}
+
+.button {
+  padding: 4%;
+  margin-top: 8%;
+  height: 7vh;
+  width: 100%;
+}
+
+.inputField {
+  margin-bottom: 8%;
+}
+
+label {
+  font-size: 1vw;
 }
 
 .verticalLine {
-  position: absolute;
-  top: 210px;
-  left: 450px;
-  width: 30%;
+  position: relative;
+  margin-top: 6%;
   transform: rotate(180deg);
+  width: 25vw;
+  border-width: 0.1vw;
 }
 
 .loginArea {
+  position: relative;
+  font-size: 1vw;
+  margin-top: 0%;
+  left: 31%;
+  width: 18vw;
   font-style: normal;
   font-weight: 400;
-  font-size: 12px;
-  line-height: 15px;
-  position: absolute;
-  left: 40%;
-  top: 240px;
-  width: min-content;
   height: min-content;
-  padding: 20px;
 }
 
 .options {
   position: relative;
-  top: 20px;
+  margin-top: 3vh;
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DarkModeService } from "../../.././_services/dark-mode.service";
+import { UiApearanceService } from "../../.././_services/uiAppearence.service";
 
 @Component({
   selector: 'app-registration',
@@ -20,25 +20,29 @@ export class RegistrationComponent implements OnInit {
   fgColor: string;
   linkColor: string;
 
-  constructor(private darkModeService: DarkModeService) {
-    this.darkModeService.onToggle().subscribe((value) => this.onToggle());
+  height: string = "5%";
+  width: string = "13.5%";
+  radius: string = "3%";
 
-    this.bgColor = this.darkModeService.bgColor;
-    this.fgColor = this.darkModeService.fgColor;
-    this.linkColor = this.darkModeService.linkColor;
+  constructor(private uiApearanceService: UiApearanceService) {
+    this.uiApearanceService.onToggle().subscribe(() => this.onToggle());
+
+    this.bgColor = this.uiApearanceService.bgColor;
+    this.fgColor = this.uiApearanceService.fgColor;
+    this.linkColor = this.uiApearanceService.linkColor;
   }
 
   ngOnInit(): void {
   }
 
   onToggle(): void {
-    this.bgColor = this.darkModeService.bgColor;
-    this.fgColor = this.darkModeService.fgColor;
-    this.linkColor = this.darkModeService.linkColor;
+    this.bgColor = this.uiApearanceService.bgColor;
+    this.fgColor = this.uiApearanceService.fgColor;
+    this.linkColor = this.uiApearanceService.linkColor;
   }
 
   toggleDarkmode(): void {
-    this.darkModeService.toggleDarkMode();
+    this.uiApearanceService.toggleDarkMode();
   }
 
   toggleNSFW(): void {

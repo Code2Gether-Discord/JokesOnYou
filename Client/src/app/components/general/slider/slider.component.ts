@@ -1,5 +1,5 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { DarkModeService } from "../../.././_services/dark-mode.service";
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { UiApearanceService } from "../../.././_services/uiAppearence.service";
 
 @Component({
   selector: 'app-slider',
@@ -7,19 +7,27 @@ import { DarkModeService } from "../../.././_services/dark-mode.service";
   styleUrls: ['./slider.component.css']
 })
 export class SliderComponent implements OnInit {
+
+  @Input() sliderWidth: string = "60px";
+  @Input() sliderHeight: string = "25px";
+  @Input() label: string | undefined;
+  @Input() circleRadius: string = "16px";
+
   sliderClass: string = "sliderDark round";
+  circleClass: string = "circleDark round";
 
   @Output() onChange: EventEmitter<void> = new EventEmitter();
 
-  constructor(private darkModeService: DarkModeService) {
-    this.darkModeService.onToggle().subscribe((value) => this.onToggle(value));
+  constructor(private uiApearanceService: UiApearanceService) {
+    this.uiApearanceService.onToggle().subscribe((value) => this.onToggle(value));
   }
 
   ngOnInit(): void {
   }
 
   onToggle(value: boolean) {
-    this.sliderClass = (value) ? "sliderDark round" : "slider round";
+    this.sliderClass = (value) ? "sliderDark round" : "sliderLight round";
+    this.circleClass = (value) ? "circleDark" : "circleLight";
   }
 
   onSliderChange(): void {
