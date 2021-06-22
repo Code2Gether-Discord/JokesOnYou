@@ -14,7 +14,7 @@
       <label for="username">Username/Email</label>
       <input type="text" [(ngModel)]="usernameEmail" name="username" id="username" class="inputField" [style.color]="fgColor" required />
       <label for="password">Password</label>
-      <input type="text" [(ngModel)]="password" name="password" id="password" class="inputField" [style.color]="fgColor" required />
+      <input type="password" [(ngModel)]="password" name="password" id="password" class="inputField" [style.color]="fgColor" required />
       <button class="button" type="submit" [style.color]="fgColor" (click)="login()">Login</button>
     </form>
 

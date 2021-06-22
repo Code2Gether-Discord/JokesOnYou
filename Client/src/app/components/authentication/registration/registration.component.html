@@ -16,7 +16,7 @@
         <tr>
           <td>
             <label for="password">Password</label>
-            <input type="text" [style.color]="fgColor" [(ngModel)]="password" name="password" id="password" class="inputField spacing" required />
+            <input type="password" [style.color]="fgColor" [(ngModel)]="password" name="password" id="password" class="inputField spacing" required />
           </td>
           <td>
             <label for="email">Email</label>
@@ -26,7 +26,7 @@
         <tr>
           <td>
             <label for="retypePassword">Retype Password</label>
-            <input type="text" [style.color]="fgColor" [(ngModel)]="retypePassword" name="retypePassword" id="retypePassword" class="inputField spacing" required />
+            <input type="password" [style.color]="fgColor" [(ngModel)]="retypePassword" name="retypePassword" id="retypePassword" class="inputField spacing" required />
           </td>
           <td>
             <app-slider (onChange)="toggleNSFW()"></app-slider>
