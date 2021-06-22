@@ -5,42 +5,41 @@
 }
 
 .background {
-  left: 0;
   position: absolute;
+  left: 0;
   width: 100%;
-  height: 92%;
+  height: 100%;
   min-width: 100%;
-  min-height: 90%;
+  min-height: 100%;
 }
 
 .inputField {
+  position: relative;
   display: block;
-  padding: 5px;
-  margin-top: -5px;
-  width: 219px;
-  height: 28px;
-  margin-bottom: 15px;
+  border-width: 0.2vw;
+  font-size: 1vw;
+  border-radius: 0.4vw;
+  padding: 3%;
   background: none;
-  border-radius: 5px;
   border-color: #00C853;
+}
+
+.label{
+  margin-bottom: -10vh;
 }
 
 .button {
-  font-size: 12px;
-  padding: 8px;
-  width: 219px;
-  height: 37px;
-  margin-top: 20px;
+  border-width: 0.2vw;
   background: none;
-  border-radius: 5px;
+  border-radius: 0.4vw;
   cursor: pointer;
   border-color: #00C853;
+  font-size: 1vw;
 }
 
 .toggleDM{
-    margin: 30px;
-    width: 100px;
-    height: 80px;
+  position: absolute;
+  top: 65%;
 }
 
 .button-round {
@@ -53,6 +52,16 @@
   border-color: #00C853;
 }
 
-.test{
-    width:100%;
+.left-colum {
+  text-align: left;
+  height: min-content;
+}
+
+.right-colum {
+  text-align: right;
+  height: min-content;
+}
+
+.debug {
+  border: 2px solid red;
 }

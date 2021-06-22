@@ -1,28 +1,64 @@
+.container {
+  position: relative;
+  margin-top: 10%;
+  left: 10px;
+  height: 80%;
+  width: 50%;
+}
+
+h2 {
+  font-size: 3vw;
+}
+
+p {
+  font-size: 1vw;
+}
+
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-row-gap: 2vh;
+  grid-column-gap: 1vw;
+}
+
+.slider {
+  margin-top: 3%;
+}
+
+.inputField{
+  width: 19vw;
+  height: 4.5vh;
+}
+
+.button {
+  margin-top: 7%;
+  left: 40%;
+  width: 20%;
+  height: min-content;
+  padding: 1.5%;
+}
+
 .registrationArea {
+  position: relative;
   font-style: normal;
   font-weight: 400;
-  font-size: 12px;
-  position: absolute;
-  left: 430px;
-  top: 90px;
-  width: 600px;
-  height: min-content;
-  padding: 20px;
+  margin-left: 3vw;
+  width: min-content;
 }
 
 .registerForm{
-  margin-top:30px;
-}
-
-.spacing{
-   margin-right:10px;
+  font-size: 0.85vw;
+  margin-top: 6%;
 }
 
 .center {
-  margin: 0px 130px;
+  position: relative;
+  display: flex;
+  justify-content: center;
 }
 
 .options {
   position: relative;
-  top: 20px;
+  margin-top: 3vh;
 }
