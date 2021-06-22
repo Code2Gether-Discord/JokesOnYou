@@ -1,0 +1,60 @@
+.container {
+  position: relative;
+  margin-top: 4%;
+  height: 80%;
+  width: 50%;
+}
+
+p {
+  font-size: 1vw;
+}
+
+.inputField {
+  width: 100%;
+}
+
+.otherServices {
+  position: relative;
+  left: 30%;
+  width: 40%;
+  height: min-content;
+}
+
+.button {
+  padding: 4%;
+  margin-top: 8%;
+  height: 7vh;
+  width: 100%;
+}
+
+.inputField {
+  margin-bottom: 8%;
+}
+
+label {
+  font-size: 1vw;
+}
+
+.verticalLine {
+  position: relative;
+  margin-top: 6%;
+  transform: rotate(180deg);
+  width: 25vw;
+  border-width: 0.1vw;
+}
+
+.loginArea {
+  position: relative;
+  font-size: 1vw;
+  margin-top: 0%;
+  left: 31%;
+  width: 18vw;
+  font-style: normal;
+  font-weight: 400;
+  height: min-content;
+}
+
+.options {
+  position: relative;
+  margin-top: 3vh;
+}

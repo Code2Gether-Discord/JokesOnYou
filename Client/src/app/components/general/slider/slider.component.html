@@ -1,0 +1,8 @@
+<div>
+  <label class="switch">
+    {{label}}
+    <input type="checkbox" (click)="onSliderChange()">
+    <span [ngClass]="circleClass" [ngStyle]="{ height: circleRadius, width: circleRadius }"></span>
+    <span [ngClass]="sliderClass" [ngStyle]="{ width: sliderWidth, height: sliderHeight }"></span>
+  </label>
+</div>

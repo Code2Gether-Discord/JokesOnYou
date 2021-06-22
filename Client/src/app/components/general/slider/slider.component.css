@@ -1,0 +1,77 @@
+.switch input {
+  display: block;
+  width: 0;
+  height: 0;
+}
+
+.sliderLight {
+  position: absolute;
+  margin-top: 1vh;
+  cursor: pointer;
+  border: 0.2vw solid #00C853;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.circleLight {
+  position: absolute;
+  z-index: 1;
+  margin-top: 1.7vh;
+  margin-left: 1%;
+  border: 0.1vw solid #00C853;
+  border-radius: 50%;
+  background-color: black;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .circle + .sliderLight {
+  background-color: #00C853;
+}
+
+input:focus + .circle + .sliderLight {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .circle {
+  -webkit-transform: translateX(37px);
+  -ms-transform: translateX(37px);
+  transform: translateX(37px);
+}
+
+.sliderDark {
+  margin-top: 1vh;
+  position: absolute;
+  cursor: pointer;
+  border: 0.2vw solid #00C853;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.circleDark {
+  position: absolute;
+  z-index: 1;
+  margin-top: 1.7vh;
+  margin-left: 1%;
+  border: 0.1vw solid #00C853;
+  border-radius: 50%;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .circleDark + .sliderDark {
+  background-color: #00C853;
+}
+
+input:focus + .circleDark + .sliderDark {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .circleDark {
+  -webkit-transform: translateX(300%);
+  -ms-transform: translateX(300%);
+  transform: translateX(300%);
+}

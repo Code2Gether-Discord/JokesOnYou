@@ -1,10 +1,13 @@
 using AutoMapper;
 using JokesOnYou.Web.Api.DTOs;
 using JokesOnYou.Web.Api.Exceptions;
+using JokesOnYou.Web.Api.Extensions;
+using JokesOnYou.Web.Api.Filters;
 using JokesOnYou.Web.Api.Models;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
 using JokesOnYou.Web.Api.Services.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Services
@@ -64,9 +67,9 @@ namespace JokesOnYou.Web.Api.Services
             jokeCreateDto.NormalizedPunchline = jokeCreateDto.Punchline.ToUpper();
         }
 
-        public async Task<IEnumerable<JokeDto>> GetAllJokeDtosAsync()
+        public async Task<IEnumerable<JokeDto>> GetAllJokeDtosAsync(JokesFilter jokesFilter)
         {
-            var jokeDtos = await _jokesRepo.GetAllJokeDtosAsync();
+            var jokeDtos = await _jokesRepo.GetFilteredJokeDtos(jokesFilter);
 
             foreach (var jokeDto in jokeDtos)
             {
