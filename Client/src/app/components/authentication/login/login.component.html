@@ -1,28 +1,32 @@
 <div class="background" [ngStyle]="{'background-color': bgColor}">
-  <div class="otherServices">
-    <button class="button">
-      <p class="content" [style.color]="fgColor">{{goggleBtnText}}</p>
-    </button>
-    <button class="button">
-      <p class="content" [style.color]="fgColor">{{facebookBtnText}}</p>
-    </button>
-  </div>
-  <hr class="verticalLine" [style.border-color]="fgColor" />
-
-  <div class="loginArea" [style.color]="fgColor">
-    <form>
-      <label for="username">Username/Email</label>
-      <input type="text" [(ngModel)]="usernameEmail" name="username" id="username" class="inputField" [style.color]="fgColor" required />
-      <label for="password">Password</label>
-      <input type="password" [(ngModel)]="password" name="password" id="password" class="inputField" [style.color]="fgColor" required />
-      <button class="button" type="submit" [style.color]="fgColor" (click)="login()">Login</button>
-    </form>
-
-    <div class="options" [style.color]="fgColor">
-      <a href="" class="underlineLink">Reset Password</a>
-      <p>Don´t you have account? <a routerLink="registration" class="underlineLink">Create one</a></p>
-    </div>
-  </div>
   <button class="button toggleDM" (click)="toggleDarkmode()" [style.color]="fgColor">Toggle dark mode</button>
   <app-joke-card></app-joke-card>
+
+  <div class="container">
+    <div class="otherServices">
+      <button class="button">
+        <p class="a" [style.color]="fgColor">{{goggleBtnText}}</p>
+      </button>
+      <button class="button">
+        <p class="content" [style.color]="fgColor">{{facebookBtnText}}</p>
+      </button>
+    </div>
+
+    <hr class="verticalLine" [style.border-color]="fgColor" />
+
+    <div class="loginArea" [style.color]="fgColor">
+      <form>
+        <label class="label" for="username">Username/Email</label>
+        <input type="text" [(ngModel)]="usernameEmail" name="username" id="username" class="inputField" [style.color]="fgColor" required />
+        <label class="label" for="password">Password</label>
+        <input type="text" [(ngModel)]="password" name="password" id="password" class="inputField" [style.color]="fgColor" required />
+        <button class="button" type="submit" [style.color]="fgColor" (click)="login()">Login</button>
+      </form>
+
+      <div class="options" [style.color]="fgColor">
+        <a href="" class="underlineLink">Reset Password</a>
+        <p>Don´t you have account? <a routerLink="registration" class="underlineLink">Create one</a></p>
+      </div>
+    </div>
+  </div>
 </div>
