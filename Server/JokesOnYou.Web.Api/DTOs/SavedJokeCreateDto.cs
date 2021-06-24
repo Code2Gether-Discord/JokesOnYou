@@ -2,5 +2,7 @@
 {
     public class SavedJokeCreateDto
     {
+        
+        //there's no need for this
     }
 }

@@ -10,14 +10,13 @@ namespace JokesOnYou.Web.Api.Data
         {
         }
 
-        
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
         }
-    
+        public DbSet<SavedJoke> SavedJokes { get; set; }
         public DbSet<Joke> Jokes { get; set; }
-
         public DbSet<Tag> Tags { get; set; }
     }
 }

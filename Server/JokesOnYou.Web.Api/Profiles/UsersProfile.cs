@@ -12,6 +12,7 @@ namespace JokesOnYou.Web.Api.Profiles
             CreateMap<UserRegisterDTO, User>();
             CreateMap<UserUpdateDTO, User>();
             CreateMap<User, UserReplyDTO>();
+            CreateMap<SavedJoke, SavedJokeReplyDto>();
         }
     }
 }
