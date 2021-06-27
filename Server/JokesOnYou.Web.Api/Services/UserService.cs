@@ -92,7 +92,7 @@ namespace JokesOnYou.Web.Api.Services
                     {
                         Id = user.Id,
                         Email = user.Email,
-                        UserName = user.Email,
+                        UserName = user.UserName,
                         Token = _tokenService.GetToken(user)
                     };
                     return userReplyDTO;

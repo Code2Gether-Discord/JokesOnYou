@@ -1,4 +1,5 @@
 ﻿using JokesOnYou.Web.Api.DTOs;
+using JokesOnYou.Web.Api.Exceptions;
 using JokesOnYou.Web.Api.Models;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
 using JokesOnYou.Web.Api.Services.Interfaces;
@@ -10,10 +11,12 @@ namespace JokesOnYou.Web.Api.Services
     public class SavedJokeService : ISavedJokeService
     {
         private readonly ISavedJokeRepository _savedJokeRepo;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public SavedJokeService(ISavedJokeRepository savedJokeRepo)
+        public SavedJokeService(ISavedJokeRepository savedJokeRepo, IUnitOfWork unitOfWork)
         {
             _savedJokeRepo = savedJokeRepo;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task AddSavedJoke(int jokeId, string userId)
@@ -24,13 +27,18 @@ namespace JokesOnYou.Web.Api.Services
                 UserId = userId,
                 SavedDate = System.DateTime.Now
             });
+            var saved = await _unitOfWork.SaveAsync();
+            if (!saved)
+            {
+                throw new AppException("Error with saving the SavedJoke.");
+            }
         }
 
         public async Task<IEnumerable<SavedJokeReplyDto>> GetSavedJokesByUserId(string id)
         {
             var yes = await _savedJokeRepo.GetSavedJokesByUserId(id);
+            
             return yes;
         }
-
     }
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase

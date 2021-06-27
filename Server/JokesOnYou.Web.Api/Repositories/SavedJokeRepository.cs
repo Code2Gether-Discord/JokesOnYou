@@ -24,7 +24,7 @@ namespace JokesOnYou.Web.Api.Repositories
             _mapper = mapper;
         }
 
-        public async Task AddSavedJoke(SavedJoke savedJoke) => await _context.SavedJokes.AddAsync(savedJoke);
-        public async Task<IEnumerable<SavedJokeReplyDto>> GetSavedJokesByUserId(string id) => await _context.SavedJokes.Where(x=> x.UserId == id).ProjectTo<SavedJokeReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
+        public async Task AddSavedJoke(SavedJoke savedJoke) => await _context.SavedJokes.AddAsync(savedJoke).AsTask();
+        public async Task<IEnumerable<SavedJokeReplyDto>> GetSavedJokesByUserId(string id) => await _context.SavedJokes.Where(x => x.UserId == id).ProjectTo<SavedJokeReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
     }
 }
