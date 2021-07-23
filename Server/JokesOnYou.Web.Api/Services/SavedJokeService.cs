@@ -36,9 +36,7 @@ namespace JokesOnYou.Web.Api.Services
 
         public async Task<IEnumerable<SavedJokeReplyDto>> GetSavedJokesByUserId(string id)
         {
-            var yes = await _savedJokeRepo.GetSavedJokesByUserId(id);
-            
-            return yes;
+            return await _savedJokeRepo.GetSavedJokesByUserId(id);
         }
     }
 }
