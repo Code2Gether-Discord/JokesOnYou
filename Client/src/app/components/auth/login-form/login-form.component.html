@@ -1,0 +1,29 @@
+<div class="form-group">
+  <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+    <h2>Login</h2>
+    <div class="form-group">
+      <p>Email</p>
+      <div class="form-group form-inline">
+        <input type="email" class="gradient-border" id="email" required
+               [(ngModel)]="model.email" name="email" #email="ngModel">
+        <div [hidden]="email.valid || email.pristine"
+             class="alert alert-danger col-3 m-1">
+          Email is required
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <p>Password</p>
+      <div class="form-group form-inline">
+        <input type="password" class="gradient-border" id="password" required
+               [(ngModel)]="model.password" name="password" #password="ngModel">
+        <div [hidden]="password.valid || password.pristine"
+             class="alert alert-danger col-3 m-1">
+          Password is required
+        </div>
+      </div>
+      </div>
+      <button type="submit" class="btn mr-5 gradient-border" (click)="login()">Log in</button>
+      <a href="/">Register</a>
+</form>
+</div>

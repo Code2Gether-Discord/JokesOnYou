@@ -1,0 +1,27 @@
+input {
+  border: none;
+  padding: 12px 15px;
+}
+
+p {
+  font-size: 16px;
+  font-weight: 100;
+  line-height: 20px;
+  letter-spacing: 0.5px;
+  margin: 5px;
+}
+
+h2 {
+  font-weight: bold;
+  line-height: 20px;
+  letter-spacing: 0.5px;
+  margin: 20px 0 30px;
+}
+
+.gradient-border {
+  background: white;
+  border: 10px solid;
+  border-image-slice: 1;
+  border-width: 3px;
+  border-image-source: linear-gradient(to right, #00C853, #B2FF59);
+}
