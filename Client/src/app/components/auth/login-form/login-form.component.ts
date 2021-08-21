@@ -11,13 +11,11 @@ export class LoginFormComponent implements OnInit {
 
   submitted = false;
 
-  onSubmit() { this.submitted = true; }
-
-  login(): void {
-    alert('Log in and redirect to main page');
+  onSubmit() {
+    this.submitted = true;
+    alert(`Log in and redirect to main page ${this.model.email}\\${this.model.password}`);
   }
 
   ngOnInit(): void {
   }
-
 }

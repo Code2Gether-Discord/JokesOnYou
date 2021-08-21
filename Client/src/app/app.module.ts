@@ -11,6 +11,7 @@ import { JokeDetailComponent } from './components/jokes/joke-detail/joke-detail.
 import { JokeListComponent } from './components/jokes/joke-list/joke-list.component';
 import { LoginFormComponent } from './components/auth/login-form/login-form.component';
 import { FormsModule } from '@angular/forms';
+import { RegistrationComponent } from './components/auth/registration/registration.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { FormsModule } from '@angular/forms';
     JokeListComponent,
     JokeCardComponent,
     JokeDetailComponent,
-    LoginFormComponent
+    LoginFormComponent,
+    RegistrationComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]
