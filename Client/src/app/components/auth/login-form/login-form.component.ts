@@ -7,13 +7,13 @@ import { LoginInfo } from 'src/app/_models/loginInfo';
   styleUrls: ['./login-form.component.css']
 })
 export class LoginFormComponent implements OnInit {
-  model: LoginInfo = { email: '', password: '' }
+  model: LoginInfo = { username: '', password: '' }
 
   submitted = false;
 
   onSubmit() {
     this.submitted = true;
-    alert(`Log in and redirect to main page ${this.model.email}\\${this.model.password}`);
+    alert(`Log in and redirect to main page ${this.model.username}\\${this.model.password}`);
   }
 
   ngOnInit(): void {

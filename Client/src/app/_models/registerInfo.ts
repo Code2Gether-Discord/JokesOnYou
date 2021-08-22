@@ -1,6 +1,6 @@
 export interface RegisterInfo {
   username?: string;
-  dateOfBirth?: string;
+  dateOfBirth?: Date;
   password?: string;
   email?: string;
   retypePassword?: string;

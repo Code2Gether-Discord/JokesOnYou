@@ -2,18 +2,18 @@
   <div class="row justify-content-center">
     <h1 class="offset-md-9">Login</h1>
     <div class="col-md-3">
-      <label for="email" class="form-label">Email</label>
+      <label for="username" class="form-label">Email or login</label>
       <div>
-        <input type="email"
+        <input type="text"
                class="form-control gradient-border"
-               id="email"
-               [(ngModel)]="model.email"
-               name="email"
-               #email="ngModel"
+               id="username"
+               [(ngModel)]="model.username"
+               name="username"
+               #username="ngModel"
                required>
-        <div [hidden]="email.valid || email.pristine"
+        <div [hidden]="username.valid || username.pristine"
              class="alert alert-danger m-1">
-          Email is required
+          Username is required
         </div>
       </div>
     </div>
