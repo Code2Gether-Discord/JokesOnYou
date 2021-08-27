@@ -1,4 +1,4 @@
-﻿using JokesOnYou.Web.Api.DTOs;
+﻿using JokesOnYou.Web.Api.Models.Request;
 using JokesOnYou.Web.Api.Extensions;
 using JokesOnYou.Web.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using JokesOnYou.Web.Api.Models.Response;
 
 namespace JokesOnYou.Web.Api.Controllers
 {
@@ -22,17 +23,14 @@ namespace JokesOnYou.Web.Api.Controllers
             _userService = userService;
         }
 
-        // Disable "this async method lacks an await operator" Remove this when we actually implement methods
-        #pragma warning disable 1998
-
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserReplyDTO>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<UserReplyDto>>> GetUsers()
         {
             return Ok(await _userService.GetAll());
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserReplyDTO>> GetUserById(string id)
+        public async Task<ActionResult<UserReplyDto>> GetUserById(string id)
         {
             var user = await _userService.GetUserReplyById(id);
             if (user != null) return user;
@@ -41,7 +39,7 @@ namespace JokesOnYou.Web.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateUser(string id, UserUpdateDTO userUpdateDTO)
+        public async Task<ActionResult> UpdateUser(string id, UserUpdateDto userUpdateDTO)
         {
             
             if (id != ClaimsPrincipalExtension.GetUserId(User))

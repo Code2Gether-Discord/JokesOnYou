@@ -1,6 +1,6 @@
-﻿namespace JokesOnYou.Web.Api.DTOs
+﻿namespace JokesOnYou.Web.Api.Models.Response
 {
-    public class UserReplyDTO
+    public class UserReplyDto
     {
         public string Id { get; set; }
         public string UserName { get; set; }

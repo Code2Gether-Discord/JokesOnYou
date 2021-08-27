@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace JokesOnYou.Web.Api.DTOs
+namespace JokesOnYou.Web.Api.Models.Response
 {
-    public class JokeDto
+    public class JokeReplyDto
     {
         public int Id { get; set; }
         public string Premise { get; set; }

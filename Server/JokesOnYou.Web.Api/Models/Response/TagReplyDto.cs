@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace JokesOnYou.Web.Api.DTOs
+namespace JokesOnYou.Web.Api.Models.Response
 {
     public class TagReplyDto
     {

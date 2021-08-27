@@ -1,6 +1,6 @@
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using JokesOnYou.Web.Api.DTOs;
+using JokesOnYou.Web.Api.Models.Request;
 using JokesOnYou.Web.Api.Exceptions;
 using JokesOnYou.Web.Api.Models;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using JokesOnYou.Web.Api.Models.Response;
 
 namespace JokesOnYou.Web.Api.Repositories
 {
@@ -24,20 +25,20 @@ namespace JokesOnYou.Web.Api.Repositories
             _userManager = userManager;
         }
 
-        public async Task<User> CreateUserAsync(UserRegisterDTO userRegisterDTO)
+        public async Task<User> CreateUserAsync(UserRegisterDto userRegisterDto)
         {
             var userCreationResult = await _userManager.CreateAsync(new User()
             {
-                Email = userRegisterDTO.Email,
-                UserName = userRegisterDTO.UserName
-            }, userRegisterDTO.Password);
+                Email = userRegisterDto.Email,
+                UserName = userRegisterDto.UserName
+            }, userRegisterDto.Password);
             if (userCreationResult.Succeeded)
             {
-                return await _userManager.FindByEmailAsync(userRegisterDTO.Email);
+                return await _userManager.FindByEmailAsync(userRegisterDto.Email);
             }
             else
             {
-                StringBuilder message = new StringBuilder();
+                StringBuilder message = new();
                 foreach (var error in userCreationResult.Errors)
                 {
                     message.AppendLine(error.Description);
@@ -47,14 +48,13 @@ namespace JokesOnYou.Web.Api.Repositories
             }
         }
 
-        public async Task<User> GetUserByUsernameAsync(string username) => await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == username);
+        public async Task<User> GetUserByUsernameAsync(string username) => 
+            await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == username);
 
-        public async Task<UserReplyDTO> GetUserReplyAsync(string id)
-        {
-            var user = await _userManager.FindByIdAsync(id);
+        public async Task<UserReplyDto> GetUserReplyAsync(string id) => 
+            await _userManager.Users.ProjectTo<UserReplyDto>(_mapper.ConfigurationProvider)
+                                    .FirstOrDefaultAsync(user => user.Id == id);
 
-            return _mapper.Map<User, UserReplyDTO>(user);
-        }
 
         public Task DeleteUserAsync(User user) => _userManager.DeleteAsync(user);
 
@@ -65,6 +65,7 @@ namespace JokesOnYou.Web.Api.Repositories
         public async Task<User> GetUserByEmailAsync(string email) => await _userManager.FindByEmailAsync(email);
 
 
-        public async Task<IEnumerable<UserReplyDTO>> GetUsersReplyDtoAsync() => await _userManager.Users.ProjectTo<UserReplyDTO>(_mapper.ConfigurationProvider).ToListAsync();
+        public async Task<IEnumerable<UserReplyDto>> GetUsersReplyDtoAsync() => 
+            await _userManager.Users.ProjectTo<UserReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
     }
 }

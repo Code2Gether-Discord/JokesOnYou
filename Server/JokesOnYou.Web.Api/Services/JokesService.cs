@@ -1,11 +1,12 @@
 using AutoMapper;
-using JokesOnYou.Web.Api.DTOs;
+using JokesOnYou.Web.Api.Models.Request;
 using JokesOnYou.Web.Api.Exceptions;
 using JokesOnYou.Web.Api.Models;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
 using JokesOnYou.Web.Api.Services.Interfaces;
-using System.Collections.Generic;
+using JokesOnYou.Web.Api.Models.Response;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace JokesOnYou.Web.Api.Services
 {
@@ -24,23 +25,16 @@ namespace JokesOnYou.Web.Api.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<JokeDto> CreateJokeAsync(JokeCreateDto jokeCreateDto)
+        public async Task<JokeReplyDto> CreateJokeAsync(JokeDto jokeDto, string userId)
         {
-            TrimAndNormalizeJokeCreateDto(jokeCreateDto);
-
-            if (await _jokesRepo.DoesJokeExist(jokeCreateDto.NormalizedPremise, jokeCreateDto.NormalizedPunchline))
-            {
-                throw new AppException("Joke Already exists.");
-            }
-
-            var user = await _userRepository.GetUserAsync(jokeCreateDto.UserId);
+            var user = await _userRepository.GetUserAsync(userId);
             if (user == null)
             {
-                throw new AppException($"No user with this id:\"{jokeCreateDto.UserId}\" found in the Database.");
+                throw new AppException($"No user with this id:\"{userId}\" found in the Database.");
             }
 
-            var joke = _mapper.Map<Joke>(jokeCreateDto);
-            joke.AuthorId = user.Id;
+            Joke joke = await BuildJokeFromJokeDtoAndUserId(jokeDto, userId);
+
             await _jokesRepo.CreateJokeAsync(joke);
 
             var saved = await _unitOfWork.SaveAsync();
@@ -49,22 +43,12 @@ namespace JokesOnYou.Web.Api.Services
                 throw new AppException("Error with saving the Joke.");
             }
 
-            var jokeDto = _mapper.Map<JokeDto>(joke);
-            jokeDto.Author.Id = user.Id;
-            jokeDto.Author.UserName = user.UserName;
+            var jokeReplyDto = _mapper.Map<JokeReplyDto>(joke);
 
-            return jokeDto;
+            return jokeReplyDto;
         }
 
-        private static void TrimAndNormalizeJokeCreateDto(JokeCreateDto jokeCreateDto)
-        {
-            jokeCreateDto.Premise = jokeCreateDto.Premise.Trim();
-            jokeCreateDto.Punchline = jokeCreateDto.Punchline.Trim();
-            jokeCreateDto.NormalizedPremise = jokeCreateDto.Premise.ToUpper();
-            jokeCreateDto.NormalizedPunchline = jokeCreateDto.Punchline.ToUpper();
-        }
-
-        public async Task<IEnumerable<JokeDto>> GetAllJokeDtosAsync()
+        public async Task<IEnumerable<JokeReplyDto>> GetAllJokeDtosAsync()
         {
             var jokeDtos = await _jokesRepo.GetAllJokeDtosAsync();
 
@@ -91,8 +75,11 @@ namespace JokesOnYou.Web.Api.Services
             }
         }
 
-        public async Task<JokeDto> UpdateJoke(JokeUpdateDto jokeUpdateDto)
+        public async Task<JokeReplyDto> UpdateJoke(JokeUpdateDto jokeUpdateDto)
         {
+            var jokeDto = _mapper.Map<JokeCreateDto>(jokeUpdateDto);
+            await TrimJokeAndCheckForDuplicate(jokeDto);
+
             var jokeToUpdate = await _jokesRepo.GetJokeByIdAsync(jokeUpdateDto.Id);
             if (jokeToUpdate == null)
             {
@@ -102,12 +89,12 @@ namespace JokesOnYou.Web.Api.Services
             _mapper.Map(jokeUpdateDto,jokeToUpdate);
             await _unitOfWork.SaveAsync();
 
-            var jokeDto = _mapper.Map<JokeDto>(jokeToUpdate);
-            await AddAuthorToJoke(jokeDto);
-            return jokeDto;
+            var jokeReplyDto = _mapper.Map<JokeReplyDto>(jokeToUpdate);
+            await AddAuthorToJoke(jokeReplyDto);
+            return jokeReplyDto;
         }
 
-        public async Task<JokeDto> GetJokeDtoAsync(int id)
+        public async Task<JokeReplyDto> GetJokeDtoAsync(int id)
         {
             var jokeDto = await _jokesRepo.GetJokeDtoAsync(id);
             if (jokeDto == null)
@@ -120,10 +107,39 @@ namespace JokesOnYou.Web.Api.Services
             return jokeDto;
         }
 
-        private async Task AddAuthorToJoke(JokeDto jokeDto)
+        private async Task AddAuthorToJoke(JokeReplyDto jokeDto)
         {
             var user = await _userRepository.GetUserReplyAsync(jokeDto.Author.Id);
             jokeDto.Author.UserName = user.UserName;
+        }
+
+        private async Task<Joke> BuildJokeFromJokeDtoAndUserId(JokeDto jokeDto, string userId)
+        {
+            var jokeCreateDto = _mapper.Map<JokeCreateDto>(jokeDto);
+            jokeCreateDto.UserId = userId;
+            await TrimJokeAndCheckForDuplicate(jokeCreateDto);
+
+            var joke = _mapper.Map<Joke>(jokeCreateDto);
+
+            return joke;
+        }
+
+        private async Task TrimJokeAndCheckForDuplicate(JokeCreateDto jokeCreateDto)
+        {
+            TrimAndNormalizeJokeCreateDto(jokeCreateDto);
+
+            if (await _jokesRepo.DoesJokeExist(jokeCreateDto.NormalizedPremise, jokeCreateDto.NormalizedPunchline))
+            {
+                throw new AppException("Joke Already exists.");
+            }
+        }
+
+        private static void TrimAndNormalizeJokeCreateDto(JokeCreateDto jokeCreateDto)
+        {
+            jokeCreateDto.Premise = jokeCreateDto.Premise.Trim();
+            jokeCreateDto.Punchline = jokeCreateDto.Punchline.Trim();
+            jokeCreateDto.NormalizedPremise = jokeCreateDto.Premise.ToUpper();
+            jokeCreateDto.NormalizedPunchline = jokeCreateDto.Punchline.ToUpper();
         }
     }
 }

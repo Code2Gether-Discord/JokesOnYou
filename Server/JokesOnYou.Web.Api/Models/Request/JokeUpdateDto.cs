@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace JokesOnYou.Web.Api.DTOs
+namespace JokesOnYou.Web.Api.Models.Request
 {
     /// <summary>
     /// Does not update joke's id, likes, author, uploaddate, or dislikes. Just Premise and Punchline

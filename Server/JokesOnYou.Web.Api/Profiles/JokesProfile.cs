@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
-using JokesOnYou.Web.Api.DTOs;
+using JokesOnYou.Web.Api.Models.Request;
 using JokesOnYou.Web.Api.Models;
+using JokesOnYou.Web.Api.Models.Response;
 
 namespace JokesOnYou.Web.Api.Profiles
 {
@@ -8,9 +9,10 @@ namespace JokesOnYou.Web.Api.Profiles
     {
         public JokesProfile()
         {
-            CreateMap<Joke, JokeDto>().ForMember(dest => dest.Author, x => x.MapFrom(src => new JokeAuthorDto() { Id = src.AuthorId }));
-                //.ForPath(dest => dest.Author.Id, x => x.MapFrom(scr => scr.AuthorId));
-            CreateMap<JokeCreateDto, Joke>();
+            CreateMap<Joke, JokeReplyDto>().ForMember(dest => dest.Author, x => x.MapFrom(src => new JokeAuthorDto() { Id = src.AuthorId }));
+            CreateMap<JokeCreateDto, Joke>().ForMember(dest => dest.AuthorId, x => x.MapFrom(source => source.UserId));
+            CreateMap<JokeUpdateDto, JokeCreateDto>();
+            CreateMap<JokeDto, JokeCreateDto>();
             CreateMap<JokeUpdateDto, Joke>();
         }
     }
