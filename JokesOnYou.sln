@@ -36,7 +36,6 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Client", "Client\", "{14753
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "52235"
-		SlnRelativePath = "Client\"
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{CB2D9186-2B28-418B-A052-8403DEC8E5AE}"
@@ -64,26 +63,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{8529E9
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{53B5F5C5-712F-4CCB-86AD-398413F760CA}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ClientApp", "AuthExample\ClientApp\", "{3820DF65-29A1-4A91-B6A9-3563DE52BFE0}"
-	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		Debug.AspNetCompiler.VirtualPath = "/localhost_59911"
-		Debug.AspNetCompiler.PhysicalPath = "AuthExample\ClientApp\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_59911\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/localhost_59911"
-		Release.AspNetCompiler.PhysicalPath = "AuthExample\ClientApp\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_59911\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "59911"
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -106,10 +85,6 @@ Global
 		{53B5F5C5-712F-4CCB-86AD-398413F760CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53B5F5C5-712F-4CCB-86AD-398413F760CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53B5F5C5-712F-4CCB-86AD-398413F760CA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3820DF65-29A1-4A91-B6A9-3563DE52BFE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3820DF65-29A1-4A91-B6A9-3563DE52BFE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3820DF65-29A1-4A91-B6A9-3563DE52BFE0}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{3820DF65-29A1-4A91-B6A9-3563DE52BFE0}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
