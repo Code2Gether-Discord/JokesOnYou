@@ -1,23 +1,46 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ReplaySubject } from 'rxjs';
+import { BehaviorSubject, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../_models/user';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { LoginRequest } from '../_models/_requests/loginRequest';
+import { Router } from '@angular/router';
+
+export enum AuthenticationResultStatus {
+  Success,
+  Redirect,
+  Fail
+}
+
+export interface IAuthenticationResult {
+  status: AuthenticationResultStatus.Success;
+  state: any;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
   private accountUrl = environment.apiUrl + 'account';
-  private currentUser = new ReplaySubject<User>(1);
+  private currentUser = new BehaviorSubject<User>({  });
+
   currentUser$ = this.currentUser.asObservable();
+  isAuthorised$ = this.currentUser$.pipe(
+    map(user => {
+      return this.isAuthorised(user);
+    })
+  )
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router)
+  {
+    const user: User = JSON.parse(localStorage.getItem('user')!);
+    this.setCurrentUser(user);
+  }
 
-  login(request: LoginRequest) {
-    return this.http.post(`${this.accountUrl}login`, request).pipe(
+  public login(request: LoginRequest, showError: (message: string) => void) {
+    return this.http.post<User>(`${this.accountUrl}/login`, request).pipe(
+      catchError(e => this.handleError(e, showError)),
       map((user: User) => {
         if (user) {
           localStorage.setItem('user', JSON.stringify(user));
@@ -26,12 +49,48 @@ export class AccountService {
       }));
   }
 
-  setCurrentUser(user: User) {
+  public logout() {
+    localStorage.removeItem('user');
+    this.currentUser.next({});
+  }
+
+  public isAuthorised(user?: User): boolean {
+    if (!user) {
+      user = this.currentUser.getValue();
+    }
+    if (user && user.token) {
+      return this.checkTokenTime(user.token);
+    }
+    return false;
+  }
+
+  public getAccessToken(): string | undefined {
+    return this.currentUser.getValue()?.token;
+  }
+
+  private checkTokenTime(token: string | undefined): boolean {
+    if (token) {
+      const mainPart = token.split('.')[1];
+      const decodedString = atob(mainPart);
+      const expirationTime = JSON.parse(decodedString)['exp'] * 1000;
+      const now = Date.now();
+      return now < expirationTime;
+    }
+    return false;
+  }
+
+  private setCurrentUser(user: User) {
     this.currentUser.next(user);
   }
 
-  logout() {
-    localStorage.removeItem('user');
-    this.currentUser.next(undefined);
+  private handleError(error: HttpErrorResponse, showError: (message: string) => void) {
+    if (error.status === 403) {
+      showError(error.error.message);
+    } else {
+      console.error(
+        `Backend returned code ${error.status}, body was: `, error.error);
+    }
+    return throwError(
+      'Something bad happened; please try again later.');
   }
 }

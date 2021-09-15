@@ -36,6 +36,7 @@ namespace JokesOnYou.Web.Api.Middlewares
                     AppException => (int)HttpStatusCode.BadRequest,
                     UserRegisterException => (int)HttpStatusCode.BadRequest, //consider using built in ArgumentException. 
                     UserLoginException => (int)HttpStatusCode.Unauthorized,
+                    WrongCredentialsException => (int)HttpStatusCode.Forbidden,
                     ArgumentException => (int)HttpStatusCode.BadRequest,
                     KeyNotFoundException => (int)HttpStatusCode.NotFound,
                     _ => (int)HttpStatusCode.InternalServerError
