@@ -17,11 +17,14 @@ namespace JokesOnYou.Web.Api.Extensions
     {
         public static IServiceCollection ConfigureAppServices(this IServiceCollection services, IConfiguration config)
         {
-            var connectionString = config.GetConnectionString("PostgresConnectionString");
+            var useSQLite = true;
+            var connectionString = useSQLite ? config.GetConnectionString("SQLite") : config.GetConnectionString("PostgresConnectionString");
 
             services.AddDbContext<DataContext>(options =>
-                    options.UseNpgsql(connectionString, o => o.EnableRetryOnFailure(5))
-            );
+            {
+                if (useSQLite) options.UseSqlite(connectionString);
+                else options.UseNpgsql(connectionString, o => o.EnableRetryOnFailure(5));
+            });
 
             services.AddIdentity<User, IdentityRole>(
                 options => { options.User.RequireUniqueEmail = true; }
@@ -49,7 +52,7 @@ namespace JokesOnYou.Web.Api.Extensions
 
             return services;
         }
-        
+
         public static IServiceCollection ConfigureSwagger(this IServiceCollection services)
         {
             services.AddSwaggerGen(config =>
