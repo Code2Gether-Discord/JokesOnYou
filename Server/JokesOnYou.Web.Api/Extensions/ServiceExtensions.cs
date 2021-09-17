@@ -17,13 +17,9 @@ namespace JokesOnYou.Web.Api.Extensions
     {
         public static IServiceCollection ConfigureAppServices(this IServiceCollection services, IConfiguration config)
         {
-            var useSQLite = true;
-            var connectionString = useSQLite ? config.GetConnectionString("SQLite") : config.GetConnectionString("PostgresConnectionString");
-
             services.AddDbContext<DataContext>(options =>
             {
-                if (useSQLite) options.UseSqlite(connectionString);
-                else options.UseNpgsql(connectionString, o => o.EnableRetryOnFailure(5));
+                options.UseSqlServer(config.GetConnectionString("SQLserverConnection"));
             });
 
             services.AddIdentity<User, IdentityRole>(
