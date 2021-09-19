@@ -1,5 +1,9 @@
 ﻿using JokesOnYou.Web.Api.Data;
 using JokesOnYou.Web.Api.Models;
+using JokesOnYou.Web.Api.Repositories;
+using JokesOnYou.Web.Api.Repositories.Interfaces;
+using JokesOnYou.Web.Api.Services;
+using JokesOnYou.Web.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -15,8 +19,20 @@ namespace JokesOnYou.Web.Api.Extensions
 {
     public static class ServiceExtensions
     {
-        public static IServiceCollection ConfigureAppServices(this IServiceCollection services, IConfiguration config)
+        public static void ConfigureAppServices(this IServiceCollection services, IConfiguration config)
         {
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ITokenService, JwtTokenService>();
+            services.AddScoped<ITagService, TagService>();
+
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IJokesRepository, JokesRepository>();
+            services.AddScoped<IJokesService, JokesService>();
+            services.AddScoped<ITagRepository, TagRepository>();
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             services.AddDbContext<DataContext>(options =>
             {
                 options.UseSqlServer(config.GetConnectionString("SQLserverConnection"));
@@ -25,8 +41,11 @@ namespace JokesOnYou.Web.Api.Extensions
             services.AddIdentity<User, IdentityRole>(
                 options => { options.User.RequireUniqueEmail = true; }
                 ).AddEntityFrameworkStores<DataContext>();
+        }
 
-            var key = Encoding.ASCII.GetBytes("We need to use a Secret Handler here");
+        public static void ConfigureJwtAuth(this IServiceCollection services, IConfiguration config)
+        {
+            var key = Encoding.ASCII.GetBytes(config["TokenKey"]);
 
             services.AddAuthentication(x =>
             {
@@ -45,11 +64,9 @@ namespace JokesOnYou.Web.Api.Extensions
                     ValidateAudience = false
                 };
             });
-
-            return services;
         }
 
-        public static IServiceCollection ConfigureSwagger(this IServiceCollection services)
+        public static void ConfigureSwagger(this IServiceCollection services)
         {
             services.AddSwaggerGen(config =>
             {
@@ -82,8 +99,6 @@ namespace JokesOnYou.Web.Api.Extensions
                     }
                 });
             });
-
-            return services;
         }
     }
 }
