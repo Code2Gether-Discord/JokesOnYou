@@ -60,8 +60,9 @@ The Building, Coding, Documenting and Teaching.
 ### Installing
 
 #### Server Environment
-1. Download [Docker Desktop](https://www.docker.com/products/docker-desktop). 
-- To run the JokesOnYou API, you will need to debug the solution in your IDE and target docker-compose
+1. To view the database you can use the object explorer inside Visual studio. Press View -> SQL server object explorer
+- If you prefer to use SQL Server Management Studio use this connection string to connect to the database: (localdb)\MSSQLLocalDB
+
 2. Download [Postman](https://www.postman.com/downloads/) or create an account to run it in your browser. 
 - Set up [environment variables](https://tinyurl.com/mprmpdd8) in Postman. 
 - The base URL will be http://localhost:8000/api.
