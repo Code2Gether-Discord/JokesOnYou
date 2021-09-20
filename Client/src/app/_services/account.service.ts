@@ -1,9 +1,9 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, throwError } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../_models/user';
-import { catchError, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { LoginRequest } from '../_models/_requests/loginRequest';
 import { Router } from '@angular/router';
 
@@ -40,7 +40,6 @@ export class AccountService {
 
   public login(request: LoginRequest, showError: (message: string) => void) {
     return this.http.post<User>(`${this.accountUrl}/login`, request).pipe(
-      catchError(e => this.handleError(e, showError)),
       map((user: User) => {
         if (user) {
           localStorage.setItem('user', JSON.stringify(user));
@@ -81,16 +80,5 @@ export class AccountService {
 
   private setCurrentUser(user: User) {
     this.currentUser.next(user);
-  }
-
-  private handleError(error: HttpErrorResponse, showError: (message: string) => void) {
-    if (error.status === 403) {
-      showError(error.error.message);
-    } else {
-      console.error(
-        `Backend returned code ${error.status}, body was: `, error.error);
-    }
-    return throwError(
-      'Something bad happened; please try again later.');
   }
 }

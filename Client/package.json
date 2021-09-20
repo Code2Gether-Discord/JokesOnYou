@@ -22,6 +22,7 @@
     "@schematics/angular": "^9.1.0",
     "bootstrap": "5.1.0",
     "ngx-bootstrap": "7.0.0",
+    "ngx-toastr": "^14.1.3",
     "rxjs": "~6.6.0",
     "tslib": "^2.1.0",
     "zone.js": "~0.11.4"

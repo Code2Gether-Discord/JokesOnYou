@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { LoginInfo } from '../../../_models/loginInfo';
 import { AccountService } from '../../../_services/account.service';
 

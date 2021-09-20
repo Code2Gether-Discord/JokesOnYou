@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { ToastrModule } from 'ngx-toastr';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from '../app/app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -16,6 +18,8 @@ import { AccountService } from './_services/account.service';
 import { AuthInterceptor } from './_services/auth-interceptor';
 import { JokesService } from './_services/jokes.service';
 import { ProfileComponent } from './components/auth/profile/profile.component';
+import { HandleErrorsInterceptor } from './_services/handle-errors-interceptor';
+import { HandleErrorService } from './_services/handle-error.service';
 
 @NgModule({
   imports: [
@@ -23,7 +27,9 @@ import { ProfileComponent } from './components/auth/profile/profile.component';
     HttpClientModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
   ],
   declarations: [
     AppComponent,
@@ -38,6 +44,12 @@ import { ProfileComponent } from './components/auth/profile/profile.component';
   providers: [
     AccountService,
     JokesService,
+    HandleErrorService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HandleErrorsInterceptor,
+      multi: true
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
