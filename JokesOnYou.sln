@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30804.86
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31512.422
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{C308B76F-F38B-4076-BBA7-C70599433A9B}"
 	ProjectSection(SolutionItems) = preProject
@@ -36,7 +36,6 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Client", "Client\", "{14753
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "52235"
-		SlnRelativePath = "Client\"
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{CB2D9186-2B28-418B-A052-8403DEC8E5AE}"
