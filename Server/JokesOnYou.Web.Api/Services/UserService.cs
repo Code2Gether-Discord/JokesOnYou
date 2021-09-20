@@ -72,7 +72,7 @@ namespace JokesOnYou.Web.Api.Services
 
                 if (!signInResult.Succeeded)
                 {
-                    throw new AppException("Sign in failed");
+                    throw new UserLoginException("Sign in failed");
                 }
                 else
                 {

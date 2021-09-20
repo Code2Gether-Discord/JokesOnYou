@@ -25,13 +25,34 @@ namespace JokesOnYou.Web.Api
             services.ConfigureSwagger();
 
             services.AddControllers();
-            services.AddCors();
+            services.AddCors(o => o.AddPolicy("DevPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+            services.AddCors(o => o.AddPolicy("ProdPolicy", builder =>
+            {
+                builder.SetIsOriginAllowedToAllowWildcardSubdomains()
+                    .WithOrigins("https://*.jokes.domain")
+                    .Build();
+            }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseCors(options => options.WithOrigins("*").AllowAnyMethod());
+            if (env.IsDevelopment())
+            {
+                Console.WriteLine("ATTENTION: Developer options for CORS enabled");
+                app.UseCors("DevPolicy");
+            }
+            else
+            {
+                app.UseCors("ProdPolicy");
+                app.UseHsts();
+                app.UseHttpsRedirection();
+            }
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -45,8 +66,6 @@ namespace JokesOnYou.Web.Api
             }
 
             app.UseMiddleware<ExceptionMiddleware>();
-
-            app.UseHttpsRedirection();
 
             app.UseRouting();
 

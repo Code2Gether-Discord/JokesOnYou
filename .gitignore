@@ -348,3 +348,6 @@ healthchecksdb
 
 # Docker DB persistent storage
 /jokesdb_pgdata
+
+# Yarn
+yarn.lock
