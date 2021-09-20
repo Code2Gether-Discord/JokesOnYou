@@ -66,7 +66,23 @@ namespace JokesOnYou.Web.Api.Extensions
             });
         }
 
-        public static void ConfigureSwagger(this IServiceCollection services)
+        public static void ConfigureCors(this IServiceCollection services)
+        {
+            services.AddCors(o => o.AddPolicy("DevPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+            services.AddCors(o => o.AddPolicy("ProdPolicy", builder =>
+            {
+                builder.SetIsOriginAllowedToAllowWildcardSubdomains()
+                    .WithOrigins("https://*.jokes.domain")
+                    .Build();
+            }));
+        }
+
+            public static void ConfigureSwagger(this IServiceCollection services)
         {
             services.AddSwaggerGen(config =>
             {

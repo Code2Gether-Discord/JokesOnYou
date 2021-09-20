@@ -1,3 +1,4 @@
+using System;
 using JokesOnYou.Web.Api.Extensions;
 using JokesOnYou.Web.Api.Middlewares;
 using Microsoft.AspNetCore.Builder;
@@ -23,20 +24,9 @@ namespace JokesOnYou.Web.Api
             services.ConfigureAppServices(_config);
             services.ConfigureJwtAuth(_config);
             services.ConfigureSwagger();
+            services.ConfigureCors();
 
             services.AddControllers();
-            services.AddCors(o => o.AddPolicy("DevPolicy", builder =>
-            {
-                builder.AllowAnyOrigin()
-                       .AllowAnyMethod()
-                       .AllowAnyHeader();
-            }));
-            services.AddCors(o => o.AddPolicy("ProdPolicy", builder =>
-            {
-                builder.SetIsOriginAllowedToAllowWildcardSubdomains()
-                    .WithOrigins("https://*.jokes.domain")
-                    .Build();
-            }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
