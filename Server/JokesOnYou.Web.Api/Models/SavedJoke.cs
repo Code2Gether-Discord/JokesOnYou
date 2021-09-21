@@ -8,7 +8,7 @@ namespace JokesOnYou.Web.Api.Models
         public int Id { get; set; }
         [Required]
         public int JokeId { get; set; }
-        public DateTime SavedDate { get; set; }
+        public DateTime SavedDate { get; set; } = DateTime.UtcNow;
         [Required]
         public string UserId { get; set; }
     }

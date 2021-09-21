@@ -29,8 +29,8 @@ namespace JokesOnYou.Web.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SavedJokeReplyDto>>> GetSavedJokesByUserId()
         {
-            var stuff = await _savedJokeService.GetSavedJokesByUserId(ClaimsPrincipalExtension.GetUserId(User));
-            return Ok(stuff);
+            var jokes = await _savedJokeService.GetSavedJokesByUserId(ClaimsPrincipalExtension.GetUserId(User));
+            return Ok(jokes);
         }
     }
 }
