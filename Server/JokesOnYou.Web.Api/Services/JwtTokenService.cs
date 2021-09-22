@@ -1,6 +1,8 @@
 ﻿using JokesOnYou.Web.Api.Models;
+using JokesOnYou.Web.Api.Models.Options;
 using JokesOnYou.Web.Api.Services.Interfaces;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -14,10 +16,10 @@ namespace JokesOnYou.Web.Api.Services
         private readonly JwtSecurityTokenHandler _tokenHandler;
         private readonly byte[] _key;
 
-        public JwtTokenService(IConfiguration config)
+        public JwtTokenService(IOptions<JwtTokenKey> jwtTokenKey)
         {
             _tokenHandler = new JwtSecurityTokenHandler();
-            _key = Encoding.ASCII.GetBytes(config["TokenKey"]);
+            _key = Encoding.ASCII.GetBytes(jwtTokenKey.Value.TokenKey);
         }
 
         public string GetToken(User user)

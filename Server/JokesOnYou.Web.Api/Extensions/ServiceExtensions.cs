@@ -3,6 +3,7 @@ using System.IO;
 using System.Text;
 using JokesOnYou.Web.Api.Data;
 using JokesOnYou.Web.Api.Models;
+using JokesOnYou.Web.Api.Models.Options;
 using JokesOnYou.Web.Api.Repositories;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
 using JokesOnYou.Web.Api.Services;
@@ -47,7 +48,10 @@ namespace JokesOnYou.Web.Api.Extensions
 
         public static void ConfigureJwtAuth(this IServiceCollection services, IConfiguration config)
         {
-            var key = Encoding.ASCII.GetBytes(config["TokenKey"]);
+            services.Configure<JwtTokenKey>(config);
+            var jwtTokenKey = config.Get<JwtTokenKey>();
+
+            var key = Encoding.ASCII.GetBytes(jwtTokenKey.TokenKey);
 
             services.AddAuthentication(x =>
             {
