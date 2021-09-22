@@ -21,7 +21,8 @@ namespace JokesOnYou.Web.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.ConfigureAppServices(_config);
+            services.ConfigureAppServices();
+            services.ConfigureDataAccess(_config);
             services.ConfigureJwtAuth(_config);
             services.ConfigureSwagger();
             services.ConfigureCors();

@@ -1,4 +1,7 @@
-﻿using JokesOnYou.Web.Api.Data;
+﻿using System;
+using System.IO;
+using System.Text;
+using JokesOnYou.Web.Api.Data;
 using JokesOnYou.Web.Api.Models;
 using JokesOnYou.Web.Api.Repositories;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
@@ -11,27 +14,26 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System;
-using System.IO;
-using System.Text;
 
 namespace JokesOnYou.Web.Api.Extensions
 {
     public static class ServiceExtensions
     {
-        public static void ConfigureAppServices(this IServiceCollection services, IConfiguration config)
+        public static void ConfigureAppServices(this IServiceCollection services)
         {
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITokenService, JwtTokenService>();
             services.AddScoped<ITagService, TagService>();
-
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IJokesRepository, JokesRepository>();
             services.AddScoped<IJokesService, JokesService>();
-            services.AddScoped<ITagRepository, TagRepository>();
-
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        }
+
+        public static void ConfigureDataAccess(this IServiceCollection services, IConfiguration config)
+        {
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IJokesRepository, JokesRepository>();
+            services.AddScoped<ITagRepository, TagRepository>();
 
             services.AddDbContext<DataContext>(options =>
             {
@@ -82,7 +84,7 @@ namespace JokesOnYou.Web.Api.Extensions
             }));
         }
 
-            public static void ConfigureSwagger(this IServiceCollection services)
+        public static void ConfigureSwagger(this IServiceCollection services)
         {
             services.AddSwaggerGen(config =>
             {
