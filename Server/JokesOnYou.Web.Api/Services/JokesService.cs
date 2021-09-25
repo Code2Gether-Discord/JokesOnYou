@@ -7,6 +7,7 @@ using JokesOnYou.Web.Api.Services.Interfaces;
 using JokesOnYou.Web.Api.Models.Response;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using JokesOnYou.Web.Api.Models.Interfaces;
 
 namespace JokesOnYou.Web.Api.Services
 {
@@ -58,6 +59,31 @@ namespace JokesOnYou.Web.Api.Services
             }
 
             return jokeDtos;
+        }
+        public async Task<IEnumerable<JokeReplyDto>> GetFilteredJokeDtosAsync(JokeFiltersDto filtersDto)
+        {
+            var filters = BuildFiltersList(filtersDto);
+
+            var jokeDtos = await _jokesRepo.GetFilterdJokesAsync(filters);
+
+            foreach (var jokeDto in jokeDtos)
+            {
+                await AddAuthorToJoke(jokeDto);
+            }
+
+            return jokeDtos;
+        }
+
+        private static List<IFilter> BuildFiltersList(JokeFiltersDto filtersDto)
+        {
+            var filters = new List<IFilter>();
+
+            if (filtersDto.Author != null)          {filters.Add(filtersDto.Author); }
+            if (filtersDto.Likes != null)           { filters.Add(filtersDto.Likes); }
+            if (filtersDto.SearchInText != null)    { filters.Add(filtersDto.SearchInText); }
+            if (filtersDto.Date != null)            { filters.Add(filtersDto.Date); }
+
+            return filters;
         }
 
         public async Task RemoveJokeAsync(int id)

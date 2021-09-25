@@ -8,6 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using JokesOnYou.Web.Api.Models.Response;
+using JokesOnYou.Web.Api.Models.Interfaces;
+using System.Linq;
+using System.Data;
 
 namespace JokesOnYou.Web.Api.Repositories
 {
@@ -37,5 +40,19 @@ namespace JokesOnYou.Web.Api.Repositories
             await _context.Jokes.ProjectTo<JokeReplyDto>(_mapper.ConfigurationProvider)
                                 .FirstOrDefaultAsync(j => j.Id == id);
         public void DeleteJoke(Joke joke) => _context.Jokes.Remove(joke);
+
+        public async Task<IEnumerable<JokeReplyDto>> GetFilterdJokesAsync(IEnumerable<IFilter> filters)
+        {
+            var jokes = from j in _context.Jokes
+                         select j;
+
+            foreach (var filter in filters)
+            {
+                jokes = jokes.Where(filter.Filter());
+            }
+            var result = await jokes.ProjectTo<JokeReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
+
+            return result;
+        }
     }
 }

@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using JokesOnYou.Web.Api.Models.Response;
+using JokesOnYou.Web.Api.Models.Interfaces;
+using JokesOnYou.Web.Api.Models.Filters;
 
 namespace JokesOnYou.Web.Api.Controllers
 {
@@ -31,11 +33,20 @@ namespace JokesOnYou.Web.Api.Controllers
 
             return jokeReplyDto;
         }
+
         [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<JokeReplyDto>>> GetAllJokesAsync()
         {
             var jokeDtos = await _jokesService.GetAllJokeDtosAsync();
+            return Ok(jokeDtos);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("results")]
+        public async Task<ActionResult<IEnumerable<JokeReplyDto>>> GetFilteredJokesAsync([FromQuery] JokeFiltersDto filters)
+        {
+            var jokeDtos = await _jokesService.GetFilteredJokeDtosAsync(filters);
             return Ok(jokeDtos);
         }
 

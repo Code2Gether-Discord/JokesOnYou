@@ -3,6 +3,7 @@ using JokesOnYou.Web.Api.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using JokesOnYou.Web.Api.Models.Response;
+using JokesOnYou.Web.Api.Models.Interfaces;
 
 namespace JokesOnYou.Web.Api.Repositories.Interfaces
 {
@@ -15,5 +16,6 @@ namespace JokesOnYou.Web.Api.Repositories.Interfaces
         Task CreateJokeAsync(Joke joke);
         Task<bool> DoesJokeExist(string normalizedPremise, string normalizedPunchline);
         Task<JokeReplyDto> GetJokeDtoAsync(int id);
+        Task<IEnumerable<JokeReplyDto>> GetFilterdJokesAsync(IEnumerable<IFilter> filters);
     }
 }
