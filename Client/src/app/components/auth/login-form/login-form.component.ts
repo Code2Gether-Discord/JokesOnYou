@@ -14,7 +14,6 @@ export class LoginFormComponent implements OnInit {
     private router: Router) { }
 
   model: LoginInfo = { username: '', password: '' };
-  error: string = '';
 
   submitted = false;
 
@@ -25,7 +24,7 @@ export class LoginFormComponent implements OnInit {
     this.authorizeService.login({
       loginName: this.model.username!,
       password: this.model.password!
-    }, m => this.error = m
+    }
     ).subscribe();
   }
 

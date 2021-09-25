@@ -16,7 +16,11 @@ export class HandleErrorService {
     }
     else {
       // Backend error goes here
-      errorMessage = `${err.error.message ?? err.error}`
+      errorMessage = `${err.error.message ??
+        Object.values(err.error.errors) // Asp.net validation errors have wierd structure
+        .flatMap(v => v)
+        .reduce((k, j) => `${k}\n${j}`)
+      }`
     }
     this.toastr.error(errorMessage);
   }

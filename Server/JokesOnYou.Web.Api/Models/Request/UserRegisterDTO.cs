@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace JokesOnYou.Web.Api.Models.Request
 {
@@ -8,9 +9,13 @@ namespace JokesOnYou.Web.Api.Models.Request
         [EmailAddress]
         public string Email { get; set; }
         [Required]
+        [MinLength(4)]
         public string UserName { get; set; }
         [Required]
         public string Password { get; set; }
-
+        [Required]
+        public bool NsfwEnabled { get; set; }
+        [Required]
+        public DateTime BirthDate { get; set; }
     }
 }

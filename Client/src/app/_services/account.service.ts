@@ -6,6 +6,7 @@ import { User } from '../_models/user';
 import { map } from 'rxjs/operators';
 import { LoginRequest } from '../_models/_requests/loginRequest';
 import { Router } from '@angular/router';
+import { RegisterRequest } from '../_models/_requests/registerRequest';
 
 export enum AuthenticationResultStatus {
   Success,
@@ -38,7 +39,13 @@ export class AccountService {
     this.setCurrentUser(user);
   }
 
-  public login(request: LoginRequest, showError: (message: string) => void) {
+  public register(request: RegisterRequest) {
+    console.log(`${this.accountUrl}/register`)
+    return this.http
+      .post<RegisterRequest>(`${this.accountUrl}/register`, request);
+  }
+
+  public login(request: LoginRequest) {
     return this.http.post<User>(`${this.accountUrl}/login`, request).pipe(
       map((user: User) => {
         if (user) {
