@@ -1,18 +1,14 @@
-﻿using JokesOnYou.Web.Api.DTOs;
+﻿using AutoMapper;
 using JokesOnYou.Web.Api.Exceptions;
 using JokesOnYou.Web.Api.Models;
+using JokesOnYou.Web.Api.Models.Request;
+using JokesOnYou.Web.Api.Models.Response;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
 using JokesOnYou.Web.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
-using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using JokesOnYou.Web.Api.Exceptions;
-using AutoMapper;
 using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Services
 {
@@ -33,12 +29,7 @@ namespace JokesOnYou.Web.Api.Services
             _tokenService = tokenService;
         }
 
-        // Disable "this async method lacks an await operator" Remove this when we actually implement methods
-#pragma warning disable 1998
-
-
-
-        public async Task<IEnumerable<UserReplyDTO>> GetAll()
+        public async Task<IEnumerable<UserReplyDto>> GetAll()
         {
             return await _userRepository.GetUsersReplyDtoAsync();
         }
@@ -53,27 +44,24 @@ namespace JokesOnYou.Web.Api.Services
             await _userRepository.DeleteUserAsync(user);
         }
 
-        public async Task<UserReplyDTO> GetUserReplyById(string id)
+        public async Task<UserReplyDto> GetUserReplyById(string id)
         {
             return await _userRepository.GetUserReplyAsync(id);
         }
 
-        public async Task UpdateUser(UserUpdateDTO userDTO)
+        public async Task UpdateUser(UserUpdateDto userDto)
         {
-            var user = await _userRepository.GetUserAsync(userDTO.Id);
-            _mapper.Map(userDTO, user);
+            var user = await _userRepository.GetUserAsync(userDto.Id);
+            _mapper.Map(userDto, user);
             await _unitOfWork.SaveAsync();
         }
-
 
         public async Task<User> GetUserById(string id)
         {
             return await _userRepository.GetUserAsync(id);
         }
 
-
-
-        public async Task<UserReplyDTO> LoginUser(UserLoginDTO userLogin)
+        public async Task<UserReplyDto> LoginUser(UserLoginDTO userLogin)
         {
             var user = new EmailAddressAttribute().IsValid(userLogin.LoginName) ? await _userRepository.GetUserByEmailAsync(userLogin.LoginName) :
                 await _userRepository.GetUserByUsernameAsync(userLogin.LoginName);
@@ -84,18 +72,14 @@ namespace JokesOnYou.Web.Api.Services
 
                 if (!signInResult.Succeeded)
                 {
-                    throw new AppException("Sign in failed");
+                    throw new UserLoginException("Sign in failed");
                 }
                 else
                 {
-                    var userReplyDTO = new UserReplyDTO()
-                    {
-                        Id = user.Id,
-                        Email = user.Email,
-                        UserName = user.UserName,
-                        Token = _tokenService.GetToken(user)
-                    };
-                    return userReplyDTO;
+                    var userReplyDto = _mapper.Map<UserReplyDto>(user);
+                    userReplyDto.Token = _tokenService.GetToken(user);
+
+                    return userReplyDto;
                 }
             }
             else
@@ -104,13 +88,13 @@ namespace JokesOnYou.Web.Api.Services
             }
         }
 
-        public async Task RegisterUser(UserRegisterDTO userRegisterDTO)
+        public async Task RegisterUser(UserRegisterDto userRegisterDTO)
         {
             if (new EmailAddressAttribute().IsValid(userRegisterDTO.UserName))
             {
                 throw new UserRegisterException("Cannot use an email as username");
             }
-            
+
             var user = await _userRepository.CreateUserAsync(userRegisterDTO);
 
             if (user == null)

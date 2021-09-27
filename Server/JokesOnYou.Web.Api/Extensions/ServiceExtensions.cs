@@ -1,5 +1,13 @@
-﻿using JokesOnYou.Web.Api.Data;
+﻿using System;
+using System.IO;
+using System.Text;
+using JokesOnYou.Web.Api.Data;
 using JokesOnYou.Web.Api.Models;
+using JokesOnYou.Web.Api.Models.Options;
+using JokesOnYou.Web.Api.Repositories;
+using JokesOnYou.Web.Api.Repositories.Interfaces;
+using JokesOnYou.Web.Api.Services;
+using JokesOnYou.Web.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -7,27 +15,43 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System;
-using System.IO;
-using System.Text;
 
 namespace JokesOnYou.Web.Api.Extensions
 {
     public static class ServiceExtensions
     {
-        public static IServiceCollection ConfigureAppServices(this IServiceCollection services, IConfiguration config)
+        public static void ConfigureAppServices(this IServiceCollection services)
         {
-            var connectionString = config.GetConnectionString("PostgresConnectionString");
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ITokenService, JwtTokenService>();
+            services.AddScoped<ITagService, TagService>();
+            services.AddScoped<IJokesService, JokesService>();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        }
+
+        public static void ConfigureDataAccess(this IServiceCollection services, IConfiguration config)
+        {
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IJokesRepository, JokesRepository>();
+            services.AddScoped<ITagRepository, TagRepository>();
 
             services.AddDbContext<DataContext>(options =>
-                    options.UseNpgsql(connectionString, o => o.EnableRetryOnFailure(5))
-            );
+            {
+                options.UseSqlServer(config.GetConnectionString("SQLserverConnection"));
+            });
 
             services.AddIdentity<User, IdentityRole>(
                 options => { options.User.RequireUniqueEmail = true; }
                 ).AddEntityFrameworkStores<DataContext>();
+        }
 
-            var key = Encoding.ASCII.GetBytes("We need to use a Secret Handler here");
+        public static void ConfigureJwtAuth(this IServiceCollection services, IConfiguration config)
+        {
+            services.Configure<JwtTokenKey>(config);
+            var jwtTokenKey = config.Get<JwtTokenKey>();
+
+            var key = Encoding.ASCII.GetBytes(jwtTokenKey.TokenKey);
 
             services.AddAuthentication(x =>
             {
@@ -46,11 +70,25 @@ namespace JokesOnYou.Web.Api.Extensions
                     ValidateAudience = false
                 };
             });
-
-            return services;
         }
-        
-        public static IServiceCollection ConfigureSwagger(this IServiceCollection services)
+
+        public static void ConfigureCors(this IServiceCollection services)
+        {
+            services.AddCors(o => o.AddPolicy("DevPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+            services.AddCors(o => o.AddPolicy("ProdPolicy", builder =>
+            {
+                builder.SetIsOriginAllowedToAllowWildcardSubdomains()
+                    .WithOrigins("https://*.jokes.domain")
+                    .Build();
+            }));
+        }
+
+        public static void ConfigureSwagger(this IServiceCollection services)
         {
             services.AddSwaggerGen(config =>
             {
@@ -83,8 +121,6 @@ namespace JokesOnYou.Web.Api.Extensions
                     }
                 });
             });
-
-            return services;
         }
     }
 }

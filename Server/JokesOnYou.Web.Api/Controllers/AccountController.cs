@@ -1,4 +1,5 @@
-﻿using JokesOnYou.Web.Api.DTOs;
+﻿using JokesOnYou.Web.Api.Models.Request;
+using JokesOnYou.Web.Api.Models.Response;
 using JokesOnYou.Web.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -17,14 +18,14 @@ namespace JokesOnYou.Web.Api.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<UserReplyDTO>> Login(UserLoginDTO userLogin)
+        public async Task<ActionResult<UserReplyDto>> Login(UserLoginDTO userLogin)
         {
             var userReplyDTO = await _userService.LoginUser(userLogin);
             return userReplyDTO;
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult> Register(UserRegisterDTO userRegister)
+        public async Task<ActionResult> Register(UserRegisterDto userRegister)
         {
             await _userService.RegisterUser(userRegister);
             return NoContent();

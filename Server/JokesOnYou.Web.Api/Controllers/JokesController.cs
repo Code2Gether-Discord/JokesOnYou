@@ -1,10 +1,11 @@
-using JokesOnYou.Web.Api.DTOs;
+using JokesOnYou.Web.Api.Models.Request;
 using JokesOnYou.Web.Api.Extensions;
 using JokesOnYou.Web.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using JokesOnYou.Web.Api.Models.Response;
 
 namespace JokesOnYou.Web.Api.Controllers
 {
@@ -22,17 +23,17 @@ namespace JokesOnYou.Web.Api.Controllers
 
         [Authorize(Roles = "Registered,Admin")]
         [HttpPost]
-        public async Task<ActionResult<JokeDto>> CreateJokeAsync(JokeCreateDto jokeCreateDto)
+        public async Task<ActionResult<JokeReplyDto>> CreateJokeAsync(JokeDto jokeDto)
         {
 
-            jokeCreateDto.UserId = ClaimsPrincipalExtension.GetUserId(User);
-            var jokeDto = await _jokesService.CreateJokeAsync(jokeCreateDto);
+            var userId = ClaimsPrincipalExtension.GetUserId(User);
+            var jokeReplyDto = await _jokesService.CreateJokeAsync(jokeDto, userId);
 
-            return jokeDto;
+            return jokeReplyDto;
         }
         [AllowAnonymous]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<JokeDto>>> GetAllJokesAsync()
+        public async Task<ActionResult<IEnumerable<JokeReplyDto>>> GetAllJokesAsync()
         {
             var jokeDtos = await _jokesService.GetAllJokeDtosAsync();
             return Ok(jokeDtos);
@@ -46,7 +47,7 @@ namespace JokesOnYou.Web.Api.Controllers
         }
         
         [HttpPut]
-        public async Task<ActionResult<JokeDto>> UpdateJoke(JokeUpdateDto jokeUpdateDto)
+        public async Task<ActionResult<JokeReplyDto>> UpdateJoke(JokeUpdateDto jokeUpdateDto)
         {
             var jokeDto = await _jokesService.UpdateJoke(jokeUpdateDto);
             return jokeDto;
@@ -54,7 +55,7 @@ namespace JokesOnYou.Web.Api.Controllers
 
         [AllowAnonymous]
         [HttpGet("{id}")]
-        public async Task<ActionResult<JokeDto>> GetJoke(int id)
+        public async Task<ActionResult<JokeReplyDto>> GetJoke(int id)
         {
             var joke = await _jokesService.GetJokeDtoAsync(id);
             return joke;

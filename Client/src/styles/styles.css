@@ -1,0 +1,8 @@
+/* You can add global styles to this file, and also import other style files */
+
+.gradient-border {
+  border: 10px solid;
+  border-image-slice: 1;
+  border-width: 3px;
+  border-image-source: linear-gradient(to right, #00C853, #B2FF59);
+}

@@ -1,5 +1,8 @@
 ﻿using JokesOnYou.Web.Api.Models;
+using JokesOnYou.Web.Api.Models.Options;
 using JokesOnYou.Web.Api.Services.Interfaces;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -13,11 +16,10 @@ namespace JokesOnYou.Web.Api.Services
         private readonly JwtSecurityTokenHandler _tokenHandler;
         private readonly byte[] _key;
 
-        public JwtTokenService()
+        public JwtTokenService(IOptions<JwtTokenKey> jwtTokenKey)
         {
             _tokenHandler = new JwtSecurityTokenHandler();
-            //TODO Add Secret handler for JWT key
-            _key = Encoding.ASCII.GetBytes("We need to use a Secret Handler here");
+            _key = Encoding.ASCII.GetBytes(jwtTokenKey.Value.TokenKey);
         }
 
         public string GetToken(User user)
@@ -30,6 +32,7 @@ namespace JokesOnYou.Web.Api.Services
             // generate token that is valid for 7 days
             var tokenDescriptor = new SecurityTokenDescriptor
             {
+                //TODO change hardcoded Role.
                 Subject = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, user.Id), new Claim(ClaimTypes.Role, "Registered") }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(_key), SecurityAlgorithms.HmacSha512Signature)

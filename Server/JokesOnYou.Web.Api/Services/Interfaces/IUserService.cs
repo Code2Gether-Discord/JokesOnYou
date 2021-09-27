@@ -1,4 +1,5 @@
-﻿using JokesOnYou.Web.Api.DTOs;
+﻿using JokesOnYou.Web.Api.Models.Request;
+using JokesOnYou.Web.Api.Models.Response;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,11 +10,11 @@ namespace JokesOnYou.Web.Api.Services.Interfaces
     {
         Task DeleteUser(String id);
         //Task<User> CreateUser(UserRegisterDTO registerDTO);
-        Task<UserReplyDTO> GetUserReplyById(string id);
-        Task UpdateUser(UserUpdateDTO user);
+        Task<UserReplyDto> GetUserReplyById(string id);
+        Task UpdateUser(UserUpdateDto user);
         //Task<User> Authenticate(string username, string password);
-        Task<IEnumerable<UserReplyDTO>> GetAll();
-        Task<UserReplyDTO> LoginUser(UserLoginDTO userLoginDTO);
-        Task RegisterUser(UserRegisterDTO userRegisterDTO);
+        Task<IEnumerable<UserReplyDto>> GetAll();
+        Task<UserReplyDto> LoginUser(UserLoginDTO userLoginDTO);
+        Task RegisterUser(UserRegisterDto userRegisterDTO);
     }
 }

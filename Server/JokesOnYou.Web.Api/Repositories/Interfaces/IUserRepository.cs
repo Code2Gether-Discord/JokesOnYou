@@ -1,7 +1,8 @@
-﻿using JokesOnYou.Web.Api.DTOs;
+﻿using JokesOnYou.Web.Api.Models.Request;
 using JokesOnYou.Web.Api.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using JokesOnYou.Web.Api.Models.Response;
 
 namespace JokesOnYou.Web.Api.Repositories.Interfaces
 {
@@ -9,10 +10,10 @@ namespace JokesOnYou.Web.Api.Repositories.Interfaces
     {
         Task<User> GetUserAsync(string id);
         Task<User> GetUserByEmailAsync(string email);
-        Task<User> CreateUserAsync(UserRegisterDTO userRegisterDTO);
+        Task<User> CreateUserAsync(UserRegisterDto userRegisterDTO);
         Task DeleteUserAsync(User user);
-        Task<UserReplyDTO> GetUserReplyAsync(string id);
-        Task<IEnumerable<UserReplyDTO>> GetUsersReplyDtoAsync();
+        Task<UserReplyDto> GetUserReplyAsync(string id);
+        Task<IEnumerable<UserReplyDto>> GetUsersReplyDtoAsync();
         Task<User> GetUserByUsernameAsync(string username);
 
 

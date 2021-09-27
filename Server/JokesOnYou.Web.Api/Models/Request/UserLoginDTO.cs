@@ -1,0 +1,12 @@
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace JokesOnYou.Web.Api.Models.Request
+{
+    public class UserLoginDTO
+    {
+        [Required]
+        public string LoginName { get; set; }
+        [Required]
+        public string Password { get; set; }
+    }
+}

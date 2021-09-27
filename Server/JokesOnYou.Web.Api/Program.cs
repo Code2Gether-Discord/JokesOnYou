@@ -25,7 +25,6 @@ namespace JokesOnYou.Web.Api
             var services = scope.ServiceProvider;
             try
             {
-
                 var context = services.GetRequiredService<DataContext>();
                 DataSeeding.Initialize(context);
             }
