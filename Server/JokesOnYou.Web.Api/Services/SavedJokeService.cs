@@ -24,8 +24,7 @@ namespace JokesOnYou.Web.Api.Services
             await _savedJokeRepo.AddSavedJoke(new SavedJoke()
             {
                 JokeId = jokeId,
-                UserId = userId,
-                SavedDate = System.DateTime.Now
+                UserId = userId
             });
             var saved = await _unitOfWork.SaveAsync();
             if (!saved)
