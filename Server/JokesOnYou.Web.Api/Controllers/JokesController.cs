@@ -31,11 +31,20 @@ namespace JokesOnYou.Web.Api.Controllers
 
             return jokeReplyDto;
         }
+
         [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<JokeReplyDto>>> GetAllJokesAsync()
         {
             var jokeDtos = await _jokesService.GetAllJokeDtosAsync();
+            return Ok(jokeDtos);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("Results")]
+        public async Task<ActionResult<IEnumerable<JokeReplyDto>>> GetFilteredJokesAsync([FromQuery]JokesFilterDto jokesFilter)
+        {
+            var jokeDtos = await _jokesService.GetFilteredJokeDtosAsync(jokesFilter);
             return Ok(jokeDtos);
         }
 

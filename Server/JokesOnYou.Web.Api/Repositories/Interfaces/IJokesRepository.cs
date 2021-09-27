@@ -15,5 +15,6 @@ namespace JokesOnYou.Web.Api.Repositories.Interfaces
         Task CreateJokeAsync(Joke joke);
         Task<bool> DoesJokeExist(string normalizedPremise, string normalizedPunchline);
         Task<JokeReplyDto> GetJokeDtoAsync(int id);
+        Task<IEnumerable<JokeReplyDto>> GetFilteredJokeDtosAsync(JokesFilterDto jokesFilter);
     }
 }

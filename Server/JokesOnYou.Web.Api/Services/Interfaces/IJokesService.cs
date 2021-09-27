@@ -12,5 +12,6 @@ namespace JokesOnYou.Web.Api.Services.Interfaces
         Task<IEnumerable<JokeReplyDto>> GetAllJokeDtosAsync();
         Task<JokeReplyDto> GetJokeDtoAsync(int id);
         Task<JokeReplyDto> CreateJokeAsync(JokeDto jokeDto, string userId);
+        Task<IEnumerable<JokeReplyDto>> GetFilteredJokeDtosAsync(JokesFilterDto jokesFilter);
     }
 }
