@@ -29,7 +29,6 @@ namespace JokesOnYou.Web.Api.Repositories
                                                 joke.NormalizedPunchLine == normalizedPunchline);
 
         public async Task CreateJokeAsync(Joke joke) => await _context.Jokes.AddAsync(joke).AsTask();
-        public async Task<IEnumerable<Joke>> GetAllJokesAsync() => await _context.Jokes.ToListAsync();
         public async Task<IEnumerable<JokeReplyDto>> GetAllJokeDtosAsync() => 
             await _context.Jokes.ProjectTo<JokeReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
         public async Task<Joke> GetJokeByIdAsync(int id) => 
