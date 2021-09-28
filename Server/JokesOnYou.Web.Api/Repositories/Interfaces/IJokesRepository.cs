@@ -9,7 +9,6 @@ namespace JokesOnYou.Web.Api.Repositories.Interfaces
     public interface IJokesRepository
     {
         Task<IEnumerable<Joke>> GetAllJokesAsync();
-        Task<IEnumerable<JokeReplyDto>> GetAllJokeDtosAsync();
         void DeleteJoke(Joke joke);
         Task<Joke> GetJokeByIdAsync(int id);
         Task CreateJokeAsync(Joke joke);
