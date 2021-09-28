@@ -48,18 +48,6 @@ namespace JokesOnYou.Web.Api.Services
             return jokeReplyDto;
         }
 
-        public async Task<IEnumerable<JokeReplyDto>> GetAllJokeDtosAsync()
-        {
-            var jokeDtos = await _jokesRepo.GetAllJokeDtosAsync();
-
-            foreach (var jokeDto in jokeDtos)
-            {
-                await AddAuthorToJoke(jokeDto);
-            }
-
-            return jokeDtos;
-        }
-
         public async Task<IEnumerable<JokeReplyDto>> GetFilteredJokeDtosAsync(JokesFilterDto jokesFilter)
         {
             var jokeDtos = await _jokesRepo.GetFilteredJokeDtosAsync(jokesFilter);
