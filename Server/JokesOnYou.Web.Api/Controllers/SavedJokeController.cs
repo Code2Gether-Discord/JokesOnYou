@@ -1,5 +1,4 @@
-﻿using JokesOnYou.Web.Api.DTOs;
-using JokesOnYou.Web.Api.Extensions;
+﻿using JokesOnYou.Web.Api.Extensions;
 using JokesOnYou.Web.Api.Models;
 using JokesOnYou.Web.Api.Models.Response;
 using JokesOnYou.Web.Api.Services.Interfaces;
@@ -22,15 +21,15 @@ namespace JokesOnYou.Web.Api.Controllers
             _savedJokeService = savedJokeService;
         }
         [HttpPost("{id}")]
-        public async Task<ActionResult> AddSavedJoke(int id)//id here is jokeid
+        public async Task<ActionResult> ToggleSavedJoke(int id)//id here is jokeid
         {
-            await _savedJokeService.AddSavedJoke(id, ClaimsPrincipalExtension.GetUserId(User));
+            await _savedJokeService.ToggleSavedJoke(id, ClaimsPrincipalExtension.GetUserId(User));
             return NoContent();
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<SavedJokeReplyDto>>> GetSavedJokesByUserId()
+        public ActionResult<IAsyncEnumerable<Joke>> GetSavedJokesByUserId()
         {
-            var jokes = await _savedJokeService.GetSavedJokesByUserId(ClaimsPrincipalExtension.GetUserId(User));
+            var jokes = _savedJokeService.GetSavedJokesByUserId(ClaimsPrincipalExtension.GetUserId(User));
             return Ok(jokes);
         }
     }

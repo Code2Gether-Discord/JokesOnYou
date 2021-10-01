@@ -1,7 +1,7 @@
-﻿using JokesOnYou.Web.Api.DTOs;
-using JokesOnYou.Web.Api.Exceptions;
+﻿using JokesOnYou.Web.Api.Exceptions;
 using JokesOnYou.Web.Api.Models;
 using JokesOnYou.Web.Api.Models.Response;
+using JokesOnYou.Web.Api.Repositories;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
 using JokesOnYou.Web.Api.Services.Interfaces;
 using System.Collections.Generic;
@@ -12,31 +12,53 @@ namespace JokesOnYou.Web.Api.Services
     public class SavedJokeService : ISavedJokeService
     {
         private readonly ISavedJokeRepository _savedJokeRepo;
+        private readonly IJokesRepository _jokeRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public SavedJokeService(ISavedJokeRepository savedJokeRepo, IUnitOfWork unitOfWork)
+        public SavedJokeService(ISavedJokeRepository savedJokeRepo, IUnitOfWork unitOfWork, IJokesRepository jokeRepository)
         {
             _savedJokeRepo = savedJokeRepo;
             _unitOfWork = unitOfWork;
+            _jokeRepository = jokeRepository;
         }
 
-        public async Task AddSavedJoke(int jokeId, string userId)
+        public async Task ToggleSavedJoke(int jokeId, string userId)
         {
-            await _savedJokeRepo.AddSavedJoke(new SavedJoke()
+            var joke = _jokeRepository.GetJokeByIdAsync(jokeId);
+
+            if (joke == null)
             {
-                JokeId = jokeId,
-                UserId = userId
-            });
-            var saved = await _unitOfWork.SaveAsync();
-            if (!saved)
+                throw new AppException("Joke does not exist");
+            }
+
+            var savedjoke = await _savedJokeRepo.GetSavedJoke(userId, jokeId);
+
+            if (savedjoke != null)
             {
-                throw new AppException("Error with saving the SavedJoke.");
+                _savedJokeRepo.DeleteSavedJoke(savedjoke);
+            }
+            else
+            {
+                await _savedJokeRepo.AddSavedJoke(new SavedJoke()
+                {
+                    JokeId = jokeId,
+                    UserId = userId
+                });
+            }
+            
+            if (!await _unitOfWork.SaveAsync())
+            {
+                throw new AppException("Error with saving the SavedJoke");
             }
         }
 
-        public async Task<IEnumerable<SavedJokeReplyDto>> GetSavedJokesByUserId(string id)
+        public async IAsyncEnumerable<Joke> GetSavedJokesByUserId(string id)
         {
-            return await _savedJokeRepo.GetSavedJokesByUserId(id);
+            var SavedJokes = _savedJokeRepo.GetSavedJokesByUserId(id);
+
+            foreach (var item in SavedJokes){
+                yield return await _jokeRepository.GetJokeByIdAsync(item.JokeId);
+            }
         }
     }
 }

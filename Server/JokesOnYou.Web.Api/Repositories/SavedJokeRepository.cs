@@ -8,7 +8,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
-using JokesOnYou.Web.Api.DTOs;
 using AutoMapper.QueryableExtensions;
 
 namespace JokesOnYou.Web.Api.Repositories
@@ -23,10 +22,15 @@ namespace JokesOnYou.Web.Api.Repositories
             _context = context;
             _mapper = mapper;
         }
+            
+        public void DeleteSavedJoke(SavedJoke savedjoke) => _context.SavedJokes.Remove(savedjoke);
 
         public async Task AddSavedJoke(SavedJoke savedJoke) => await _context.SavedJokes.AddAsync(savedJoke);
 
-        public async Task<IEnumerable<SavedJokeReplyDto>> GetSavedJokesByUserId(string id) =>
-            await _context.SavedJokes.Where(x => x.UserId == id).ProjectTo<SavedJokeReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
+        public IEnumerable<SavedJoke> GetSavedJokesByUserId(string id) =>
+            _context.SavedJokes.Where(x => x.UserId == id).ToList();
+
+        public async Task<SavedJoke> GetSavedJoke(string id, int jokeId) =>
+            await _context.SavedJokes.FirstOrDefaultAsync(x => x.UserId == id && x.JokeId == jokeId);
     }
 }
