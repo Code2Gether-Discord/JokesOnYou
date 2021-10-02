@@ -20,14 +20,16 @@ namespace JokesOnYou.Web.Api.Controllers
         {
             _savedJokeService = savedJokeService;
         }
+
         [HttpPost("{id}")]
         public async Task<ActionResult> ToggleSavedJoke(int id)//id here is jokeid
         {
             await _savedJokeService.ToggleSavedJoke(id, ClaimsPrincipalExtension.GetUserId(User));
             return NoContent();
         }
+
         [HttpGet]
-        public ActionResult<IAsyncEnumerable<Joke>> GetSavedJokesByUserId()
+        public ActionResult<IAsyncEnumerable<JokeReplyDto>> GetSavedJokesByUserId()
         {
             var jokes = _savedJokeService.GetSavedJokesByUserId(ClaimsPrincipalExtension.GetUserId(User));
             return Ok(jokes);

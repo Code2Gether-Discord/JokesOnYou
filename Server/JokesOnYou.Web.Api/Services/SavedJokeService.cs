@@ -24,7 +24,7 @@ namespace JokesOnYou.Web.Api.Services
 
         public async Task ToggleSavedJoke(int jokeId, string userId)
         {
-            var joke = _jokeRepository.GetJokeByIdAsync(jokeId);
+            var joke = await _jokeRepository.GetJokeByIdAsync(jokeId);
 
             if (joke == null)
             {
@@ -52,12 +52,12 @@ namespace JokesOnYou.Web.Api.Services
             }
         }
 
-        public async IAsyncEnumerable<Joke> GetSavedJokesByUserId(string id)
+        public async IAsyncEnumerable<JokeReplyDto> GetSavedJokesByUserId(string id)
         {
             var SavedJokes = _savedJokeRepo.GetSavedJokesByUserId(id);
 
             foreach (var item in SavedJokes){
-                yield return await _jokeRepository.GetJokeByIdAsync(item.JokeId);
+                yield return await _jokeRepository.GetJokeDtoAsync(item.JokeId);
             }
         }
     }

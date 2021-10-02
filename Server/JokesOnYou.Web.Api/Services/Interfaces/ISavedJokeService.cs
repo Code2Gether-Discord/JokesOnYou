@@ -8,6 +8,6 @@ namespace JokesOnYou.Web.Api.Services.Interfaces
     public interface ISavedJokeService
     {
         Task ToggleSavedJoke(int jokeId, string userId);
-        IAsyncEnumerable<Joke> GetSavedJokesByUserId(string id);
+        IAsyncEnumerable<JokeReplyDto> GetSavedJokesByUserId(string id);
     }
 }
