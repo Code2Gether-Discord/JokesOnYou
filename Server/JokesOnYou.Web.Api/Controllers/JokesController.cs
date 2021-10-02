@@ -36,7 +36,7 @@ namespace JokesOnYou.Web.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<JokeReplyDto>>> GetAllJokesAsync([FromQuery]JokesFilterDto jokesFilter)
         {
-            var jokeDtos = await _jokesService.GetFilteredJokeDtosAsync(jokesFilter);
+            var jokeDtos = await _jokesService.GetJokeDtosAsync(jokesFilter);
             return Ok(jokeDtos);
         }
 

@@ -8,12 +8,11 @@ namespace JokesOnYou.Web.Api.Repositories.Interfaces
 {
     public interface IJokesRepository
     {
-        Task<IEnumerable<Joke>> GetAllJokesAsync();
         void DeleteJoke(Joke joke);
         Task<Joke> GetJokeByIdAsync(int id);
         Task CreateJokeAsync(Joke joke);
         Task<bool> DoesJokeExist(string normalizedPremise, string normalizedPunchline);
         Task<JokeReplyDto> GetJokeDtoAsync(int id);
-        Task<IEnumerable<JokeReplyDto>> GetFilteredJokeDtosAsync(JokesFilterDto jokesFilter);
+        Task<IEnumerable<JokeReplyDto>> GetJokeDtosAsync(JokesFilterDto jokesFilter);
     }
 }

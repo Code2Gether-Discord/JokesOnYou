@@ -29,17 +29,20 @@ namespace JokesOnYou.Web.Api.Repositories
                                                 joke.NormalizedPunchLine == normalizedPunchline);
 
         public async Task CreateJokeAsync(Joke joke) => await _context.Jokes.AddAsync(joke).AsTask();
+
         public async Task<IEnumerable<JokeReplyDto>> GetAllJokeDtosAsync() => 
             await _context.Jokes.ProjectTo<JokeReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
+
         public async Task<Joke> GetJokeByIdAsync(int id) => 
             await _context.Jokes.FirstOrDefaultAsync(x => x.Id == id);
 
         public async Task<JokeReplyDto> GetJokeDtoAsync(int id) => 
             await _context.Jokes.ProjectTo<JokeReplyDto>(_mapper.ConfigurationProvider)
                                 .FirstOrDefaultAsync(j => j.Id == id);
+
         public void DeleteJoke(Joke joke) => _context.Jokes.Remove(joke);
 
-        public async Task<IEnumerable<JokeReplyDto>> GetFilteredJokeDtosAsync(JokesFilterDto jokesFilter)
+        public async Task<IEnumerable<JokeReplyDto>> GetJokeDtosAsync(JokesFilterDto jokesFilter)
         {
             var query = _context.Jokes.AsQueryable();
             if (!string.IsNullOrWhiteSpace(jokesFilter.AuthorId))
@@ -59,7 +62,6 @@ namespace JokesOnYou.Web.Api.Repositories
                 query = query.Where(joke => joke.NormalizedPremise.Contains(jokesFilter.Text.ToUpper()) || joke.NormalizedPunchLine.Contains(jokesFilter.Text.ToUpper()));
             }
 
-            
             return await query.ProjectTo<JokeReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
         }
     }
