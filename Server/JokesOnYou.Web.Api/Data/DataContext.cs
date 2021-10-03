@@ -16,6 +16,8 @@ namespace JokesOnYou.Web.Api.Data
             base.OnModelCreating(builder);
         }
     
+        public DbSet<SavedJoke> SavedJokes { get; set; }
+
         public DbSet<Joke> Jokes { get; set; }
 
         public DbSet<Tag> Tags { get; set; }
