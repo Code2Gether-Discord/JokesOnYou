@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace JokesOnYou.Web.Api.Controllers
 {
@@ -21,15 +22,15 @@ namespace JokesOnYou.Web.Api.Controllers
             _savedJokeService = savedJokeService;
         }
 
-        [HttpPost("{id}")]
-        public async Task<ActionResult> ToggleSavedJoke(int id)//id here is jokeid
+        [HttpPost("{jokeId}")]
+        public async Task<ActionResult> ToggleSavedJoke(int jokeId)
         {
-            await _savedJokeService.ToggleSavedJoke(id, ClaimsPrincipalExtension.GetUserId(User));
+            await _savedJokeService.ToggleSavedJoke(jokeId, ClaimsPrincipalExtension.GetUserId(User));
             return NoContent();
         }
 
         [HttpGet]
-        public ActionResult<IAsyncEnumerable<JokeReplyDto>> GetSavedJokesByUserId()
+        public ActionResult<IEnumerable<JokeReplyDto>> GetSavedJokesByUserId()
         {
             var jokes = _savedJokeService.GetSavedJokesByUserId(ClaimsPrincipalExtension.GetUserId(User));
             return Ok(jokes);

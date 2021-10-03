@@ -27,8 +27,8 @@ namespace JokesOnYou.Web.Api.Repositories
 
         public async Task AddSavedJoke(SavedJoke savedJoke) => await _context.SavedJokes.AddAsync(savedJoke);
 
-        public IEnumerable<SavedJoke> GetSavedJokesByUserId(string id) =>
-            _context.SavedJokes.Where(x => x.UserId == id).ToList();
+        public async Task<IEnumerable<SavedJoke>> GetSavedJokesByUserId(string id) =>
+            await _context.SavedJokes.Where(x => x.UserId == id).ToListAsync();
 
         public async Task<SavedJoke> GetSavedJoke(string id, int jokeId) =>
             await _context.SavedJokes.FirstOrDefaultAsync(x => x.UserId == id && x.JokeId == jokeId);

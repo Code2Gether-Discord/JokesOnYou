@@ -54,7 +54,7 @@ namespace JokesOnYou.Web.Api.Services
 
         public async IAsyncEnumerable<JokeReplyDto> GetSavedJokesByUserId(string id)
         {
-            var SavedJokes = _savedJokeRepo.GetSavedJokesByUserId(id);
+            var SavedJokes = await _savedJokeRepo.GetSavedJokesByUserId(id);
 
             foreach (var item in SavedJokes){
                 yield return await _jokeRepository.GetJokeDtoAsync(item.JokeId);

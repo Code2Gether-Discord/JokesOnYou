@@ -9,6 +9,6 @@ namespace JokesOnYou.Web.Api.Repositories.Interfaces
         void DeleteSavedJoke(SavedJoke savedjoke);
         Task<SavedJoke> GetSavedJoke(string id, int jokeId);
         Task AddSavedJoke(SavedJoke savedJoke);
-        IEnumerable<SavedJoke> GetSavedJokesByUserId(string id);
+        Task<IEnumerable<SavedJoke>> GetSavedJokesByUserId(string id);
     }
 }
