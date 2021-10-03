@@ -52,13 +52,16 @@ namespace JokesOnYou.Web.Api.Services
             }
         }
 
-        public async IAsyncEnumerable<JokeReplyDto> GetSavedJokesByUserId(string id)
+        public async Task<IEnumerable<JokeReplyDto>> GetSavedJokesByUserId(string id)
         {
             var SavedJokes = await _savedJokeRepo.GetSavedJokesByUserId(id);
-
+            if (SavedJokes == null) return null;
+            List<JokeReplyDto> jokes = new();
+            
             foreach (var item in SavedJokes){
-                yield return await _jokeRepository.GetJokeDtoAsync(item.JokeId);
+                jokes.Add( await _jokeRepository.GetJokeDtoAsync(item.JokeId));
             }
+            return jokes;
         }
     }
 }
