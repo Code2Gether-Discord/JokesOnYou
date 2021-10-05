@@ -42,7 +42,7 @@
              #password="ngModel"
              required
       />
-      <div [hidden]="password.valid || password.pristine"
+      <div [hidden]="(password.valid || password.pristine)"
            class="alert alert-danger m-1">
         Password is required
       </div>
@@ -78,6 +78,9 @@
            class="alert alert-danger m-1">
         Password is required
       </div>
+      <div [hidden]="model.retypePassword == model.password || !model.retypePassword" class="alert alert-danger m-1">
+        Passwords don't match
+      </div>
     </div>
     <div class="col-md-3 col-9">
       <label for="nsfw" class="form-check-label">Enable NSFW Content?</label>
@@ -91,7 +94,7 @@
       Register
     </button>
     <span class="col-md-3">
-      Have already an account?&nbsp;<a href="/login" class="underlineLink">Go to login</a>      
+      Have already an account?&nbsp;<a href="/login" class="underlineLink">Go to login</a>
     </span>
   </div>
 </form>

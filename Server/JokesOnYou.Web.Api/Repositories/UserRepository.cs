@@ -30,7 +30,8 @@ namespace JokesOnYou.Web.Api.Repositories
             var userCreationResult = await _userManager.CreateAsync(new User()
             {
                 Email = userRegisterDto.Email,
-                UserName = userRegisterDto.UserName
+                UserName = userRegisterDto.UserName,
+                Nsfw = userRegisterDto.NsfwEnabled
             }, userRegisterDto.Password);
             if (userCreationResult.Succeeded)
             {
