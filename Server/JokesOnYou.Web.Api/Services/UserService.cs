@@ -6,6 +6,7 @@ using JokesOnYou.Web.Api.Models.Response;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
 using JokesOnYou.Web.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
@@ -29,9 +30,18 @@ namespace JokesOnYou.Web.Api.Services
             _tokenService = tokenService;
         }
 
-        public async Task<IEnumerable<UserReplyDto>> GetAll()
+        public async Task<IEnumerable<UserReplyDto>> GetAll(int pageNo, int usersPerPage)
         {
-            return await _userRepository.GetUsersReplyDtoAsync();
+            if(pageNo < 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(pageNo), "Page No cannot be zero or negative.");
+            }
+            if(usersPerPage < 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(usersPerPage), "User per page cannot be zero or negative");
+            }
+
+            return await _userRepository.GetUsersReplyDtoAsync(pageNo,usersPerPage);
         }
 
         public async Task DeleteUser(string id)

@@ -24,9 +24,9 @@ namespace JokesOnYou.Web.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserReplyDto>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<UserReplyDto>>> GetUsers([FromQuery] int pageNo = 1, int userPerPage = 10)
         {
-            return Ok(await _userService.GetAll());
+            return Ok(await _userService.GetAll(pageNo, userPerPage));
         }
 
         [HttpGet("{id}")]

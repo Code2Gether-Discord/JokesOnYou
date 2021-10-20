@@ -13,7 +13,7 @@ namespace JokesOnYou.Web.Api.Services.Interfaces
         Task<UserReplyDto> GetUserReplyById(string id);
         Task UpdateUser(UserUpdateDto user);
         //Task<User> Authenticate(string username, string password);
-        Task<IEnumerable<UserReplyDto>> GetAll();
+        Task<IEnumerable<UserReplyDto>> GetAll(int pageNo, int usersPerPage);
         Task<UserReplyDto> LoginUser(UserLoginDTO userLoginDTO);
         Task RegisterUser(UserRegisterDto userRegisterDTO);
     }

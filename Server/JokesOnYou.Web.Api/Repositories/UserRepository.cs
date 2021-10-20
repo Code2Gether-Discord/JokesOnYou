@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using JokesOnYou.Web.Api.Models.Response;
+using System.Linq;
 
 namespace JokesOnYou.Web.Api.Repositories
 {
@@ -66,7 +67,13 @@ namespace JokesOnYou.Web.Api.Repositories
         public async Task<User> GetUserByEmailAsync(string email) => await _userManager.FindByEmailAsync(email);
 
 
-        public async Task<IEnumerable<UserReplyDto>> GetUsersReplyDtoAsync() => 
-            await _userManager.Users.ProjectTo<UserReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
+        public async Task<IEnumerable<UserReplyDto>> GetUsersReplyDtoAsync(int pageNo, int usersPerPage)
+        {
+            return await _userManager.Users.ProjectTo<UserReplyDto>(_mapper.ConfigurationProvider)
+                .Skip(usersPerPage * (pageNo - 1))
+                .Take(usersPerPage)
+                .AsNoTracking()
+                .ToListAsync();
+        }
     }
 }

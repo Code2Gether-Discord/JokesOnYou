@@ -13,7 +13,7 @@ namespace JokesOnYou.Web.Api.Repositories.Interfaces
         Task<User> CreateUserAsync(UserRegisterDto userRegisterDTO);
         Task DeleteUserAsync(User user);
         Task<UserReplyDto> GetUserReplyAsync(string id);
-        Task<IEnumerable<UserReplyDto>> GetUsersReplyDtoAsync();
+        Task<IEnumerable<UserReplyDto>> GetUsersReplyDtoAsync(int pageNo, int usersPerPage);
         Task<User> GetUserByUsernameAsync(string username);
 
 
