@@ -1,28 +1,32 @@
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using JokesOnYou.Web.Api.Models.Request;
 using JokesOnYou.Web.Api.Exceptions;
+using JokesOnYou.Web.Api.Helpers;
 using JokesOnYou.Web.Api.Models;
+using JokesOnYou.Web.Api.Models.Request;
+using JokesOnYou.Web.Api.Models.Request.Query;
+using JokesOnYou.Web.Api.Models.Response;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using JokesOnYou.Web.Api.Models.Response;
-using System.Linq;
 
 namespace JokesOnYou.Web.Api.Repositories
 {
     public class UserRepository : IUserRepository
     {
         private readonly UserManager<User> _userManager;
+        private readonly IdentityDbContext<User> _dbContext;
         readonly IMapper _mapper;
 
-        public UserRepository(UserManager<User> userManager, IMapper mapper)
+        public UserRepository(UserManager<User> userManager, IMapper mapper, IdentityDbContext<User> dbContext)
         {
             _mapper = mapper;
+            _dbContext = dbContext;
             _userManager = userManager;
         }
 
@@ -50,10 +54,10 @@ namespace JokesOnYou.Web.Api.Repositories
             }
         }
 
-        public async Task<User> GetUserByUsernameAsync(string username) => 
+        public async Task<User> GetUserByUsernameAsync(string username) =>
             await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == username);
 
-        public async Task<UserReplyDto> GetUserReplyAsync(string id) => 
+        public async Task<UserReplyDto> GetUserReplyAsync(string id) =>
             await _userManager.Users.ProjectTo<UserReplyDto>(_mapper.ConfigurationProvider)
                                     .FirstOrDefaultAsync(user => user.Id == id);
 
@@ -66,14 +70,15 @@ namespace JokesOnYou.Web.Api.Repositories
 
         public async Task<User> GetUserByEmailAsync(string email) => await _userManager.FindByEmailAsync(email);
 
-
-        public async Task<IEnumerable<UserReplyDto>> GetUsersReplyDtoAsync(int pageNo, int usersPerPage)
+        public async Task<PaginatedList<User>> GetAllUserAsync(UserPaginationQueryParameters parameters)
         {
-            return await _userManager.Users.ProjectTo<UserReplyDto>(_mapper.ConfigurationProvider)
-                .Skip(usersPerPage * (pageNo - 1))
-                .Take(usersPerPage)
-                .AsNoTracking()
-                .ToListAsync();
+            var result =  await PaginatedList<User>.ToPaginatedList(
+                _dbContext.Users.AsNoTracking(),
+                parameters.PageNumber,
+                parameters.PageSize,
+                x => x.Email.Contains(parameters.SearchText) || x.UserName.Contains(parameters.SearchText));
+
+            return result;
         }
     }
 }

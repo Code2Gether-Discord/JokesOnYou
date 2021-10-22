@@ -1,8 +1,9 @@
-﻿using JokesOnYou.Web.Api.Models.Request;
+﻿using JokesOnYou.Web.Api.Helpers;
 using JokesOnYou.Web.Api.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using JokesOnYou.Web.Api.Models.Request;
+using JokesOnYou.Web.Api.Models.Request.Query;
 using JokesOnYou.Web.Api.Models.Response;
+using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Repositories.Interfaces
 {
@@ -13,7 +14,7 @@ namespace JokesOnYou.Web.Api.Repositories.Interfaces
         Task<User> CreateUserAsync(UserRegisterDto userRegisterDTO);
         Task DeleteUserAsync(User user);
         Task<UserReplyDto> GetUserReplyAsync(string id);
-        Task<IEnumerable<UserReplyDto>> GetUsersReplyDtoAsync(int pageNo, int usersPerPage);
+        Task<PaginatedList<User>> GetAllUserAsync(UserPaginationQueryParameters parameters);
         Task<User> GetUserByUsernameAsync(string username);
 
 

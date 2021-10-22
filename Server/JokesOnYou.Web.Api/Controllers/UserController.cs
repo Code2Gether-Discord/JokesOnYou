@@ -7,10 +7,11 @@ using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using JokesOnYou.Web.Api.Models.Response;
+using JokesOnYou.Web.Api.Models.Request.Query;
 
 namespace JokesOnYou.Web.Api.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -24,9 +25,11 @@ namespace JokesOnYou.Web.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserReplyDto>>> GetUsers([FromQuery] int pageNo = 1, int userPerPage = 10)
+        public async Task<ActionResult<IEnumerable<UserReplyDto>>> GetUsers([FromQuery] UserPaginationQueryParameters paginationQuery)
         {
-            return Ok(await _userService.GetAll(pageNo, userPerPage));
+            var users = await _userService.GetAll(paginationQuery);
+
+            return Ok(users);
         }
 
         [HttpGet("{id}")]

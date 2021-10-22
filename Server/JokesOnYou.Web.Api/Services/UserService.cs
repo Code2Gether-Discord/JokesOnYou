@@ -9,7 +9,10 @@ using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper.QueryableExtensions;
+using JokesOnYou.Web.Api.Models.Request.Query;
 
 namespace JokesOnYou.Web.Api.Services
 {
@@ -30,18 +33,11 @@ namespace JokesOnYou.Web.Api.Services
             _tokenService = tokenService;
         }
 
-        public async Task<IEnumerable<UserReplyDto>> GetAll(int pageNo, int usersPerPage)
+        public async Task<IEnumerable<UserReplyDto>> GetAll(UserPaginationQueryParameters parameters)
         {
-            if(pageNo < 1)
-            {
-                throw new ArgumentOutOfRangeException(nameof(pageNo), "Page No cannot be zero or negative.");
-            }
-            if(usersPerPage < 1)
-            {
-                throw new ArgumentOutOfRangeException(nameof(usersPerPage), "User per page cannot be zero or negative");
-            }
+            var users = await _userRepository.GetAllUserAsync(parameters);
 
-            return await _userRepository.GetUsersReplyDtoAsync(pageNo,usersPerPage);
+            return users.AsQueryable().ProjectTo<UserReplyDto>(_mapper.ConfigurationProvider); 
         }
 
         public async Task DeleteUser(string id)

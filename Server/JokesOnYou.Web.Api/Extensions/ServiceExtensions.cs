@@ -10,6 +10,7 @@ using JokesOnYou.Web.Api.Services;
 using JokesOnYou.Web.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,6 +39,10 @@ namespace JokesOnYou.Web.Api.Extensions
             services.AddScoped<ITagRepository, TagRepository>();
             services.AddScoped<ISavedJokeRepository, SavedJokeRepository>();
             services.AddDbContext<DataContext>(options =>
+            {
+                options.UseSqlServer(config.GetConnectionString("SQLserverConnection"));
+            });
+            services.AddDbContext<IdentityDbContext<User>>(options =>
             {
                 options.UseSqlServer(config.GetConnectionString("SQLserverConnection"));
             });
