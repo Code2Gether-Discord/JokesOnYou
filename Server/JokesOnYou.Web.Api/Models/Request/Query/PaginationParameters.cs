@@ -11,10 +11,10 @@ namespace JokesOnYou.Web.Api.Models.Request.Query
         const int maxPageSize = 50;
         private int _pageSize = 10;
 
-        [RegularExpression(@"^\d*[1-9]\d*$", ErrorMessage = "PageNumber cannot be zero or negative")]
+        [Range(1, UInt16.MaxValue, ErrorMessage = "PageNumber cannot be zero/negative or more than 65535")]
         public int PageNumber { get; set; } = 1;
 
-        [RegularExpression(@"^\d*[1-9]\d*$", ErrorMessage = "PageSize cannot be zero or negative")]
+        [Range(1, UInt16.MaxValue, ErrorMessage = "PageSize cannot be zero/negative or more than 65535")]
         public int PageSize
         {
             get

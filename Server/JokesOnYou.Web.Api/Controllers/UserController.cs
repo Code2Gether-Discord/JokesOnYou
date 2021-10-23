@@ -1,17 +1,18 @@
 ﻿using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading.Tasks;
 using JokesOnYou.Web.Api.Extensions;
 using JokesOnYou.Web.Api.Models.Request;
 using JokesOnYou.Web.Api.Models.Request.Query;
 using JokesOnYou.Web.Api.Models.Response;
 using JokesOnYou.Web.Api.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 
 namespace JokesOnYou.Web.Api.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -39,7 +40,7 @@ namespace JokesOnYou.Web.Api.Controllers
                 users.ItemsCount
             };
 
-            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(metadata));
             return Ok(users);
         }
 

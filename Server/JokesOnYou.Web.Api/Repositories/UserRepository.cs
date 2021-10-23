@@ -72,8 +72,7 @@ namespace JokesOnYou.Web.Api.Repositories
         {
             var users = _userManager.Users.AsNoTracking();
 
-            if (string.IsNullOrEmpty(parameters.SearchText) != true ||
-                string.IsNullOrWhiteSpace(parameters.SearchText) != true)
+            if (string.IsNullOrEmpty(parameters.SearchText) == false || string.IsNullOrWhiteSpace(parameters.SearchText) == false)
             {
                 users = users.Where(x => x.Email.Contains(parameters.SearchText) || 
                 x.UserName.Contains(parameters.SearchText));
