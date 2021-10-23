@@ -1,13 +1,13 @@
-﻿using JokesOnYou.Web.Api.Models.Request;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using JokesOnYou.Web.Api.Extensions;
+using JokesOnYou.Web.Api.Models.Request;
+using JokesOnYou.Web.Api.Models.Request.Query;
+using JokesOnYou.Web.Api.Models.Response;
 using JokesOnYou.Web.Api.Services.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using JokesOnYou.Web.Api.Models.Response;
-using JokesOnYou.Web.Api.Models.Request.Query;
+using Newtonsoft.Json;
 
 namespace JokesOnYou.Web.Api.Controllers
 {
@@ -25,10 +25,21 @@ namespace JokesOnYou.Web.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserReplyDto>>> GetUsers([FromQuery] UserPaginationQueryParameters paginationQuery)
+        public async Task<ActionResult<IEnumerable<UserReplyDto>>> GetUsers([FromQuery] UserParameters paginationQuery)
         {
             var users = await _userService.GetAll(paginationQuery);
 
+            var metadata = new
+            {
+                users.PageSize,
+                users.CurrentPage,
+                users.PrevousPage,
+                users.NextPage,
+                users.TotalPages,
+                users.ItemsCount
+            };
+
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
             return Ok(users);
         }
 
@@ -44,12 +55,12 @@ namespace JokesOnYou.Web.Api.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateUser(string id, UserUpdateDto userUpdateDTO)
         {
-            
+
             if (id != ClaimsPrincipalExtension.GetUserId(User))
             {
                 return Unauthorized();
             }
-            
+
             userUpdateDTO.Id = id;
             await _userService.UpdateUser(userUpdateDTO);
             return NoContent();
@@ -58,12 +69,12 @@ namespace JokesOnYou.Web.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteUser(string id)
         {
-            
+
             if (id != ClaimsPrincipalExtension.GetUserId(User))
             {
                 return Unauthorized();
             }
-            
+
             await _userService.DeleteUser(id);
             return NoContent();
         }

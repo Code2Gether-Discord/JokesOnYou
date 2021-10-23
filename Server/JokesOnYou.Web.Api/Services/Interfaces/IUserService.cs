@@ -15,7 +15,7 @@ namespace JokesOnYou.Web.Api.Services.Interfaces
         Task<UserReplyDto> GetUserReplyById(string id);
         Task UpdateUser(UserUpdateDto user);
         //Task<User> Authenticate(string username, string password);
-        Task<PaginatedList<UserReplyDto>> GetAll(UserPaginationQueryParameters parameters);
+        Task<PaginatedList<UserReplyDto>> GetAll(UserParameters parameters);
         Task<UserReplyDto> LoginUser(UserLoginDTO userLoginDTO);
         Task RegisterUser(UserRegisterDto userRegisterDTO);
     }

@@ -68,7 +68,7 @@ namespace JokesOnYou.Web.Api.Repositories
 
         public async Task<User> GetUserByEmailAsync(string email) => await _userManager.FindByEmailAsync(email);
 
-        public async Task<PaginatedList<UserReplyDto>> GetUsersReplyDtoAsync(UserPaginationQueryParameters parameters)
+        public async Task<PaginatedList<UserReplyDto>> GetUsersReplyDtoAsync(UserParameters parameters)
         {
             var users = _userManager.Users.AsNoTracking();
 

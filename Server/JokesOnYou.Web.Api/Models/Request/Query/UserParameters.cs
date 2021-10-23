@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Models.Request.Query
 {
-    public class UserPaginationQueryParameters : PaginationQuery
+    public class UserParameters : PaginationQuery
     {
         public string SearchText { get; set; } = string.Empty;
     }

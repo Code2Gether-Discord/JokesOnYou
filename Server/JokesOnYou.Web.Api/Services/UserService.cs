@@ -34,7 +34,7 @@ namespace JokesOnYou.Web.Api.Services
             _tokenService = tokenService;
         }
 
-        public async Task<PaginatedList<UserReplyDto>> GetAll(UserPaginationQueryParameters parameters)
+        public async Task<PaginatedList<UserReplyDto>> GetAll(UserParameters parameters)
         {
             return await _userRepository.GetUsersReplyDtoAsync(parameters);
         }
