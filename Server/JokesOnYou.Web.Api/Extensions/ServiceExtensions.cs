@@ -42,10 +42,6 @@ namespace JokesOnYou.Web.Api.Extensions
             {
                 options.UseSqlServer(config.GetConnectionString("SQLserverConnection"));
             });
-            services.AddDbContext<IdentityDbContext<User>>(options =>
-            {
-                options.UseSqlServer(config.GetConnectionString("SQLserverConnection"));
-            });
 
             services.AddIdentity<User, IdentityRole>(
                 options => { options.User.RequireUniqueEmail = true; }

@@ -20,13 +20,11 @@ namespace JokesOnYou.Web.Api.Repositories
     public class UserRepository : IUserRepository
     {
         private readonly UserManager<User> _userManager;
-        private readonly IdentityDbContext<User> _dbContext;
         readonly IMapper _mapper;
 
-        public UserRepository(UserManager<User> userManager, IMapper mapper, IdentityDbContext<User> dbContext)
+        public UserRepository(UserManager<User> userManager, IMapper mapper)
         {
             _mapper = mapper;
-            _dbContext = dbContext;
             _userManager = userManager;
         }
 
@@ -72,11 +70,19 @@ namespace JokesOnYou.Web.Api.Repositories
 
         public async Task<PaginatedList<User>> GetAllUserAsync(UserPaginationQueryParameters parameters)
         {
-            var result =  await PaginatedList<User>.ToPaginatedList(
-                _dbContext.Users.AsNoTracking(),
+            var users = _userManager.Users;
+
+            if (string.IsNullOrEmpty(parameters.SearchText) != true ||
+                string.IsNullOrWhiteSpace(parameters.SearchText) != true)
+            {
+                users.Where(x => x.Email.Contains(parameters.SearchText) || 
+                x.UserName.Contains(parameters.SearchText));
+            }
+
+            var result = await PaginatedList<User>.ToPaginatedListAsync(
+                users.AsNoTracking(),
                 parameters.PageNumber,
-                parameters.PageSize,
-                x => x.Email.Contains(parameters.SearchText) || x.UserName.Contains(parameters.SearchText));
+                parameters.PageSize);
 
             return result;
         }
