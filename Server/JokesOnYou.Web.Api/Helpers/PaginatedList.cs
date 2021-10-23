@@ -10,30 +10,33 @@ namespace JokesOnYou.Web.Api.Helpers
     public class PaginatedList<T> : List<T>
     {
         public int CurrentPage { get; set; }
+        public int? PrevousPage { get; set; }
+        public int? NextPage { get; set; }
         public int PageSize { get; set; }
-        public int NextPage { get; set; }
-        public int PrevousPage { get; set; }
-        public int PageNumber { get; set; }
-        public PaginatedList(List<T> items, int pageNumber, int pageSize)
+        public int TotalPages { get; set; }
+        public int ItemsCount { get; set; }        
+        
+        public PaginatedList(IEnumerable<T> items, int count, int pageNumber, int pageSize)
         {
+            CurrentPage = pageNumber;            
+            PrevousPage = CurrentPage - 1 >= 1 ? CurrentPage - 1 : null;
+            NextPage = CurrentPage + 1 <= TotalPages ? CurrentPage + 1 : null; 
             PageSize = pageSize;
-            CurrentPage = pageNumber;
+            TotalPages = (int)Math.Ceiling(count / (double)pageSize);
+            ItemsCount = count;
 
             AddRange(items);
         }
 
-        public static async Task<PaginatedList<T>> ToPaginatedList(IQueryable<T> source, int pageNumber, int pageSize, Expression<Func<T,bool>> expression)
+        public static async Task<PaginatedList<T>> ToPaginatedListAsync(IQueryable<T> source, int pageNumber, int pageSize)
         {
-            if (expression != null)
-            {
-                source = source.Where(expression);
-            }
+            var count = source.Count();
 
             List<T> items = await source.Skip(pageSize * (pageNumber - 1))
             .Take(pageSize)
             .ToListAsync();
 
-            return new PaginatedList<T>(items, pageNumber, pageSize);
+            return new PaginatedList<T>(items, count, pageNumber, pageSize);
         }
     }
 }
