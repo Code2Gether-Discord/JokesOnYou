@@ -68,19 +68,19 @@ namespace JokesOnYou.Web.Api.Repositories
 
         public async Task<User> GetUserByEmailAsync(string email) => await _userManager.FindByEmailAsync(email);
 
-        public async Task<PaginatedList<User>> GetAllUserAsync(UserPaginationQueryParameters parameters)
+        public async Task<PaginatedList<UserReplyDto>> GetUsersReplyDtoAsync(UserPaginationQueryParameters parameters)
         {
-            var users = _userManager.Users;
+            var users = _userManager.Users.AsNoTracking();
 
             if (string.IsNullOrEmpty(parameters.SearchText) != true ||
                 string.IsNullOrWhiteSpace(parameters.SearchText) != true)
             {
-                users.Where(x => x.Email.Contains(parameters.SearchText) || 
+                users = users.Where(x => x.Email.Contains(parameters.SearchText) || 
                 x.UserName.Contains(parameters.SearchText));
             }
 
-            var result = await PaginatedList<User>.ToPaginatedListAsync(
-                users.AsNoTracking(),
+            var result = await PaginatedList<UserReplyDto>.ToPaginatedListAsync(
+                users.ProjectTo<UserReplyDto>(_mapper.ConfigurationProvider),
                 parameters.PageNumber,
                 parameters.PageSize);
 

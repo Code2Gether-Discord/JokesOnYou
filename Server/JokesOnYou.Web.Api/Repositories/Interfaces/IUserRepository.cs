@@ -14,7 +14,7 @@ namespace JokesOnYou.Web.Api.Repositories.Interfaces
         Task<User> CreateUserAsync(UserRegisterDto userRegisterDTO);
         Task DeleteUserAsync(User user);
         Task<UserReplyDto> GetUserReplyAsync(string id);
-        Task<PaginatedList<User>> GetAllUserAsync(UserPaginationQueryParameters parameters);
+        Task<PaginatedList<UserReplyDto>> GetUsersReplyDtoAsync(UserPaginationQueryParameters parameters);
         Task<User> GetUserByUsernameAsync(string username);
 
 
