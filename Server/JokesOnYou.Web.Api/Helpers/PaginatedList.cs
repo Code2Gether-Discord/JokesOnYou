@@ -18,11 +18,16 @@ namespace JokesOnYou.Web.Api.Helpers
         
         public PaginatedList(IEnumerable<T> items, int count, int pageNumber, int pageSize)
         {
-            CurrentPage = pageNumber;            
-            PrevousPage = CurrentPage - 1 >= 1 ? CurrentPage - 1 : null;
-            NextPage = CurrentPage + 1 <= TotalPages ? CurrentPage + 1 : null; 
-            PageSize = pageSize;
+            CurrentPage = pageNumber;
             TotalPages = (int)Math.Ceiling(count / (double)pageSize);
+
+            if (TotalPages >= CurrentPage)
+            {
+                PrevousPage = CurrentPage - 1 >= 1 ? CurrentPage - 1 : null;
+                NextPage = CurrentPage + 1 <= TotalPages ? CurrentPage + 1 : null;
+            }
+
+            PageSize = pageSize;
             ItemsCount = count;
 
             AddRange(items);
