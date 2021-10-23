@@ -13,6 +13,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper.QueryableExtensions;
 using JokesOnYou.Web.Api.Models.Request.Query;
+using JokesOnYou.Web.Api.Helpers;
 
 namespace JokesOnYou.Web.Api.Services
 {
@@ -33,11 +34,9 @@ namespace JokesOnYou.Web.Api.Services
             _tokenService = tokenService;
         }
 
-        public async Task<IEnumerable<UserReplyDto>> GetAll(UserPaginationQueryParameters parameters)
+        public async Task<PaginatedList<UserReplyDto>> GetAll(UserPaginationQueryParameters parameters)
         {
-            var users = await _userRepository.GetAllUserAsync(parameters);
-
-            return users.AsQueryable().ProjectTo<UserReplyDto>(_mapper.ConfigurationProvider); 
+            return await _userRepository.GetUsersReplyDtoAsync(parameters);
         }
 
         public async Task DeleteUser(string id)
