@@ -7,6 +7,7 @@ using JokesOnYou.Web.Api.Services.Interfaces;
 using JokesOnYou.Web.Api.Models.Response;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using JokesOnYou.Web.Api.Helpers;
 
 namespace JokesOnYou.Web.Api.Services
 {
@@ -48,7 +49,7 @@ namespace JokesOnYou.Web.Api.Services
             return jokeReplyDto;
         }
 
-        public async Task<IEnumerable<JokeReplyDto>> GetJokeDtosAsync(JokesFilterDto jokesFilter)
+        public async Task<PaginatedList<JokeReplyDto>> GetJokeDtosAsync(JokesFilterDto jokesFilter)
         {
             var jokeDtos = await _jokesRepo.GetJokeDtosAsync(jokesFilter);
 

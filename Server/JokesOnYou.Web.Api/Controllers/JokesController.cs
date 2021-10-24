@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using JokesOnYou.Web.Api.Models.Response;
+using System.Text.Json;
 
 namespace JokesOnYou.Web.Api.Controllers
 {
@@ -37,6 +38,19 @@ namespace JokesOnYou.Web.Api.Controllers
         public async Task<ActionResult<IEnumerable<JokeReplyDto>>> GetAllJokesAsync([FromQuery]JokesFilterDto jokesFilter)
         {
             var jokeDtos = await _jokesService.GetJokeDtosAsync(jokesFilter);
+
+            var metadata = new
+            {
+                jokeDtos.PageSize,
+                jokeDtos.CurrentPage,
+                jokeDtos.PrevousPage,
+                jokeDtos.NextPage,
+                jokeDtos.TotalPages,
+                jokeDtos.ItemsCount
+            };
+
+            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(metadata));
+
             return Ok(jokeDtos);
         }
 
