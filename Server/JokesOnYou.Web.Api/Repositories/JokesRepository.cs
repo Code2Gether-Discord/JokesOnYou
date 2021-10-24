@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using JokesOnYou.Web.Api.Models.Response;
 using System.Linq;
 using System;
+using JokesOnYou.Web.Api.Helpers;
 
 namespace JokesOnYou.Web.Api.Repositories
 {
@@ -42,9 +43,10 @@ namespace JokesOnYou.Web.Api.Repositories
 
         public void DeleteJoke(Joke joke) => _context.Jokes.Remove(joke);
 
-        public async Task<IEnumerable<JokeReplyDto>> GetJokeDtosAsync(JokesFilterDto jokesFilter)
+        public async Task<PaginatedList<JokeReplyDto>> GetJokeDtosAsync(JokesFilterDto jokesFilter)
         {
             var query = _context.Jokes.AsQueryable();
+
             if (!string.IsNullOrWhiteSpace(jokesFilter.AuthorId))
             {
                 query = query.Where(joke => joke.AuthorId == jokesFilter.AuthorId);
@@ -57,12 +59,18 @@ namespace JokesOnYou.Web.Api.Repositories
             {
                 query = query.Where(joke => joke.UploadDate >= jokesFilter.MinimumDate && joke.UploadDate <= jokesFilter.MaximumDate.AddDays(1));
             }
-            if (!string.IsNullOrEmpty(jokesFilter.Text))
+            if (string.IsNullOrEmpty(jokesFilter.SearchText) == false || string.IsNullOrWhiteSpace(jokesFilter.SearchText) == false)
             {
-                query = query.Where(joke => joke.NormalizedPremise.Contains(jokesFilter.Text.ToUpper()) || joke.NormalizedPunchLine.Contains(jokesFilter.Text.ToUpper()));
+                query = query.Where(x => x.NormalizedPremise.Contains(jokesFilter.SearchText.ToUpper()) ||
+                x.NormalizedPunchLine.Contains(jokesFilter.SearchText.ToUpper()));
             }
 
-            return await query.ProjectTo<JokeReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
+            var result = await PaginatedList<JokeReplyDto>.ToPaginatedListAsync(
+                query.ProjectTo<JokeReplyDto>(_mapper.ConfigurationProvider),
+                jokesFilter.PageNumber,
+                jokesFilter.PageSize);
+
+            return result;
         }
     }
 }
