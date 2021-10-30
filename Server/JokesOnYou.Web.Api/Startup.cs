@@ -1,15 +1,11 @@
+using System;
 using JokesOnYou.Web.Api.Extensions;
 using JokesOnYou.Web.Api.Middlewares;
-using JokesOnYou.Web.Api.Repositories;
-using JokesOnYou.Web.Api.Repositories.Interfaces;
-using JokesOnYou.Web.Api.Services;
-using JokesOnYou.Web.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
 
 namespace JokesOnYou.Web.Api
 {
@@ -25,33 +21,29 @@ namespace JokesOnYou.Web.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.ConfigureAppServices(_config);
-            
-            services.AddControllers();
-
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<ITokenService, JwtTokenService>();
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IJokesRepository, JokesRepository>();
-            services.AddScoped<IJokesService, JokesService>();
-            services.AddScoped<ITagService, TagService>();
-            services.AddScoped<ITagRepository, TagRepository>();
-            services.AddScoped<ILikedTagsRepository, LikedTagsRepository>();
-            services.AddScoped<ILikedTagsService, LikedTagsService>();
-
-            services.AddCors();
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
+            services.ConfigureAppServices();
+            services.ConfigureDataAccess(_config);
+            services.ConfigureJwtAuth(_config);
             services.ConfigureSwagger();
+            services.ConfigureCors();
+
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseCors(
-                options => options.WithOrigins("*").AllowAnyMethod()
-            );
+            if (env.IsDevelopment())
+            {
+                Console.WriteLine("ATTENTION: Developer options for CORS enabled");
+                app.UseCors("DevPolicy");
+            }
+            else
+            {
+                app.UseCors("ProdPolicy");
+                app.UseHsts();
+                app.UseHttpsRedirection();
+            }
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -65,8 +57,6 @@ namespace JokesOnYou.Web.Api
             }
 
             app.UseMiddleware<ExceptionMiddleware>();
-
-            app.UseHttpsRedirection();
 
             app.UseRouting();
 

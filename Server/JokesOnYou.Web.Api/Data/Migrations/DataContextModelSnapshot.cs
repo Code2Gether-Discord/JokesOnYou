@@ -63,6 +63,28 @@ namespace JokesOnYou.Web.Api.Data.Migrations
                     b.ToTable("Jokes");
                 });
 
+            modelBuilder.Entity("JokesOnYou.Web.Api.Models.SavedJoke", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("JokeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("SavedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SavedJokes");
+                });
+
             modelBuilder.Entity("JokesOnYou.Web.Api.Models.Tag", b =>
                 {
                     b.Property<int>("Id")

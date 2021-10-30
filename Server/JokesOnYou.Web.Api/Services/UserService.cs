@@ -6,9 +6,14 @@ using JokesOnYou.Web.Api.Models.Response;
 using JokesOnYou.Web.Api.Repositories.Interfaces;
 using JokesOnYou.Web.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper.QueryableExtensions;
+using JokesOnYou.Web.Api.Models.Request.Query;
+using JokesOnYou.Web.Api.Helpers;
 
 namespace JokesOnYou.Web.Api.Services
 {
@@ -29,9 +34,9 @@ namespace JokesOnYou.Web.Api.Services
             _tokenService = tokenService;
         }
 
-        public async Task<IEnumerable<UserReplyDto>> GetAll()
+        public async Task<PaginatedList<UserReplyDto>> GetAll(UserParameters parameters)
         {
-            return await _userRepository.GetUsersReplyDtoAsync();
+            return await _userRepository.GetUsersReplyDtoAsync(parameters);
         }
 
         public async Task DeleteUser(string id)
@@ -72,7 +77,7 @@ namespace JokesOnYou.Web.Api.Services
 
                 if (!signInResult.Succeeded)
                 {
-                    throw new AppException("Sign in failed");
+                    throw new UserLoginException("Sign in failed");
                 }
                 else
                 {

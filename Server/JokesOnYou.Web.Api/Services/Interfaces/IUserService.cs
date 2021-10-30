@@ -1,4 +1,6 @@
-﻿using JokesOnYou.Web.Api.Models.Request;
+﻿using JokesOnYou.Web.Api.Helpers;
+using JokesOnYou.Web.Api.Models.Request;
+using JokesOnYou.Web.Api.Models.Request.Query;
 using JokesOnYou.Web.Api.Models.Response;
 using System;
 using System.Collections.Generic;
@@ -13,7 +15,7 @@ namespace JokesOnYou.Web.Api.Services.Interfaces
         Task<UserReplyDto> GetUserReplyById(string id);
         Task UpdateUser(UserUpdateDto user);
         //Task<User> Authenticate(string username, string password);
-        Task<IEnumerable<UserReplyDto>> GetAll();
+        Task<PaginatedList<UserReplyDto>> GetAll(UserParameters parameters);
         Task<UserReplyDto> LoginUser(UserLoginDTO userLoginDTO);
         Task RegisterUser(UserRegisterDto userRegisterDTO);
     }

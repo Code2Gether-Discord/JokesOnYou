@@ -18,6 +18,8 @@ namespace JokesOnYou.Web.Api.Data
                 .HasMany(t => t.Users);
         }
     
+        public DbSet<SavedJoke> SavedJokes { get; set; }
+
         public DbSet<Joke> Jokes { get; set; }
 
         public DbSet<Tag> Tags { get; set; }
