@@ -10,7 +10,7 @@ namespace JokesOnYou.Web.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Roles = "Registered,Admin")]
     public class LikedTagsController : ControllerBase
     {
         private readonly ILikedTagsService _likedTagsService;
@@ -19,24 +19,22 @@ namespace JokesOnYou.Web.Api.Controllers
         {
             _likedTagsService = likedTagsService;
         }
-
-        [Authorize(Roles = "Registered,Admin")]
-        [HttpPut]
+        
+        [HttpPost]
         [Route("LikeTag")]
-        public async Task<ActionResult<LikedTagsReplyDto>> LikeTagAsync(LikedTagsCreateDto likedTagsCreateDto)
+        public async Task<ActionResult<LikedTagsReplyDto>> LikeTagAsync(int tagID)
         {
             var userId = ClaimsPrincipalExtension.GetUserId(User);
-            var tagDto = await _likedTagsService.LikeTagAsync(likedTagsCreateDto, userId);
+            var tagDto = await _likedTagsService.LikeTagAsync(tagID, userId);
             return tagDto;
         }
 
-        [Authorize(Roles = "Registered,Admin")]
-        [HttpPut]
+        [HttpPost]
         [Route("UnlikeTag")]
-        public async Task<ActionResult> UnlikeTagAsync(UnlikedTagCreateDto unlikedTagCreateDto)
+        public async Task<ActionResult> UnlikeTagAsync(int tagID)
         {
             var userId = ClaimsPrincipalExtension.GetUserId(User);
-            await _likedTagsService.UnlikeTagAsync(unlikedTagCreateDto, userId);
+            await _likedTagsService.UnlikeTagAsync(tagID, userId);
             return NoContent();
         }
 

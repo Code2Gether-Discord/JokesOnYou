@@ -15,6 +15,5 @@ namespace JokesOnYou.Web.Api.Models
         public ICollection<int> Jokes { get; set; } = new List<int>();
         public string OwnerId { get; set; }
         public int Likes { get; set; }
-        public ICollection<User> Users { get; set; } = new List<User>();
     }
 }

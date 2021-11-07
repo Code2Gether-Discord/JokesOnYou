@@ -6,7 +6,7 @@ namespace JokesOnYou.Web.Api.Services.Interfaces
 {
     public interface ILikedTagsService
     {
-        Task<LikedTagsReplyDto> LikeTagAsync(LikedTagsCreateDto likedTagCreateDto, string userId);
-        Task UnlikeTagAsync(UnlikedTagCreateDto unlikedTagCreateDto, string userId);
+        Task<LikedTagsReplyDto> LikeTagAsync(int tagID, string userId);
+        Task UnlikeTagAsync(int tagID, string userId);
     }
 }

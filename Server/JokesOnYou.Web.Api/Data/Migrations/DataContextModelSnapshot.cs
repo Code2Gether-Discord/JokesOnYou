@@ -63,6 +63,27 @@ namespace JokesOnYou.Web.Api.Data.Migrations
                     b.ToTable("Jokes");
                 });
 
+            modelBuilder.Entity("JokesOnYou.Web.Api.Models.LikedTags", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("SavedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("TagId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LikedTags");
+                });
+
             modelBuilder.Entity("JokesOnYou.Web.Api.Models.SavedJoke", b =>
                 {
                     b.Property<int>("Id")
@@ -166,9 +187,6 @@ namespace JokesOnYou.Web.Api.Data.Migrations
                     b.Property<int>("Strikes")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TagId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
@@ -185,8 +203,6 @@ namespace JokesOnYou.Web.Api.Data.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.HasIndex("TagId");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -322,13 +338,6 @@ namespace JokesOnYou.Web.Api.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("JokesOnYou.Web.Api.Models.User", b =>
-                {
-                    b.HasOne("JokesOnYou.Web.Api.Models.Tag", null)
-                        .WithMany("Users")
-                        .HasForeignKey("TagId");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -378,11 +387,6 @@ namespace JokesOnYou.Web.Api.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("JokesOnYou.Web.Api.Models.Tag", b =>
-                {
-                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

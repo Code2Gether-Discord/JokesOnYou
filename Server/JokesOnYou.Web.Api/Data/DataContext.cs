@@ -14,8 +14,6 @@ namespace JokesOnYou.Web.Api.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.Entity<Tag>()
-                .HasMany(t => t.Users);
         }
     
         public DbSet<SavedJoke> SavedJokes { get; set; }
@@ -23,5 +21,6 @@ namespace JokesOnYou.Web.Api.Data
         public DbSet<Joke> Jokes { get; set; }
 
         public DbSet<Tag> Tags { get; set; }
+        public DbSet<LikedTags> LikedTags { get; set; }
     }
 }

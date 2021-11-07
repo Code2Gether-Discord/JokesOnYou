@@ -14,38 +14,45 @@ namespace JokesOnYou.Web.Api.Services
     public class LikedTagsService : ILikedTagsService
     {
         private readonly ILikedTagsRepository _likedTagsRepo;
-        private readonly ITagRepository _tagRepo;
-        private readonly IUserRepository _userRepository;
+        private readonly ITagRepository _tagRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-
-        public LikedTagsService(ILikedTagsRepository likedTagsRepo, ITagRepository tagRepository, IUserRepository userRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public LikedTagsService(ILikedTagsRepository likedTagsRepo, ITagRepository tagRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _likedTagsRepo = likedTagsRepo;
-            _tagRepo = tagRepository;
-            _userRepository = userRepository;
+            _tagRepository = tagRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
-        public async Task<LikedTagsReplyDto> LikeTagAsync(LikedTagsCreateDto likedTagCreateDto, string userId)
+        public async Task<LikedTagsReplyDto> LikeTagAsync(int tagID, string userId)
         {
-            Tag tagToLike = await _tagRepo.GetTagAsync(likedTagCreateDto.Id);
-            User userLikingTag = await _userRepository.GetUserAsync(userId);
-
+            Tag tagToLike = await _tagRepository.GetTagAsync(tagID);
             if (tagToLike == null)
             {
-                throw new KeyNotFoundException("Cannot find tag");
+                throw new KeyNotFoundException("Tag not found");
             }
 
-            if (tagToLike.Users.Contains(userLikingTag))
+
+            LikedTags likedTags = await _likedTagsRepo.GetLikedTag(userId, tagID);
+            if(likedTags != null)
             {
-                throw new AppException("User already liked this tag");
+                throw new AppException("Tag already liked by user");
             }
-            
-            tagToLike.Likes += 1;
-            tagToLike.Users.Add(userLikingTag);
-            await _unitOfWork.SaveAsync();
+            else
+            {
+                await _likedTagsRepo.AddLikedTag(new LikedTags
+                {
+                    UserId = userId,
+                    TagId = tagID
+                });
+                tagToLike.Likes += 1;
+            }
+
+            if(!await _unitOfWork.SaveAsync())
+            {
+                throw new AppException("Failure to like tag");
+            }
 
             var likedTagReplyDto = _mapper.Map<LikedTagsReplyDto>(tagToLike);
 
@@ -53,21 +60,25 @@ namespace JokesOnYou.Web.Api.Services
 
         }
 
-        public async Task UnlikeTagAsync(UnlikedTagCreateDto unlikedTagCreateDto, string userId)
+        public async Task UnlikeTagAsync(int tagID, string userId)
         {
-            Tag tagToUnlike = await _tagRepo.GetTagAsync(unlikedTagCreateDto.Id);
-            User userUnlikingTag = await _userRepository.GetUserAsync(userId);
+            Tag tagToUnlike = await _tagRepository.GetTagAsync(tagID);
             if (tagToUnlike == null)
             {
                 throw new KeyNotFoundException("Tag not found");
             }
 
-            if (!tagToUnlike.Users.Contains(userUnlikingTag))
+            LikedTags likedTags = await _likedTagsRepo.GetLikedTag(userId, tagID);
+            if (likedTags == null)
             {
-                throw new KeyNotFoundException("Tag wasn't liked user");
+                throw new AppException("Tag wasn't liked by user");
             }
-            tagToUnlike.Likes -= 1;
-            tagToUnlike.Users.Remove(userUnlikingTag);
+            else
+            {
+                _likedTagsRepo.DeleteLikedTag(likedTags);
+                tagToUnlike.Likes -= 1;
+            }
+
             if (!await _unitOfWork.SaveAsync())
             {
                 throw new AppException("Failure to unlike Tag");
