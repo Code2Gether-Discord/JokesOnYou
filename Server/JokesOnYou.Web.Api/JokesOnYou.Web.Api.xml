@@ -4,6 +4,25 @@
         <name>JokesOnYou.Web.Api</name>
     </assembly>
     <members>
+        <member name="M:JokesOnYou.Web.Api.Extensions.QueryableExtensions.PaginateAsync``1(System.Linq.IQueryable{``0},System.Int32,System.Int32)">
+            <summary>
+             Gets the total amount of items in the database and then applies pagination to the query
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="source"></param>
+            <param name="pageNumber"></param>
+            <param name="pageSize"></param>
+            <returns>The query paginated and the count before pagination was applied</returns>
+        </member>
+        <member name="M:JokesOnYou.Web.Api.Helpers.PaginatedList`1.ToPaginatedListAsync(System.Linq.IQueryable{`0},System.Int32,System.Int32)">
+            <summary>
+            Creates a new PaginatedList after paginating and executing the query <see cref="M:JokesOnYou.Web.Api.Extensions.QueryableExtensions.PaginateAsync``1(System.Linq.IQueryable{``0},System.Int32,System.Int32)"/>
+            </summary>
+            <param name="source"></param>
+            <param name="pageNumber"></param>
+            <param name="pageSize"></param>
+            <returns>A <see cref="T:JokesOnYou.Web.Api.Helpers.PaginatedList`1"/> containing the result of the query</returns>
+        </member>
         <member name="T:JokesOnYou.Web.Api.Models.Request.JokeUpdateDto">
             <summary>
             Does not update joke's id, likes, author, uploaddate, or dislikes. Just Premise and Punchline

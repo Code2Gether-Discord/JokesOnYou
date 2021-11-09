@@ -53,11 +53,6 @@ namespace JokesOnYou.Web.Api.Services
         {
             var jokeDtos = await _jokesRepo.GetJokeDtosAsync(jokesFilter);
 
-            foreach (var jokeDto in jokeDtos)
-            {
-                await AddAuthorToJoke(jokeDto);
-            }
-
             return jokeDtos;
         }
 
