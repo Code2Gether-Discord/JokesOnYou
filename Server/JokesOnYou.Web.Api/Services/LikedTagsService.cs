@@ -14,37 +14,40 @@ namespace JokesOnYou.Web.Api.Services
     public class LikedTagsService : ILikedTagsService
     {
         private readonly ILikedTagsRepository _likedTagsRepo;
+        private readonly IUserRepository _userRepository;
         private readonly ITagRepository _tagRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public LikedTagsService(ILikedTagsRepository likedTagsRepo, ITagRepository tagRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public LikedTagsService(ILikedTagsRepository likedTagsRepo, ITagRepository tagRepository, IUnitOfWork unitOfWork, IMapper mapper, IUserRepository userRepository)
         {
             _likedTagsRepo = likedTagsRepo;
             _tagRepository = tagRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _userRepository = userRepository;
         }
 
-        public async Task<LikedTagsReplyDto> LikeTagAsync(int tagID, string userId)
+        public async Task<LikedTagsReplyDto> LikeTagAsync(int tagId, string userId)
         {
-            Tag tagToLike = await _tagRepository.GetTagAsync(tagID);
+            Tag tagToLike = await _tagRepository.GetTagAsync(tagId);
+            User user = await _userRepository.GetUserAsync(userId);
             if (tagToLike == null)
             {
                 throw new KeyNotFoundException("Tag not found");
             }
 
 
-            LikedTags likedTags = await _likedTagsRepo.GetLikedTag(userId, tagID);
+            LikedTags likedTags = await _likedTagsRepo.GetLikedTag(userId, tagId);
             if(likedTags != null)
             {
-                throw new AppException("Tag already liked by user");
+                throw new AppException($"{tagToLike.Name} tag already liked by {user.UserName}");
             }
             else
             {
                 await _likedTagsRepo.AddLikedTag(new LikedTags
                 {
                     UserId = userId,
-                    TagId = tagID
+                    TagId = tagId
                 });
                 tagToLike.Likes += 1;
             }
@@ -60,22 +63,23 @@ namespace JokesOnYou.Web.Api.Services
 
         }
 
-        public async Task UnlikeTagAsync(int tagID, string userId)
+        public async Task UnlikeTagAsync(int tagId, string userId)
         {
-            Tag tagToUnlike = await _tagRepository.GetTagAsync(tagID);
+            Tag tagToUnlike = await _tagRepository.GetTagAsync(tagId);
+            User user = await _userRepository.GetUserAsync(userId);
             if (tagToUnlike == null)
             {
                 throw new KeyNotFoundException("Tag not found");
             }
 
-            LikedTags likedTags = await _likedTagsRepo.GetLikedTag(userId, tagID);
-            if (likedTags == null)
+            LikedTags likeForTag = await _likedTagsRepo.GetLikedTag(userId, tagId);
+            if (likeForTag == null)
             {
-                throw new AppException("Tag wasn't liked by user");
+                throw new AppException($"{tagToUnlike.Name} tag wasn't liked by {user.UserName}");
             }
             else
             {
-                _likedTagsRepo.DeleteLikedTag(likedTags);
+                _likedTagsRepo.DeleteLikedTag(likeForTag);
                 tagToUnlike.Likes -= 1;
             }
 
