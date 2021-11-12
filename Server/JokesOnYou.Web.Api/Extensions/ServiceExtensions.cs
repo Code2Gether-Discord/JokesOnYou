@@ -28,7 +28,7 @@ namespace JokesOnYou.Web.Api.Extensions
             services.AddScoped<ITagService, TagService>();
             services.AddScoped<IJokesService, JokesService>();
             services.AddScoped<ISavedJokeService, SavedJokeService>();
-            services.AddScoped<ILikedTagsService, LikedTagsService>();
+            services.AddScoped<ILikeForTagsService, LikeForTagsService>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 
@@ -39,7 +39,7 @@ namespace JokesOnYou.Web.Api.Extensions
             services.AddScoped<IJokesRepository, JokesRepository>();
             services.AddScoped<ITagRepository, TagRepository>();
             services.AddScoped<ISavedJokeRepository, SavedJokeRepository>();
-            services.AddScoped<ILikedTagsRepository, LikedTagsRepository>();
+            services.AddScoped<ILikeForTagsRepository, LikeForTagsRepository>();
             services.AddDbContext<DataContext>(options =>
             {
                 options.UseSqlServer(config.GetConnectionString("SQLserverConnection"));

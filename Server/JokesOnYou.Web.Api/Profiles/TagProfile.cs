@@ -10,7 +10,7 @@ namespace JokesOnYou.Web.Api.Profiles
         public TagProfile()
         {
             CreateMap<Tag, TagReplyDto>();
-            CreateMap<Tag, LikedTagReplyDto>();
+            CreateMap<Tag, LikeForTagReplyDto>();
             CreateMap<TagCreateDto, Tag>();
         }
     }
