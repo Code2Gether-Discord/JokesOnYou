@@ -20,14 +20,14 @@ namespace JokesOnYou.Web.Api.Repositories
             _mapper = mapper;
         }
 
-        public void DeleteLikedTag(LikeForTag likedTag) => _context.LikedTags.Remove(likedTag);
+        public void DeleteLikedTag(LikeForTag likedTag) => _context.LikeForTags.Remove(likedTag);
 
-        public async Task AddLikedTag(LikeForTag likedTag) => await _context.LikedTags.AddAsync(likedTag);
+        public async Task AddLikedTag(LikeForTag likedTag) => await _context.LikeForTags.AddAsync(likedTag);
 
         public async Task<IEnumerable<LikeForTag>> GetLikedTagByUserId(string userId) =>
-            await _context.LikedTags.Where(x => x.UserId == userId).ToListAsync();
+            await _context.LikeForTags.Where(x => x.UserId == userId).ToListAsync();
 
         public async Task<LikeForTag> GetLikedTag(string userId, int tagId) =>
-            await _context.LikedTags.FirstOrDefaultAsync(x => x.UserId == userId && x.TagId == tagId);
+            await _context.LikeForTags.FirstOrDefaultAsync(x => x.UserId == userId && x.TagId == tagId);
     }
 }

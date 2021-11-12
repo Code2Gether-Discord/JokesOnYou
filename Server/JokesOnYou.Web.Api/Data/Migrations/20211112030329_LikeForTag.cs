@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace JokesOnYou.Web.Api.Data.Migrations
 {
-    public partial class LikedTags : Migration
+    public partial class LikeForTag : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "LikedTags",
+                name: "LikeForTags",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -19,14 +19,14 @@ namespace JokesOnYou.Web.Api.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LikedTags", x => x.Id);
+                    table.PrimaryKey("PK_LikeForTags", x => x.Id);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "LikedTags");
+                name: "LikeForTags");
         }
     }
 }

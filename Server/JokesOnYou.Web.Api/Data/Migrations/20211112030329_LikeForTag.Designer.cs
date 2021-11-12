@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JokesOnYou.Web.Api.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211107221712_LikedTags")]
-    partial class LikedTags
+    [Migration("20211112030329_LikeForTag")]
+    partial class LikeForTag
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -65,7 +65,7 @@ namespace JokesOnYou.Web.Api.Data.Migrations
                     b.ToTable("Jokes");
                 });
 
-            modelBuilder.Entity("JokesOnYou.Web.Api.Models.LikedTags", b =>
+            modelBuilder.Entity("JokesOnYou.Web.Api.Models.LikeForTag", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -83,7 +83,7 @@ namespace JokesOnYou.Web.Api.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LikedTags");
+                    b.ToTable("LikeForTags");
                 });
 
             modelBuilder.Entity("JokesOnYou.Web.Api.Models.SavedJoke", b =>

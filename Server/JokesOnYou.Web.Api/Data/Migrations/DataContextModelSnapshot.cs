@@ -63,7 +63,7 @@ namespace JokesOnYou.Web.Api.Data.Migrations
                     b.ToTable("Jokes");
                 });
 
-            modelBuilder.Entity("JokesOnYou.Web.Api.Models.LikedTags", b =>
+            modelBuilder.Entity("JokesOnYou.Web.Api.Models.LikeForTag", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -81,7 +81,7 @@ namespace JokesOnYou.Web.Api.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LikedTags");
+                    b.ToTable("LikeForTags");
                 });
 
             modelBuilder.Entity("JokesOnYou.Web.Api.Models.SavedJoke", b =>
