@@ -2,7 +2,7 @@
 
 namespace JokesOnYou.Web.Api.Models.Request
 {
-    public class LikedTagsCreateDto
+    public class LikeForTagCreateDto
     {
     }
 }

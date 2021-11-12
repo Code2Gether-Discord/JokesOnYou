@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JokesOnYou.Web.Api.Models.Response
 {
-    public class LikedTagsReplyDto
+    public class LikeForTagReplyDto
     {
 
         public int Id { get; set; }

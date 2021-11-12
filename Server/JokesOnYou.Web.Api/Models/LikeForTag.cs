@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace JokesOnYou.Web.Api.Models
 {
-    public class LikedTags
+    public class LikeForTag
     {
         public int Id { get; set; }
         public int TagId { get; set; }

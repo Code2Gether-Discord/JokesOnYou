@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Services.Interfaces
 {
-    public interface ILikedTagsService
+    public interface ILikeForTagsService
     {
-        Task<LikedTagsReplyDto> LikeTagAsync(int tagId, string userId);
+        Task<LikeForTagReplyDto> LikeTagAsync(int tagId, string userId);
         Task UnlikeTagAsync(int tagId, string userId);
     }
 }

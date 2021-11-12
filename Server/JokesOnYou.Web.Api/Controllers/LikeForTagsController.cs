@@ -11,18 +11,18 @@ namespace JokesOnYou.Web.Api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(Roles = "Registered,Admin")]
-    public class LikedTagsController : ControllerBase
+    public class LikeForTagsController : ControllerBase
     {
-        private readonly ILikedTagsService _likedTagsService;
+        private readonly ILikeForTagsService _likedTagsService;
 
-        public LikedTagsController(ILikedTagsService likedTagsService)
+        public LikeForTagsController(ILikeForTagsService likedTagsService)
         {
             _likedTagsService = likedTagsService;
         }
         
         [HttpPost]
         [Route("LikeTag")]
-        public async Task<ActionResult<LikedTagsReplyDto>> LikeTagAsync(int tagID)
+        public async Task<ActionResult<LikeForTagReplyDto>> LikeTagAsync(int tagID)
         {
             var userId = ClaimsPrincipalExtension.GetUserId(User);
             var tagDto = await _likedTagsService.LikeTagAsync(tagID, userId);

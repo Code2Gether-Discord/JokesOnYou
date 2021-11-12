@@ -9,25 +9,25 @@ using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Repositories
 {
-    public class LikedTagsRepository : ILikedTagsRepository
+    public class LikeForTagsRepository : ILikeForTagsRepository
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
 
-        public LikedTagsRepository(DataContext context, IMapper mapper)
+        public LikeForTagsRepository(DataContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
 
-        public void DeleteLikedTag(LikedTags likedTags) => _context.LikedTags.Remove(likedTags);
+        public void DeleteLikedTag(LikeForTag likedTag) => _context.LikedTags.Remove(likedTag);
 
-        public async Task AddLikedTag(LikedTags likedTags) => await _context.LikedTags.AddAsync(likedTags);
+        public async Task AddLikedTag(LikeForTag likedTag) => await _context.LikedTags.AddAsync(likedTag);
 
-        public async Task<IEnumerable<LikedTags>> GetLikedTagByUserId(string userId) =>
+        public async Task<IEnumerable<LikeForTag>> GetLikedTagByUserId(string userId) =>
             await _context.LikedTags.Where(x => x.UserId == userId).ToListAsync();
 
-        public async Task<LikedTags> GetLikedTag(string userId, int tagId) =>
+        public async Task<LikeForTag> GetLikedTag(string userId, int tagId) =>
             await _context.LikedTags.FirstOrDefaultAsync(x => x.UserId == userId && x.TagId == tagId);
     }
 }
