@@ -38,6 +38,7 @@ namespace JokesOnYou.Web.Api.Extensions
             services.AddScoped<IJokesRepository, JokesRepository>();
             services.AddScoped<ITagRepository, TagRepository>();
             services.AddScoped<ISavedJokeRepository, SavedJokeRepository>();
+            services.AddScoped<IUserJokeTagRepository, UserJokeTagRepository>();
             services.AddDbContext<DataContext>(options =>
             {
                 options.UseSqlServer(config.GetConnectionString("SQLserverConnection"));
