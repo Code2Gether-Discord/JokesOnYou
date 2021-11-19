@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,20 +17,8 @@ namespace JokesOnYou.Web.Api.Models
             get { return name; } 
             set
             {
-                VerifyTag(value);
-                name = value.FirstCharToUpperRestToLower();
-            }
-        }
-
-        public static void VerifyTag(string name)
-        {
-            if (name.Any(c=> Char.IsWhiteSpace(c)))
-            {
-                throw new ArgumentException($"Error: Tag Given is not a valid Tag. \"{name}\". Tag should not Contain any special characters, numbers or spaces.");
-            }
-            if (name.Any(ch => !Char.IsLetter(ch)))
-            {
-                throw new ArgumentException($"Error: Tag Given is not a valid Tag. \"{name}\". Tag should not Contain any special characters, numbers or spaces.");
+                TextInfo ti = CultureInfo.CurrentCulture.TextInfo;
+                name = ti.ToTitleCase(value);
             }
         }
 
