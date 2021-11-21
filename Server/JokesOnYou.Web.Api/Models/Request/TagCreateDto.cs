@@ -6,5 +6,6 @@ namespace JokesOnYou.Web.Api.Models.Request
     {
         [Required]
         public string Name { get; set; }
+        public int JokeId { get; set; }
     }
 }

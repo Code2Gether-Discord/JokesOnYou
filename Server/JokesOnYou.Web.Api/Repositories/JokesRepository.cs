@@ -11,6 +11,7 @@ using JokesOnYou.Web.Api.Models.Response;
 using System.Linq;
 using System;
 using JokesOnYou.Web.Api.Helpers;
+using JokesOnYou.Web.Api.Extensions;
 
 namespace JokesOnYou.Web.Api.Repositories
 {
@@ -31,13 +32,13 @@ namespace JokesOnYou.Web.Api.Repositories
 
         public async Task CreateJokeAsync(Joke joke) => await _context.Jokes.AddAsync(joke).AsTask();
 
-        public async Task<IEnumerable<JokeReplyDto>> GetAllJokeDtosAsync() => 
+        public async Task<IEnumerable<JokeReplyDto>> GetAllJokeDtosAsync() =>
             await _context.Jokes.ProjectTo<JokeReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
 
-        public async Task<Joke> GetJokeByIdAsync(int id) => 
+        public async Task<Joke> GetJokeByIdAsync(int id) =>
             await _context.Jokes.FirstOrDefaultAsync(x => x.Id == id);
 
-        public async Task<JokeReplyDto> GetJokeDtoAsync(int id) => 
+        public async Task<JokeReplyDto> GetJokeDtoAsync(int id) =>
             await _context.Jokes.ProjectTo<JokeReplyDto>(_mapper.ConfigurationProvider)
                                 .FirstOrDefaultAsync(j => j.Id == id);
 
@@ -45,7 +46,7 @@ namespace JokesOnYou.Web.Api.Repositories
 
         public async Task<PaginatedList<JokeReplyDto>> GetJokeDtosAsync(JokesFilterDto jokesFilter)
         {
-            var query = _context.Jokes.AsQueryable();
+            var query = _context.Jokes.AsNoTracking();
 
             if (!string.IsNullOrWhiteSpace(jokesFilter.AuthorId))
             {
@@ -65,12 +66,23 @@ namespace JokesOnYou.Web.Api.Repositories
                 x.NormalizedPunchLine.Contains(jokesFilter.SearchText.ToUpper()));
             }
 
-            var result = await PaginatedList<JokeReplyDto>.ToPaginatedListAsync(
-                query.ProjectTo<JokeReplyDto>(_mapper.ConfigurationProvider),
-                jokesFilter.PageNumber,
-                jokesFilter.PageSize);
+            int count;
+            (query, count) = await query.PaginateAsync(jokesFilter.PageNumber, jokesFilter.PageSize);
 
-            return result;
+            var relatedAuthors = await _context.Users
+                .Where(u => query.Select(j => j.AuthorId).Contains(u.Id))
+                .Select(u => new { u.UserName, u.Id })
+                .ToListAsync();
+
+            var jokes = await query.ProjectTo<JokeReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
+
+            jokes = jokes.Select(j =>
+                {
+                    j.Author.UserName = relatedAuthors.FirstOrDefault(x => x.Id == j.Author.Id).UserName;
+                    return j;
+                }).ToList();
+
+            return new PaginatedList<JokeReplyDto>(jokes, count, jokesFilter.PageNumber, jokesFilter.PageSize);
         }
     }
 }

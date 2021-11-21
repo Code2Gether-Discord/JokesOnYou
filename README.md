@@ -36,7 +36,7 @@ The Building, Coding, Documenting and Teaching.
  - [Visual Studio 2019](https://visualstudio.microsoft.com/downloads/)
  - [Visual Studio Code](https://code.visualstudio.com/download)
  - [Discord](https://discord.com/download)
-2. Join the Code Together Discord Group : [Join Here](https://discord.gg/fkksvX7YPR)
+2. Join the Code Together Discord Group : [Join Here](https://discord.gg/Z73yYYDe)
 
 ### Follow this:
 

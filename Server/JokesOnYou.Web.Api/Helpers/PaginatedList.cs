@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using JokesOnYou.Web.Api.Extensions;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +15,8 @@ namespace JokesOnYou.Web.Api.Helpers
         public int? NextPage { get; set; }
         public int PageSize { get; set; }
         public int TotalPages { get; set; }
-        public int ItemsCount { get; set; }        
-        
+        public int ItemsCount { get; set; }
+
         public PaginatedList(IEnumerable<T> items, int count, int pageNumber, int pageSize)
         {
             CurrentPage = pageNumber;
@@ -33,13 +34,17 @@ namespace JokesOnYou.Web.Api.Helpers
             AddRange(items);
         }
 
+        /// <summary>
+        /// Creates a new PaginatedList after paginating and executing the query <see cref="QueryableExtensions.PaginateAsync{T}(IQueryable{T}, int, int)"/>
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="pageNumber"></param>
+        /// <param name="pageSize"></param>
+        /// <returns>A <see cref="PaginatedList{T}"/> containing the result of the query</returns>
         public static async Task<PaginatedList<T>> ToPaginatedListAsync(IQueryable<T> source, int pageNumber, int pageSize)
         {
-            var count = source.Count();
-
-            List<T> items = await source.Skip(pageSize * (pageNumber - 1))
-            .Take(pageSize)
-            .ToListAsync();
+            var (query, count) = await source.PaginateAsync(pageNumber, pageSize);
+            var items = await query.ToListAsync();
 
             return new PaginatedList<T>(items, count, pageNumber, pageSize);
         }

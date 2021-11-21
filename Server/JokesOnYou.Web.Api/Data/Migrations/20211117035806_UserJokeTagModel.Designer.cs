@@ -4,14 +4,16 @@ using JokesOnYou.Web.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace JokesOnYou.Web.Api.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20211117035806_UserJokeTagModel")]
+    partial class UserJokeTagModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,27 +63,6 @@ namespace JokesOnYou.Web.Api.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Jokes");
-                });
-
-            modelBuilder.Entity("JokesOnYou.Web.Api.Models.LikeForTag", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("SavedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("TagId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("LikeForTags");
                 });
 
             modelBuilder.Entity("JokesOnYou.Web.Api.Models.SavedJoke", b =>
