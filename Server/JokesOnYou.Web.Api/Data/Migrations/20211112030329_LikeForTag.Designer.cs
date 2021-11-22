@@ -75,7 +75,7 @@ namespace JokesOnYou.Web.Api.Data.Migrations
                     b.Property<DateTime>("SavedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("TagId")
+                    b.Property<int>("UserJokeTagId")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")

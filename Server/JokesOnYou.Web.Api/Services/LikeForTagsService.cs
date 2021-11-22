@@ -13,80 +13,70 @@ namespace JokesOnYou.Web.Api.Services
 {
     public class LikeForTagsService : ILikeForTagsService
     {
-        private readonly ILikeForTagsRepository _likeForTagsRepo;
+        private readonly ILikeForTagsRepository _likeForTagsRepoitory;
         private readonly IUserRepository _userRepository;
         private readonly ITagRepository _tagRepository;
+        private readonly IUserJokeTagRepository _userJokeTagRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public LikeForTagsService(ILikeForTagsRepository likeForTagsRepo, ITagRepository tagRepository, IUnitOfWork unitOfWork, IMapper mapper, IUserRepository userRepository)
+        public LikeForTagsService(ILikeForTagsRepository likeForTagsRepository, ITagRepository tagRepository, IUnitOfWork unitOfWork, IMapper mapper, IUserRepository userRepository, IUserJokeTagRepository userJokeTagRepository)
         {
-            _likeForTagsRepo = likeForTagsRepo;
+            _likeForTagsRepoitory = likeForTagsRepository;
             _tagRepository = tagRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _userRepository = userRepository;
+            _userJokeTagRepository = userJokeTagRepository;
         }
 
-        public async Task<LikeForTagReplyDto> LikeTagAsync(int tagId, string userId)
+        public async Task<TagReplyDto> ToggleLikeForTag(UserJokeTag userJokeTag, string userId)
         {
-            Tag tagToLike = await _tagRepository.GetTagAsync(tagId);
             User user = await _userRepository.GetUserAsync(userId);
-            if (tagToLike == null)
+            LikeForTag likeForTag = await _likeForTagsRepoitory.GetLikedTag(userId, userJokeTag.Id); // check to see if user already like user joketag
+            Tag tag = await _tagRepository.GetTagAsync(userJokeTag.TagId);
+            if(likeForTag == null)
             {
-                throw new KeyNotFoundException("Tag not found");
-            }
-
-
-            LikeForTag likedTags = await _likeForTagsRepo.GetLikedTag(userId, tagId);
-            if(likedTags != null)
-            {
-                throw new AppException($"{tagToLike.Name} tag already liked by {user.UserName}");
-            }
-            else
-            {
-                await _likeForTagsRepo.AddLikedTag(new LikeForTag
+                // liking UserJokeTag
+                likeForTag = new LikeForTag
                 {
                     UserId = userId,
-                    TagId = tagId
-                });
-                tagToLike.Likes += 1;
-            }
+                    UserJokeTagId = userJokeTag.Id
+                };
 
-            if(!await _unitOfWork.SaveAsync())
-            {
-                throw new AppException("Failure to like tag");
-            }
+                await _likeForTagsRepoitory.AddLikedTag(likeForTag);
+                userJokeTag.Likes += 1;
+                tag.Likes += 1;
 
-            var likedTagReplyDto = _mapper.Map<LikeForTagReplyDto>(tagToLike);
 
-            return likedTagReplyDto;
-
-        }
-
-        public async Task UnlikeTagAsync(int tagId, string userId)
-        {
-            Tag tagToUnlike = await _tagRepository.GetTagAsync(tagId);
-            User user = await _userRepository.GetUserAsync(userId);
-            if (tagToUnlike == null)
-            {
-                throw new KeyNotFoundException("Tag not found");
-            }
-
-            LikeForTag likeForTag = await _likeForTagsRepo.GetLikedTag(userId, tagId);
-            if (likeForTag == null)
-            {
-                throw new AppException($"{tagToUnlike.Name} tag wasn't liked by {user.UserName}");
+                var saved = await _unitOfWork.SaveAsync();
+                if (!saved)
+                {
+                    throw new AppException($"Error: Failed liking {nameof(userJokeTag)} for User: {user.UserName}");
+                }
             }
             else
             {
-                _likeForTagsRepo.DeleteLikedTag(likeForTag);
-                tagToUnlike.Likes -= 1;
+                // unliking UserJokeTag
+                _likeForTagsRepoitory.DeleteLikedTag(likeForTag);
+                userJokeTag.Likes -= 1;
+                tag.Likes -= 1;
+
+                if(userJokeTag.Likes == 0) // we delete user JokeTag since likes reaches 0
+                {
+                    _userJokeTagRepository.DeleteUserJokeTag(userJokeTag);
+                }
+
+                var saved = await _unitOfWork.SaveAsync();
+                if (!saved)
+                {
+                    throw new AppException($"Error: Failed unliking {nameof(userJokeTag)} for User: {user.UserName}");
+                }
             }
 
-            if (!await _unitOfWork.SaveAsync())
-            {
-                throw new AppException("Failure to unlike Tag");
-            }
+            var tagReplyDto = _mapper.Map<TagReplyDto>(tag);
+            tagReplyDto.Likes = userJokeTag.Likes;
+
+            return tagReplyDto;
         }
     }
 }

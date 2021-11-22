@@ -20,6 +20,7 @@ namespace JokesOnYou.Web.Api.Repositories
             _mapper = mapper;
         }
 
+        public void DeleteUserJokeTag(UserJokeTag userJokeTag) => _context.UserJokeTags.Remove(userJokeTag);
         public async Task CreateUserJokeTagAsync(UserJokeTag userJokeTag) => 
             await _context.UserJokeTags.AddAsync(userJokeTag);
 

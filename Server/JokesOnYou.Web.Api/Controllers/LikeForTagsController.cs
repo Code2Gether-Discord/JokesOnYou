@@ -1,6 +1,8 @@
 ﻿using JokesOnYou.Web.Api.Extensions;
+using JokesOnYou.Web.Api.Models;
 using JokesOnYou.Web.Api.Models.Request;
 using JokesOnYou.Web.Api.Models.Response;
+using JokesOnYou.Web.Api.Repositories.Interfaces;
 using JokesOnYou.Web.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,29 +16,29 @@ namespace JokesOnYou.Web.Api.Controllers
     public class LikeForTagsController : ControllerBase
     {
         private readonly ILikeForTagsService _likeForTagsService;
+        private readonly IUserJokeTagRepository _userJokeTagRepository;
 
-        public LikeForTagsController(ILikeForTagsService likeForTagsService)
+        public LikeForTagsController(ILikeForTagsService likeForTagsService, IUserJokeTagRepository userJokeTagRepository)
         {
             _likeForTagsService = likeForTagsService;
-        }
-        
-        [HttpPost]
-        [Route("LikeTag")]
-        public async Task<ActionResult<LikeForTagReplyDto>> LikeTagAsync(int tagId)
-        {
-            var userId = ClaimsPrincipalExtension.GetUserId(User);
-            var tagDto = await _likeForTagsService.LikeTagAsync(tagId, userId);
-            return tagDto;
+            _userJokeTagRepository = userJokeTagRepository;
         }
 
-        [HttpPost]
-        [Route("UnlikeTag")]
-        public async Task<ActionResult> UnlikeTagAsync(int tagId)
+        [HttpPost("{userJokeTagId}")]
+        public async Task<ActionResult<TagReplyDto>> ToggleLikeUserJokeTag(int userJokeTagId)
         {
+            TagReplyDto tagReplyDto = null;
             var userId = ClaimsPrincipalExtension.GetUserId(User);
-            await _likeForTagsService.UnlikeTagAsync(tagId, userId);
-            return NoContent();
+            UserJokeTag userJokeTag = await _userJokeTagRepository.GetUSerJokeTagAsync(userJokeTagId);
+            
+            if(userJokeTag != null) // only perform this action if User JokeTag exist
+            {
+                tagReplyDto = await _likeForTagsService.ToggleLikeForTag(userJokeTag, userId);
+            }
+
+            return tagReplyDto;
         }
+
 
     }
 }

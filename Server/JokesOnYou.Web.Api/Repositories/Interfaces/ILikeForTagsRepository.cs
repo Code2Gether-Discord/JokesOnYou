@@ -13,6 +13,6 @@ namespace JokesOnYou.Web.Api.Repositories.Interfaces
 
         Task<IEnumerable<LikeForTag>> GetLikedTagByUserId(string userId);
 
-        Task<LikeForTag> GetLikedTag(string userId, int tagId);
+        Task<LikeForTag> GetLikedTag(string userId, int userJokeTagId);
     }
 }
