@@ -13,5 +13,6 @@ namespace JokesOnYou.Web.Api.Services.Interfaces
         Task<TagReplyDto> CreateTagAsync(TagCreateDto tagCreateDto, string userId);
         Task<IEnumerable<TagReplyDto>> GetAllTagDtosAsync();
         Task<TagReplyDto> GetTagDtoAsync(int id);
+        Task<IEnumerable<TagReplyDto>> GetTagDtosByJokeIdAsync(int jokeId);
     }
 }

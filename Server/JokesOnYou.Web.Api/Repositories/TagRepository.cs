@@ -30,7 +30,13 @@ namespace JokesOnYou.Web.Api.Repositories
             await _context.Tags.ProjectTo<TagReplyDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync(t => t.Id == id);
         public async Task<List<Tag>> GetTags(int[] ids) => 
             await _context.Tags.Where(x => ids.Contains(x.Id)).ToListAsync();
-        
+
+        public async Task<IEnumerable<TagReplyDto>> GetTagDtosByJokeIdAsync(int jokeId) =>
+            await (from tags in _context.Tags
+                   join userJokeTags in _context.UserJokeTags
+                   on tags.Id equals userJokeTags.TagId
+                   where userJokeTags.JokeId == jokeId
+                   select tags).ProjectTo<TagReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
 
         /// <summary>
         /// Find Tag by given id
