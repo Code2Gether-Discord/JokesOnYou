@@ -24,12 +24,12 @@ namespace JokesOnYou.Web.Api.Controllers
             _userJokeTagRepository = userJokeTagRepository;
         }
 
-        [HttpPost("{userJokeTagId}")]
-        public async Task<ActionResult<TagReplyDto>> ToggleLikeUserJokeTag(int userJokeTagId)
+        [HttpPost]
+        public async Task<ActionResult<TagReplyDto>> ToggleLikeUserJokeTag(int jokeId, int tagId)
         {
             TagReplyDto tagReplyDto = null;
             var userId = ClaimsPrincipalExtension.GetUserId(User);
-            UserJokeTag userJokeTag = await _userJokeTagRepository.GetUSerJokeTagAsync(userJokeTagId);
+            UserJokeTag userJokeTag = await _userJokeTagRepository.GetUserJokeTagAsync(jokeId, tagId);
             
             if(userJokeTag != null) // only perform this action if User JokeTag exist
             {

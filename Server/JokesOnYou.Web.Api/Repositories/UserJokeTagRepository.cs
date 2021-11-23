@@ -24,12 +24,16 @@ namespace JokesOnYou.Web.Api.Repositories
         public async Task CreateUserJokeTagAsync(UserJokeTag userJokeTag) => 
             await _context.UserJokeTags.AddAsync(userJokeTag);
 
-        public async Task<UserJokeTag> GetUSerJokeTagAsync(int id) => 
+        public async Task<UserJokeTag> GetUserJokeTagAsync(int id) => 
             await _context.UserJokeTags.FirstOrDefaultAsync(x => x.Id == id);
 
         public async Task<UserJokeTag> GetUserJokeTagAsync(UserJokeTag userJokeTag) => 
              await _context.UserJokeTags.FirstOrDefaultAsync(x =>
                                                         x.JokeId == userJokeTag.JokeId && 
                                                         x.TagId == userJokeTag.TagId);
+        public async Task<UserJokeTag> GetUserJokeTagAsync(int jokeId, int tagId) =>
+             await _context.UserJokeTags.FirstOrDefaultAsync(x =>
+                                                        x.JokeId == jokeId &&
+                                                        x.TagId == tagId);
     }
 }
