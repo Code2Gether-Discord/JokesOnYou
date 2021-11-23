@@ -64,5 +64,13 @@ namespace JokesOnYou.Web.Api.Controllers
             var tagReplyDto = await _tagService.CreateTagAsync(tagCreateDto, userId); 
             return tagReplyDto;
         }
+
+        [AllowAnonymous]
+        [HttpGet("getbyjoke/{jokeId}")]
+        public async Task<ActionResult<IEnumerable<TagReplyDto>>> GetTagsByJokeId(int jokeId)
+        {
+            var tagDtos = await _tagService.GetTagDtosByJokeIdAsync(jokeId);
+            return Ok(tagDtos);
+        }
     }
 }

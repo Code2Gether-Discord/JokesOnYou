@@ -13,6 +13,7 @@ namespace JokesOnYou.Web.Api.Repositories.Interfaces
         Task<List<Tag>> GetTags(int[] ids);
         Task<IEnumerable<TagReplyDto>> GetAllTagDtosAsync();
         Task<TagReplyDto> GetTagDtoAsync(int id);
-        Task CreateTagAsync(Tag tag); 
+        Task CreateTagAsync(Tag tag);
+        Task<IEnumerable<TagReplyDto>> GetTagDtosByJokeIdAsync(int jokeId);
     }
 }
