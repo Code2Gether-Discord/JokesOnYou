@@ -24,11 +24,11 @@ namespace JokesOnYou.Web.Api.Repositories
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<TagReplyDto>> GetAllTagDtosAsync() => 
+        public async Task<IEnumerable<TagReplyDto>> GetAllTagDtosAsync() =>
             await _context.Tags.ProjectTo<TagReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
-        public async Task<TagReplyDto> GetTagDtoAsync(int id) => 
+        public async Task<TagReplyDto> GetTagDtoAsync(int id) =>
             await _context.Tags.ProjectTo<TagReplyDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync(t => t.Id == id);
-        public async Task<List<Tag>> GetTags(int[] ids) => 
+        public async Task<List<Tag>> GetTags(int[] ids) =>
             await _context.Tags.Where(x => ids.Contains(x.Id)).ToListAsync();
 
         public async Task<IEnumerable<TagReplyDto>> GetTagDtosByJokeIdAsync(int jokeId) =>
@@ -36,7 +36,15 @@ namespace JokesOnYou.Web.Api.Repositories
                    join userJokeTags in _context.UserJokeTags
                    on tags.Id equals userJokeTags.TagId
                    where userJokeTags.JokeId == jokeId
-                   select tags).ProjectTo<TagReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
+                   select new Tag 
+                   {
+                       
+                       Id = tags.Id, 
+                       Name = tags.Name,  
+                       Created = tags.Created, 
+                       OwnerId = tags.OwnerId, 
+                       Likes = userJokeTags.Likes
+                   }).ProjectTo<TagReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
 
         /// <summary>
         /// Find Tag by given id
