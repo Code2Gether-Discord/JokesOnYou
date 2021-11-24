@@ -61,5 +61,6 @@ namespace JokesOnYou.Web.Api.Repositories
         public void Delete(Tag tag) => _context.Tags.Remove(tag);
 
         public async Task CreateTagAsync(Tag tag) => await _context.Tags.AddAsync(tag);
+        public async Task<Tag> GetTagByNameAsync(string tagName) => await _context.Tags.FirstOrDefaultAsync(t => t.Name == tagName);
     }
 }
