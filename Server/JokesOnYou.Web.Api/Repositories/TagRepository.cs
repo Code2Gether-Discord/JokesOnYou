@@ -1,15 +1,17 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using JokesOnYou.Web.Api.Data;
+using JokesOnYou.Web.Api.Extensions;
+using JokesOnYou.Web.Api.Helpers;
+using JokesOnYou.Web.Api.Models;
+using JokesOnYou.Web.Api.Models.Request;
+using JokesOnYou.Web.Api.Models.Response;
+using JokesOnYou.Web.Api.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Microsoft.EntityFrameworkCore;
-using JokesOnYou.Web.Api.Data;
-using JokesOnYou.Web.Api.Models.Request;
-using JokesOnYou.Web.Api.Models;
-using JokesOnYou.Web.Api.Repositories.Interfaces;
-using JokesOnYou.Web.Api.Models.Response;
+using System.Threading.Tasks;
 
 namespace JokesOnYou.Web.Api.Repositories
 {
@@ -24,8 +26,32 @@ namespace JokesOnYou.Web.Api.Repositories
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<TagReplyDto>> GetAllTagDtosAsync() =>
-            await _context.Tags.ProjectTo<TagReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
+        public async Task<PaginatedList<TagReplyDto>> GetAllTagDtosAsync(TagFilterDto tagFilterDto)
+        {
+            var query = _context.Tags.AsNoTracking();
+
+            if (!string.IsNullOrWhiteSpace(tagFilterDto.OwnerId))
+            {
+                query = query.Where(t => t.OwnerId == tagFilterDto.OwnerId);
+            }
+            if (tagFilterDto.MinimumLikes != int.MinValue || tagFilterDto.MaximumLikes != int.MaxValue)
+            {
+                query = query.Where(t => t.Likes >= tagFilterDto.MinimumLikes && t.Likes <= tagFilterDto.MaximumLikes);
+            }
+            if (tagFilterDto.MinimumDate != DateTime.MinValue || tagFilterDto.MaximumDate != DateTime.MaxValue)
+            {
+                query = query.Where(t => t.Created >= tagFilterDto.MinimumDate && t.Created <= tagFilterDto.MaximumDate.AddDays(1));
+            }
+            if (string.IsNullOrEmpty(tagFilterDto.SearchText) == false || string.IsNullOrWhiteSpace(tagFilterDto.SearchText) == false)
+            {
+                query = query.Where(x => x.Name.Contains(tagFilterDto.SearchText.ToUpper()));
+            }
+
+            var result = await PaginatedList<TagReplyDto>.ToPaginatedListAsync(query.ProjectTo<TagReplyDto>(_mapper.ConfigurationProvider), tagFilterDto.PageNumber, tagFilterDto.PageSize);
+
+            return result;
+        }
+
         public async Task<TagReplyDto> GetTagDtoAsync(int id) =>
             await _context.Tags.ProjectTo<TagReplyDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync(t => t.Id == id);
         public async Task<List<Tag>> GetTags(int[] ids) =>
@@ -36,13 +62,12 @@ namespace JokesOnYou.Web.Api.Repositories
                    join userJokeTags in _context.UserJokeTags
                    on tags.Id equals userJokeTags.TagId
                    where userJokeTags.JokeId == jokeId
-                   select new Tag 
+                   select new Tag
                    {
-                       
-                       Id = tags.Id, 
-                       Name = tags.Name,  
-                       Created = tags.Created, 
-                       OwnerId = tags.OwnerId, 
+                       Id = tags.Id,
+                       Name = tags.Name,
+                       Created = tags.Created,
+                       OwnerId = tags.OwnerId,
                        Likes = userJokeTags.Likes
                    }).ProjectTo<TagReplyDto>(_mapper.ConfigurationProvider).ToListAsync();
 

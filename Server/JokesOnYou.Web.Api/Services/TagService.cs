@@ -7,6 +7,7 @@ using JokesOnYou.Web.Api.Repositories.Interfaces;
 using JokesOnYou.Web.Api.Services.Interfaces;
 using AutoMapper;
 using JokesOnYou.Web.Api.Models.Response;
+using JokesOnYou.Web.Api.Helpers;
 
 namespace JokesOnYou.Web.Api.Services
 {
@@ -74,7 +75,7 @@ namespace JokesOnYou.Web.Api.Services
             return tagReplyDto;
         }
 
-        public async Task<IEnumerable<TagReplyDto>> GetAllTagDtosAsync() => await _tagRepository.GetAllTagDtosAsync();
+        public async Task<PaginatedList<TagReplyDto>> GetAllTagDtosAsync(TagFilterDto tagFilterDto) => await _tagRepository.GetAllTagDtosAsync(tagFilterDto);
         public async Task<TagReplyDto> GetTagDtoAsync(int id) => await _tagRepository.GetTagDtoAsync(id);
         public async Task<IEnumerable<TagReplyDto>> GetTagDtosByJokeIdAsync(int jokeId) => 
             await _tagRepository.GetTagDtosByJokeIdAsync(jokeId);
