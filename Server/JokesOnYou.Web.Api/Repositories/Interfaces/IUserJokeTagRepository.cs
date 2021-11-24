@@ -6,10 +6,8 @@ namespace JokesOnYou.Web.Api.Repositories.Interfaces
 {
     public interface IUserJokeTagRepository
     {
-        void DeleteUserJokeTag(UserJokeTag userJokeTag);
         Task CreateUserJokeTagAsync(UserJokeTag userJokeTag);
         Task<UserJokeTag> GetUserJokeTagAsync(UserJokeTag userJokeTag);
-        Task<UserJokeTag> GetUserJokeTagAsync(int id);
-        Task<UserJokeTag> GetUserJokeTagAsync(int jokeId, int tagId);
+        Task<UserJokeTag> GetUSerJokeTagAsync(int id);
     }
 }
