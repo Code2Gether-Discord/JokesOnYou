@@ -11,7 +11,7 @@ namespace JokesOnYou.Web.Api.Repositories.Interfaces
 
         Task AddLikedTag(LikeForTag likedTag);
 
-        Task<IEnumerable<LikeForTag>> GetLikedTagByUserId(string userId);
+        Task<IEnumerable<LikeForTag>> GetLikedTagsByUserId(string userId);
 
         Task<LikeForTag> GetLikedTag(string userId, int userJokeTagId);
     }

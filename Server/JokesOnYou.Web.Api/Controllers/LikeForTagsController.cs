@@ -25,18 +25,27 @@ namespace JokesOnYou.Web.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<TagReplyDto>> ToggleLikeUserJokeTag(int jokeId, int tagId)
+        public async Task<ActionResult> ToggleLikeUserJokeTag(int jokeId, int tagId)
         {
             TagReplyDto tagReplyDto = null;
             var userId = ClaimsPrincipalExtension.GetUserId(User);
             UserJokeTag userJokeTag = await _userJokeTagRepository.GetUserJokeTagAsync(jokeId, tagId);
-            
-            if(userJokeTag != null) // only perform this action if User JokeTag exist
+            int currentLikes = userJokeTag.Likes; // to be used to determine whether user is liking or unliking
+
+            if (userJokeTag != null) // only perform this action if User JokeTag exist
             {
                 tagReplyDto = await _likeForTagsService.ToggleLikeForTag(userJokeTag, userId);
             }
 
-            return tagReplyDto;
+            if(tagReplyDto.Likes > currentLikes)
+            {
+                return Ok(); // like
+            }
+            else
+            {
+                return NoContent(); // unlike
+            }
+         
         }
 
 
