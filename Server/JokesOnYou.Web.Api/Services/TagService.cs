@@ -31,7 +31,7 @@ namespace JokesOnYou.Web.Api.Services
         public async Task<TagReplyDto> CreateTagAsync(TagCreateDto tagCreateDto, string userId)
         {
             Tag tag = await _tagRepository.GetTagByNameAsync(tagCreateDto.Name);
-            if(tag == null)//Tag does not exist.
+            if(tag == null)
             {
                 tag = _mapper.Map<Tag>(tagCreateDto);
                 tag.OwnerId = userId;
@@ -64,7 +64,7 @@ namespace JokesOnYou.Web.Api.Services
             }
             else
             {
-                userJokeTag = existingUserJokeTag; // we found user Joketag
+                userJokeTag = existingUserJokeTag;
             }
 
             TagReplyDto tagReplyDto = await _likeForTagsService.ToggleLikeForTag(userJokeTag, userId);

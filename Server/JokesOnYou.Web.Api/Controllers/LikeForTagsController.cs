@@ -30,20 +30,20 @@ namespace JokesOnYou.Web.Api.Controllers
             TagReplyDto tagReplyDto = null;
             var userId = ClaimsPrincipalExtension.GetUserId(User);
             UserJokeTag userJokeTag = await _userJokeTagRepository.GetUserJokeTagAsync(jokeId, tagId);
-            int currentLikes = userJokeTag.Likes; // to be used to determine whether user is liking or unliking
+            int currentLikes = userJokeTag.Likes;
 
-            if (userJokeTag != null) // only perform this action if User JokeTag exist
+            if (userJokeTag != null)
             {
                 tagReplyDto = await _likeForTagsService.ToggleLikeForTag(userJokeTag, userId);
             }
 
             if(tagReplyDto.Likes > currentLikes)
             {
-                return Ok(); // like
+                return Ok();
             }
             else
             {
-                return NoContent(); // unlike
+                return NoContent();
             }
          
         }
