@@ -13,12 +13,11 @@ namespace JokesOnYou.Web.Api.Repositories.Interfaces
 
         Task<Tag> GetTagAsync(int id);
 
+        Task<Tag> GetTagByNameAsync(string tagName);
+
         Task<List<Tag>> GetTags(int[] ids);
 
-        Task<PaginatedList<TagReplyDto>>
-        GetAllTagDtosAsync(
-            TagFilterDto tagFilterDto
-        );
+        Task<PaginatedList<TagReplyDto>>GetAllTagDtosAsync(TagFilterDto tagFilterDto);
 
         Task<TagReplyDto> GetTagDtoAsync(int id);
 
