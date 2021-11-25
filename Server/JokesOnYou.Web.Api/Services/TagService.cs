@@ -30,13 +30,11 @@ namespace JokesOnYou.Web.Api.Services
 
         public async Task<TagReplyDto> CreateTagAsync(TagCreateDto tagCreateDto, string userId)
         {
-            TagReplyDto tagReplyDto;
             Tag tag = await _tagRepository.GetTagByNameAsync(tagCreateDto.Name);
-            if(tag == null)//Tag does not exist.
+            if(tag == null)
             {
                 tag = _mapper.Map<Tag>(tagCreateDto);
                 tag.OwnerId = userId;
-                tag.Likes = 0;
 
                 await _tagRepository.CreateTagAsync(tag);
                 var tagSaved = await _unitOfWork.SaveAsync();
@@ -63,18 +61,13 @@ namespace JokesOnYou.Web.Api.Services
                 {
                     throw new AppException($"error: Failed saving {nameof(userJokeTag)} for the {nameof(tag)}: {tagCreateDto.Name}");
                 }
-
-                tagReplyDto = await _likeForTagsService.ToggleLikeForTag(userJokeTag, userId); // add initial like to LikeForTag
             }
             else
             {
                 userJokeTag = existingUserJokeTag;
-
-                tagReplyDto = await _likeForTagsService.ToggleLikeForTag(userJokeTag, userId);
-                
             }
 
-            tagReplyDto.Likes = userJokeTag.Likes;
+            TagReplyDto tagReplyDto = await _likeForTagsService.ToggleLikeForTag(userJokeTag, userId);
 
             return tagReplyDto;
         }

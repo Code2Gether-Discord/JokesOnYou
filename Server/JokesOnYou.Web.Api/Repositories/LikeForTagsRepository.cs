@@ -24,7 +24,7 @@ namespace JokesOnYou.Web.Api.Repositories
 
         public async Task AddLikedTag(LikeForTag likedTag) => await _context.LikeForTags.AddAsync(likedTag);
 
-        public async Task<IEnumerable<LikeForTag>> GetLikedTagByUserId(string userId) =>
+        public async Task<IEnumerable<LikeForTag>> GetLikedTagsByUserId(string userId) =>
             await _context.LikeForTags.Where(x => x.UserId == userId).ToListAsync();
 
         public async Task<LikeForTag> GetLikedTag(string userId, int userJokeTagId) =>
