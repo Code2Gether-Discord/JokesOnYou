@@ -19,9 +19,7 @@ namespace JokesOnYou.Web.Api.Services.Interfaces
         );
 
         Task<PaginatedList<TagReplyDto>>
-        GetAllTagDtosAsync(
-            TagFilterDto tagFilterDto
-        );
+        GetAllTagDtosAsync(TagFilterDto tagFilterDto);
 
         Task<TagReplyDto> GetTagDtoAsync(int id);
 
