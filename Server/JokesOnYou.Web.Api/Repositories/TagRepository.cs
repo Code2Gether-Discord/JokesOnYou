@@ -34,17 +34,14 @@ namespace JokesOnYou.Web.Api.Repositories
             {
                 query = query.Where(t => t.OwnerId == tagFilterDto.OwnerId);
             }
-            if (tagFilterDto.MinimumLikes != int.MinValue || tagFilterDto.MaximumLikes != int.MaxValue)
-            {
-                query = query.Where(t => t.Likes >= tagFilterDto.MinimumLikes && t.Likes <= tagFilterDto.MaximumLikes);
-            }
+
             if (tagFilterDto.MinimumDate != DateTime.MinValue || tagFilterDto.MaximumDate != DateTime.MaxValue)
             {
                 query = query.Where(t => t.Created >= tagFilterDto.MinimumDate && t.Created <= tagFilterDto.MaximumDate.AddDays(1));
             }
             if (string.IsNullOrEmpty(tagFilterDto.SearchText) == false || string.IsNullOrWhiteSpace(tagFilterDto.SearchText) == false)
             {
-                query = query.Where(x => x.Name.Contains(tagFilterDto.SearchText.ToUpper()));
+                query = query.Where(x => x.Name.Contains(tagFilterDto.SearchText));
             }
 
             var result = await PaginatedList<TagReplyDto>.ToPaginatedListAsync(query.ProjectTo<TagReplyDto>(_mapper.ConfigurationProvider), tagFilterDto.PageNumber, tagFilterDto.PageSize);
