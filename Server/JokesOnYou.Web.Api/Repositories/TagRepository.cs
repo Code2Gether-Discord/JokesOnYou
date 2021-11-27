@@ -35,6 +35,8 @@ namespace JokesOnYou.Web.Api.Repositories
                 query = query.Where(t => t.OwnerId == tagFilterDto.OwnerId);
             }
 
+            query = query.Where(t => t.Likes >= tagFilterDto.MinimumLikes && t.Likes <= tagFilterDto.MaximumLikes);
+
             if (tagFilterDto.MinimumDate != DateTime.MinValue || tagFilterDto.MaximumDate != DateTime.MaxValue)
             {
                 query = query.Where(t => t.Created >= tagFilterDto.MinimumDate && t.Created <= tagFilterDto.MaximumDate.AddDays(1));
