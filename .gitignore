@@ -351,3 +351,5 @@ healthchecksdb
 
 # Yarn
 yarn.lock
+.vscode**
+.vs**
